@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}KingCoin{% endblock %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/kg_logo.svg' %}">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              screens: { 'lgx': '1090px' }
+            }
+          }
+        }
+    </script>
+
+    <!-- Fonte Archivo -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gradient-to-b from-black via-[#0e1a14] to-black text-gray-200">
+
+    {% block navbar %}
+    <!-- Navbar padrão -->
+    <header class="fixed top-4 left-0 w-full z-50 fadeSlide px-4">
+        <div class="max-w-7xl mx-auto glass rounded-full px-6 py-3 shadow-lg flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center ml-7">
+                <img src="{% static 'img/kg_logo.svg' %}" alt="KingCoin" class="h-8 w-auto lgx:h-9">
+            </div>
+            <!-- Navbar desktop -->
+            <div class="hidden lgx:flex justify-center">
+                <nav class="flex space-x-6 text-base font-medium">
+                    <a href="#" class="nav-link">Início</a>
+                    <a href="#" class="nav-link">Sobre Nós</a>
+                    <a href="#" class="nav-link">Solução</a>
+                    <a href="#" class="nav-link">Feedbacks</a>
+                    <a href="#" class="nav-link">Contato</a>
+                </nav>
+            </div>
+            <!-- Ações desktop -->
+            <div class="hidden lgx:flex space-x-3 mr-7">
+                <a href="#" class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastro</a>
+                <a href="#" class="px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Entrar</a>
+            </div>
+            <!-- Botão mobile -->
+            <div class="lgx:hidden flex items-center">
+                <button id="menu-btn" class="focus:outline-none">
+                    <svg id="icon-open" class="w-7 h-7 text-gray-200 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg id="icon-close" class="w-7 h-7 text-gray-200 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="menu-hidden lgx:hidden mt-2 mx-4 glass rounded-3xl px-6 py-6 shadow-lg space-y-4 text-center">
+            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Início</a>
+            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Sobre Nós</a>
+            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Solução</a>
+            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Feedbacks</a>
+            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Contato</a>
+            <div class="pt-4 border-t border-white/10 space-y-3">
+                <a href="#" class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Log in</a>
+                <a href="#" class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Sign up</a>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    {% block content %}
+    <!-- Conteúdo das páginas -->
+    {% endblock %}
+
+    <script>
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('icon-open');
+        const iconClose = document.getElementById('icon-close');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('menu-hidden');
+            menu.classList.toggle('menu-show');
+            iconOpen.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

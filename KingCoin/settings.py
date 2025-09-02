@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #Arquivo de configurações gerais do projeto
+=======
+#é o arquivo de configurações gerais do projeto
+>>>>>>> 109d6de (adicionando a landing page)
 
 from pathlib import Path
 
@@ -105,8 +109,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'financas/static']
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
