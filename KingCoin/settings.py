@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#Arquivo de configurações gerais do projeto
-=======
 #é o arquivo de configurações gerais do projeto
->>>>>>> 109d6de (adicionando a landing page)
 
 from pathlib import Path
 

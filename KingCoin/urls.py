@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#Arquivo de rotas
-=======
 #arquivo de rotas do projeto
->>>>>>> 109d6de (adicionando a landing page)
 
 from django.contrib import admin
 from django.urls import path
