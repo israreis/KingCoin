@@ -1,11 +1,9 @@
-#arquivo de rotas do projeto
-
 from django.contrib import admin
-from django.urls import path, include   # <-- precisa importar include
-from financas.views import landing, CustomLoginView, CustomLogoutView
+from django.urls import path, include
+from financas.views import landing
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', landing, name='landing'),  
-    path("financas/", include("financas.urls")),  
+    path('financas/', include('financas.urls')),  
 ]
