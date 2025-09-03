@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,20 +12,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-          theme: {
-            extend: {
-              screens: { 'lgx': '1090px' }
+            theme: {
+                extend: {
+                    screens: { 'lgx': '1090px' }
+                }
             }
-          }
         }
     </script>
 
     <!-- Fonte Archivo -->
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% block extra_head %}{% endblock %}
 </head>
+
 <body class="bg-gradient-to-b from-black via-[#0e1a14] to-black text-gray-200">
 
     {% block navbar %}
@@ -33,12 +37,14 @@
         <div class="max-w-7xl mx-auto glass rounded-full px-6 py-3 shadow-lg flex items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center ml-7">
-                <img src="{% static 'img/kg_logo.svg' %}" alt="KingCoin" class="h-8 w-auto lgx:h-9">
+                <a href="{% url 'landing' %}">
+                    <img src="{% static 'img/kg_logo.svg' %}" alt="KingCoin" class="h-8 w-auto lgx:h-9">
+                </a>
             </div>
             <!-- Navbar desktop -->
             <div class="hidden lgx:flex justify-center">
                 <nav class="flex space-x-6 text-base font-medium">
-                    <a href="#" class="nav-link">Início</a>
+                    <a href="{% url 'landing' %}" class="nav-link">Início</a>
                     <a href="#" class="nav-link">Sobre Nós</a>
                     <a href="#" class="nav-link">Solução</a>
                     <a href="#" class="nav-link">Feedbacks</a>
@@ -47,30 +53,54 @@
             </div>
             <!-- Ações desktop -->
             <div class="hidden lgx:flex space-x-3 mr-7">
-                <a href="#" class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastro</a>
-                <a href="#" class="px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Entrar</a>
+                <a href="{% url 'register' %}"
+                    class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">
+                    Cadastrar
+                </a>
+                <a href="{% url 'login' %}"
+                    class="px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">
+                    Entrar
+                </a>
+
             </div>
             <!-- Botão mobile -->
             <div class="lgx:hidden flex items-center">
                 <button id="menu-btn" class="focus:outline-none">
-                    <svg id="icon-open" class="w-7 h-7 text-gray-200 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <svg id="icon-open" class="w-7 h-7 text-gray-200 block" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                    <svg id="icon-close" class="w-7 h-7 text-gray-200 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    <svg id="icon-close" class="w-7 h-7 text-gray-200 hidden" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="menu-hidden lgx:hidden mt-2 mx-4 glass rounded-3xl px-6 py-6 shadow-lg space-y-4 text-center">
-            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Início</a>
-            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Sobre Nós</a>
-            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Solução</a>
-            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Feedbacks</a>
-            <a href="#" class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Contato</a>
+        <div id="mobile-menu"
+            class="menu-hidden lgx:hidden mt-2 mx-4 glass rounded-3xl px-6 py-6 shadow-lg space-y-4 text-center">
+            <a href="#"
+                class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Início</a>
+            <a href="#"
+                class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Sobre
+                Nós</a>
+            <a href="#"
+                class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Solução</a>
+            <a href="#"
+                class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Feedbacks</a>
+            <a href="#"
+                class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Contato</a>
             <div class="pt-4 border-t border-white/10 space-y-3">
-                <a href="#" class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Log in</a>
-                <a href="#" class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Sign up</a>
+                <a href="{% url 'login' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">
+                    Entrar
+                </a>
+                <a href="{% url 'register' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">
+                    Cadastrar
+                </a>
             </div>
         </div>
     </header>
@@ -95,5 +125,64 @@
     </script>
 
     {% block extra_js %}{% endblock %}
+    
+{% block footer %}
+<footer class="mt-12 w-full glass py-10 text-gray-400">
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- Top columns -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <!-- Logo -->
+            <div class="flex flex-col space-y-2">
+                <img src="{% static 'img/kg_logo.svg' %}" alt="KingCoin" class="h-10 w-auto">
+            </div>
+            <!-- Coluna 1 -->
+            <div class="flex flex-col space-y-1">
+                <h4 class="font-semibold text-gray-200 mb-2">Serviços</h4>
+                <a href="#" class="hover:text-green-400 transition text-sm">Dashboard</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Relatórios</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Investimentos</a>
+            </div>
+            <!-- Coluna 2 -->
+            <div class="flex flex-col space-y-1">
+                <h4 class="font-semibold text-gray-200 mb-2">Suporte</h4>
+                <a href="#" class="hover:text-green-400 transition text-sm">FAQ</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Contato</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Enviar Ticket</a>
+            </div>
+            <!-- Coluna 3 -->
+            <div class="flex flex-col space-y-1">
+                <h4 class="font-semibold text-gray-200 mb-2">Empresa</h4>
+                <a href="#" class="hover:text-green-400 transition text-sm">Sobre Nós</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Política de Privacidade</a>
+                <a href="#" class="hover:text-green-400 transition text-sm">Termos de Uso</a>
+            </div>
+        </div>
+
+        <!-- Linha separadora -->
+        <hr class="border-white/20 mb-6">
+
+        <!-- Social & copyright -->
+        <div class="flex flex-col items-center justify-center space-y-4 sm:space-y-0">
+            <div class="flex space-x-4 mb-4">
+                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full bg-green-400 hover:bg-green-500 text-black transition text-lg">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full bg-green-400 hover:bg-green-500 text-black transition text-lg">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="flex items-center justify-center w-10 h-10 rounded-full bg-green-400 hover:bg-green-500 text-black transition text-lg">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="text-sm text-center">&copy; 2025 KingCoin. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+
+
+
 </body>
+
 </html>
