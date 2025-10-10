@@ -4,17 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kingcoin - Cadastre-se</title>
+
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- CSS personalizado -->
   <link rel="stylesheet" href="cadastro.css">
+
+  <!-- Fonte do Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body class="transition-colors duration-500 bg-[#000805] text-white flex items-center justify-center min-h-screen font-[Archivo] relative overflow-hidden" id="body">
 
-  <!-- Background -->
+  <!-- Background da página -->
   <div id="bg-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 -z-10"></div>
 
-  <!-- Botão de tema -->
+  <!-- Botão de alternar tema (claro/escuro) -->
   <div class="absolute top-6 right-8 flex items-center gap-2 z-20">
     <label class="relative inline-flex items-center cursor-pointer">
       <input type="checkbox" id="theme-toggle" class="sr-only peer">
@@ -22,48 +28,58 @@
     </label>
   </div>
 
-  <!-- Logo -->
+  <!-- Logo do site -->
   <div class="absolute top-8 left-10 z-20 flex items-center">
     <a href="index.html" class="block"> 
       <img id="logo-img" src="img/KingCoin Logo.svg" alt="Kingcoin" class="w-64 h-auto max-w-[160px] transition-all duration-500">
     </a>
   </div>
 
-  <!-- Card de Cadastro -->
+  <!-- Card de cadastro -->
   <div class="flex flex-col items-center justify-center w-full px-6 relative z-10">
     <div id="register-card" class="glass-dark w-full max-w-lg text-center shadow-xl animate-zoomIn">
+      <!-- Título -->
       <h2 class="text-4xl font-semibold mb-3 text-left">Cadastre-se</h2>
+
+      <!-- Descrição -->
       <p id="description-text" class="text-left text-gray-300 mb-8">
         Vamos organizar tudo. Faça <a href="login.html" class="text-[#23b785] font-medium">Login</a> 
         ou <a href="cadastro.html" class="text-[#23b785] font-medium">Cadastre-se</a> agora mesmo!
       </p>
 
+      <!-- Formulário de cadastro -->
       <form class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+        <!-- Nome completo -->
         <div class="md:col-span-2">
           <label for="name" class="block text-sm mb-1">Nome Completo</label>
           <input type="text" id="name" class="bg-transparent border-b border-gray-500 w-full py-2 focus:outline-none focus:border-[#23b785]" />
         </div>
 
+        <!-- E-mail -->
         <div>
           <label for="email" class="block text-sm mb-1">Seu Melhor E-mail</label>
           <input type="email" id="email" class="bg-transparent border-b border-gray-500 w-full py-2 focus:outline-none focus:border-[#23b785]" />
         </div>
 
+        <!-- Telefone -->
         <div>
           <label for="phone" class="block text-sm mb-1">Telefone</label>
           <input type="tel" id="phone" class="bg-transparent border-b border-gray-500 w-full py-2 focus:outline-none focus:border-[#23b785]" />
         </div>
 
+        <!-- Senha -->
         <div>
           <label for="password" class="block text-sm mb-1">Criar Senha</label>
           <input type="password" id="password" class="bg-transparent border-b border-gray-500 w-full py-2 focus:outline-none focus:border-[#23b785]" />
         </div>
 
+        <!-- Confirmar senha -->
         <div>
           <label for="confirm-password" class="block text-sm mb-1">Repetir Senha</label>
           <input type="password" id="confirm-password" class="bg-transparent border-b border-gray-500 w-full py-2 focus:outline-none focus:border-[#23b785]" />
         </div>
 
+        <!-- Botão e link para login -->
         <div class="md:col-span-2 flex flex-col items-center">
           <button type="submit" class="bg-[#23b785] text-[#000805] font-semibold py-3 rounded-full w-full hover:opacity-90 transition">Cadastrar-se</button>
           <p id="bottom-text" class="text-sm text-gray-300 text-center mt-3">
@@ -74,7 +90,7 @@
     </div>
   </div>
 
-  <!-- Script Tema -->
+  <!-- Script para alternar tema -->
   <script>
     const toggle = document.getElementById('theme-toggle');
     const body = document.getElementById('body');
@@ -89,8 +105,10 @@
     const LOGO_DARK = "img/KingCoin Logo.svg";
     const LOGO_LIGHT = "img/KingCoin-Logo-Light.svg";
 
+    // Função para aplicar o tema
     function applyTheme(isLight) {
       if (isLight) {
+        // Tema claro
         body.classList.remove('bg-[#000805]', 'text-white');
         body.classList.add('bg-[#fffcf0]', 'text-[#000805]');
         card.classList.remove('glass-dark');
@@ -102,6 +120,7 @@
         toggle.checked = true;
         localStorage.setItem('theme', 'light');
       } else {
+        // Tema escuro
         body.classList.remove('bg-[#fffcf0]', 'text-[#000805]');
         body.classList.add('bg-[#000805]', 'text-white');
         card.classList.remove('glass-light');
@@ -115,6 +134,7 @@
       }
     }
 
+    // Aplicar tema salvo no carregamento
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme') || 'dark';
       applyTheme(savedTheme === 'light');
@@ -122,6 +142,7 @@
       setTimeout(() => body.classList.add('transition-colors', 'duration-500'), 100);
     });
 
+    // Alternar tema ao clicar
     toggle.addEventListener('change', () => applyTheme(toggle.checked));
   </script>
 </body>
