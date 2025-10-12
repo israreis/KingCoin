@@ -58,11 +58,11 @@
 
         <!-- Botões -->
         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center mt-6 w-full sm:w-auto">
-            <a href="cadastro.html"
+            <a href="{% url 'register' %}"
                 class="heroFadeUp hero-delay-4 px-6 py-3 text-sm sm:text-lg font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition w-full max-w-xs mx-auto sm:max-w-none sm:w-auto text-center whitespace-nowrap">
                 Quero me organizar financeiramente
             </a>
-            <a href="login.html"
+            <a href="{% url 'login' %}"
                 class="heroFadeUp hero-delay-4 px-6 py-3 text-base sm:text-lg font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition w-full max-w-xs mx-auto sm:max-w-none sm:w-auto text-center">
                 Já tenho conta
             </a>

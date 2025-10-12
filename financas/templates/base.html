@@ -28,7 +28,7 @@
         
     {% block extra_head %}{% endblock %}
 </head>
-
+{% block body %}
 <body class="bg-[#000805]">
 
     {% block navbar %}
@@ -65,9 +65,9 @@
                     <span id="moon-icon" class="hidden">🌙</span>
                 </button>
 
-                <a href="cadastro.html"
+                <a href="{% url 'register' %}"
                     class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastro</a>
-                <a href="login.html"
+                <a href="{% url 'login' %}"
                     class="px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Entrar</a>
             </div>
 
@@ -182,5 +182,5 @@
     <script src="{% static 'js/script.js' %}"></script>
 
 </body>
-
+{% endblock %}
 </html>
