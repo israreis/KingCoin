@@ -7,7 +7,6 @@ from .forms import (
     CustomLoginForm,
     CustomUserCreationForm,
     CustomPasswordResetForm,
-    # import do form para redefinir senha
     CustomSetPasswordForm,
 )
 
@@ -47,3 +46,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "financas/password_reset_confirm.html"
     success_url = reverse_lazy("login")
     form_class = CustomSetPasswordForm
+
+
+
