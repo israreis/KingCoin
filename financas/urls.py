@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import (
+from .views import (  # <-- importando corretamente das views
     landing,
+    transacoes,
     CustomLoginView,
     CustomLogoutView,
     RegisterView,
@@ -11,18 +12,19 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # Página inicial
-    path("", landing, name="landing"),          
+    path("", landing, name="landing"),
+    path("transacoes/", transacoes, name="transacoes"),
 
     # Autenticação
-    path("login/", CustomLoginView.as_view(), name="login"),     
-    path("logout/", CustomLogoutView.as_view(), name="logout"),   
+    path("login/", CustomLoginView.as_view(), name="login"),
+    path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 
     # Recuperação de senha usando a view customizada
     path(
         "password-reset/",
         CustomPasswordResetView.as_view(),
-        name="password_reset"
+        name="password_reset",
     ),
 
     # Página de confirmação de envio do link
@@ -31,13 +33,13 @@ urlpatterns = [
         auth_views.PasswordResetDoneView.as_view(
             template_name="financas/password_reset_done.html"
         ),
-        name="password_reset_done"
+        name="password_reset_done",
     ),
 
     # Página de redefinição de senha via link usando view customizada
     path(
         "reset/<uidb64>/<token>/",
         CustomPasswordResetConfirmView.as_view(),
-        name="password_reset_confirm"
+        name="password_reset_confirm",
     ),
 ]

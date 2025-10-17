@@ -48,4 +48,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class = CustomSetPasswordForm
 
 
-
+# --- Tela de Transaçoes ---
+def transacoes(request):
+    return render(request, "financas/transacoes.html")

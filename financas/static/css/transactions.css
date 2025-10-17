@@ -1,0 +1,442 @@
+:root {
+    --bg-dark: #000805;
+    --bg-light: #fffcf0;
+    --glass-dark: rgba(255, 255, 255, 0.07);
+    --glass-light: rgba(0, 0, 0, 0.05);
+    --accent-green: #23b785;
+    --card-radius: 24px;
+}
+
+/* Global */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Archivo', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color .25s ease, color .25s ease;
+}
+
+/* Layout */
+.app {
+    display: flex;
+    min-height: 100vh;
+    gap: 60px;
+    padding: 32px;
+}
+
+/* Lateral Nav - ESTILO CORRIGIDO CONFORME IMAGEM */
+.sidenav {
+    width: 72px;
+    border-radius: 20px;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
+    height: calc(100vh - 64px);
+    border: 1px solid rgba(35, 183, 133, 0.20);
+}
+
+.sidenav .logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-bottom: 20px;
+    
+}
+
+/* Círculo verde para foto de perfil */
+.profile-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sidenav a,
+.sidenav button {
+    color: inherit;
+    opacity: .95;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.sidenav a:hover,
+.sidenav button:hover {
+    background-color: rgba(35, 183, 133, 0.1);
+    transform: scale(1.05);
+}
+
+/* Espaçamento conforme imagem */
+.nav-spacer {
+    flex: 1;
+}
+
+/* Menu Hamburger para Mobile */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    border: none;
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Main area */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+/* Título */
+.page-title {
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Cards superior - barra rolável no mobile */
+.top-cards {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.top-cards::-webkit-scrollbar {
+    height: 8px;
+}
+
+.top-cards::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+}
+
+.card {
+    min-width: 260px;
+    max-width: 330px;
+    border-radius: var(--card-radius);
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: transform .18s ease, box-shadow .18s ease;
+    background-clip: padding-box;
+    flex-shrink: 0;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Glass sheen */
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.006) 40%, rgba(0, 0, 0, 0.08) 100%);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+.card .badge {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.card h3 {
+    font-weight: 700;
+    font-size: 20px;
+    margin: 8px 0;
+    color: inherit;
+}
+
+/* Big transactions panel - LARGURA AJUSTADA */
+.panel {
+    margin-top: 10px;
+    border-radius: 34px;
+    padding: 26px;
+    background-clip: padding-box;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+    /* LARGURA LIMITADA PARA ALINHAR COM ÚLTIMO CARD */
+    max-width: calc(260px * 4 + 20px * 3);
+    /* 4 cards + 3 gaps */
+    width: 100%;
+}
+
+.panel .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: inherit;
+}
+
+/* Transaction rows - LAYOUT CORRIGIDO */
+.tx-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.tx-row .left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex: 1;
+}
+
+.tx-row .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.tx-row .tx-info {
+    flex: 1;
+}
+
+.tx-amount {
+    font-weight: 700;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.tx-amount.plus {
+    color: #23b785;
+}
+
+.tx-amount.minus {
+    color: #ff2b2b;
+}
+
+/* Thin horizontal divider - ÚNICA LINHA ENTRE DIAS */
+.thin-hr {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    margin: 18px 0;
+    border-radius: 2px;
+}
+
+/* Theme specific utilities applied by JS */
+.theme-dark {
+    background: var(--bg-dark);
+    color: #cfd8d8;
+}
+
+.theme-dark .sidenav {
+    background: var(--glass-dark);
+    color: #e6efe9;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.theme-dark .card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+    color: #e9f0ec;
+    border-color: rgba(255, 255, 255, 0.03);
+}
+
+.theme-dark .panel {
+    background: rgba(255, 255, 255, 0.015);
+    color: #d7dedc;
+    border-color: rgba(255, 255, 255, 0.03);
+}
+
+.theme-light {
+    background: var(--bg-light);
+    color: #13201b;
+}
+
+.theme-light .sidenav {
+    background: var(--glass-light);
+    color: #0b1a15;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.theme-light .card {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.01));
+    color: #07120f;
+    border-color: rgba(0, 0, 0, 0.04);
+}
+
+.theme-light .panel {
+    background: rgba(0, 0, 0, 0.01);
+    color: #07120f;
+    border-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Specific gradients for cards (to match image) */
+.g-blue {
+    background: linear-gradient(135deg, #0b1d2b 0%, #172a3a 100%);
+    border: 1px solid rgba(16, 37, 60, 0.25);
+}
+
+.g-purple {
+    background: linear-gradient(135deg, #2a0f24 0%, #3a2040 100%);
+    border: 1px solid rgba(60, 28, 60, 0.25);
+}
+
+.g-green {
+    background: linear-gradient(135deg, #083423 0%, #0b5a38 100%);
+    border: 1px solid rgba(4, 80, 45, 0.28);
+}
+
+.g-navy {
+    background: linear-gradient(135deg, #0b1a27 0%, #0c2130 100%);
+    border: 1px solid rgba(12, 28, 42, 0.28);
+}
+
+/* RESPONSIVIDADE */
+@media (min-width: 1024px) {
+    .page-title {
+        font-size: 64px;
+    }
+
+    .top-cards {
+        overflow: visible;
+    }
+}
+
+@media (max-width: 768px) {
+    .app {
+        padding: 18px;
+        gap: 12px;
+        flex-direction: column;
+    }
+
+    /* Navbar lateral oculta em mobile */
+    .sidenav {
+        display: none;
+    }
+
+    /* Menu hamburger visível em mobile */
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    /* Navbar mobile quando aberta */
+    .sidenav.mobile-open {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 72px;
+        z-index: 999;
+        background: var(--glass-dark);
+        border-radius: 0 20px 20px 0;
+    }
+
+    .page-title {
+        font-size: 34px;
+        margin-top: 6px;
+        text-align: left;
+        margin-left: 60px;
+        /* Espaço para o botão hamburger */
+    }
+
+    .panel {
+        border-radius: 20px;
+        padding: 18px;
+        max-width: 100%;
+        /* Em mobile ocupa toda largura */
+    }
+
+    .card {
+        min-width: 240px;
+        max-width: 260px;
+    }
+
+    /* Transações empilhadas verticalmente */
+    .tx-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .tx-row .left {
+        width: 100%;
+    }
+
+    .tx-amount {
+        margin-left: 0;
+        align-self: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .app {
+        padding: 12px;
+    }
+
+    .page-title {
+        font-size: 28px;
+        margin-left: 50px;
+    }
+
+    .card {
+        min-width: 220px;
+        max-width: 240px;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .mobile-menu-btn {
+        top: 12px;
+        left: 12px;
+        width: 40px;
+        height: 40px;
+    }
+}
