@@ -46,8 +46,10 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "financas/password_reset_confirm.html"
     success_url = reverse_lazy("login")
     form_class = CustomSetPasswordForm
-
-
+  
 # --- Tela de Transaçoes ---
 def transacoes(request):
     return render(request, "financas/transacoes.html")
+
+def minha_carteira_view(request):
+    return render(request, "financas/carteira.html") 

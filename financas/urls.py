@@ -6,13 +6,17 @@ from .views import (  # <-- importando corretamente das views
     CustomLogoutView,
     RegisterView,
     CustomPasswordResetView,
-    CustomPasswordResetConfirmView,  # view customizada para redefinir senha
+    CustomPasswordResetConfirmView,
+    minha_carteira_view
 )
 from django.contrib.auth import views as auth_views
+
+# A linha 'app_name = "financas"' foi removida daqui.
 
 urlpatterns = [
     # Página inicial
     path("", landing, name="landing"),
+
     path("transacoes/", transacoes, name="transacoes"),
 
     # Autenticação
@@ -20,14 +24,14 @@ urlpatterns = [
     path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("register/", RegisterView.as_view(), name="register"),
 
-    # Recuperação de senha usando a view customizada
+    # Recuperação de senha
     path(
         "password-reset/",
         CustomPasswordResetView.as_view(),
         name="password_reset",
     ),
 
-    # Página de confirmação de envio do link
+    # Confirmação de envio do link
     path(
         "password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(
@@ -36,10 +40,13 @@ urlpatterns = [
         name="password_reset_done",
     ),
 
-    # Página de redefinição de senha via link usando view customizada
+    # Redefinição de senha via link
     path(
         "reset/<uidb64>/<token>/",
         CustomPasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
+
+    # Nova URL da Carteira
+    path('minha-carteira/', minha_carteira_view, name='minha-carteira'),
 ]
