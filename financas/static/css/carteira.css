@@ -1,11 +1,11 @@
 /* --- Efeito Hover dos Cards --- */
 /* Define uma transição suave para os cards */
-.card {
+#Cardsaldo{
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 /* Quando passa o mouse, o card "levanta" e ganha uma sombra mais forte */
-.card:hover {
+#Cardsaldo:hover{
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
