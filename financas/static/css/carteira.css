@@ -1,0 +1,39 @@
+/* --- Efeito Hover dos Cards --- */
+/* Define uma transição suave para os cards */
+.card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Quando passa o mouse, o card "levanta" e ganha uma sombra mais forte */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Animação de entrada (descendo + fade) --- */
+@keyframes slideFadeIn {
+  0% {
+    /* Começa transparente e 20px acima */
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  100% {
+    /* Termina opaco e na posição original */
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Classe que aplica a animação */
+.animate-slide-fade {
+  opacity: 0; /* Começa transparente */
+  animation: slideFadeIn 0.6s ease-out forwards; /* Executa a animação */
+}
+
+/* --- Delays para efeito em cascata --- */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }

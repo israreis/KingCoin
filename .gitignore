@@ -1,0 +1,29 @@
+# Ambiente virtual
+venv/
+ENV/
+env/
+
+# Arquivos compilados
+*.pyc
+__pycache__/
+
+# Banco de dados SQLite
+db.sqlite3
+
+# Configurações locais
+*.env
+*.local
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Django migrations
+*/migrations/*.pyc
+*/migrations/__pycache__/
