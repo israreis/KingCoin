@@ -1,18 +1,260 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}KingCoin - Landing{% endblock %}
+
+{% block title %}KingCoin - Inicio{% endblock %}
 
 {% block content %}
-<section class="flex flex-col items-center justify-center h-[90vh] text-center px-4 space-y-6">
-    <h1 class="fadeSlide delay-1 text-4xl lgx:text-6xl font-normal leading-snug text-gray-300">
-        Nós somos o futuro da <span class="text-gray-100"><br>organização</span>
-        financeira <span class="text-gray-100">pessoal</span>
-    </h1>
-    <p class="fadeSlide delay-2 text-lg lgx:text-xl text-gray-400 max-w-2xl">
-        O jeito mais moderno e seguro de controlar suas finanças pessoais chegou. Cadastre-se e comece a se organizar financeiramente hoje mesmo!
-    </p>
-    <a href="{% url 'register' %}" class="fadeSlide delay-3 mt-4 px-6 py-3 text-lg font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">
-        Quero me organizar financeiramente
-    </a>
+
+<!-- Hero Section -->
+<section id="hero"
+    class="relative flex flex-col items-center justify-center h-[90vh] text-center px-4 space-y-6 overflow-hidden">
+
+    <!-- Container do vídeo -->
+    <div class="absolute inset-0 w-full h-full">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+            <source src="{% static 'videos/Criação_de_Vídeo_de_Organização_Financeira.mp4' %}">
+            Seu navegador não suporta vídeos em HTML5.
+        </video>
+        <div class="absolute inset-0 bg-[#000805]/70 pointer-events-none"></div>
+        <div class="absolute inset-0 pointer-events-none hidden xl:block"
+            style="background-image: linear-gradient(to right, #000805 0%, transparent 50%, #000805 100%);"></div>
+        <div class="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
+            style="background-image: linear-gradient(to top, #000805 0%, transparent 100%);"></div>
+    </div>
+    <!-- Conteúdo por cima -->
+    <div class="relative flex flex-col items-center justify-center z-20 px-6 mt-12">
+
+        <!-- Avatares + texto -->
+        <div class="heroFadeUp hero-delay-1 flex items-center space-x-3 mb-6">
+            <div class="flex -space-x-3">
+                <img src="{% static 'img/João.png' %}" alt="Usuário 1"
+                    class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2">
+                <img src="{% static 'img/Murilo.jpg' %}" alt="Usuário 2"
+                    class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2">
+                <img src="{% static 'img/Israel.jpg' %}" alt="Usuário 3"
+                    class="w-8 h-8 md:w-10 md:h-10 rounded-full border-2">
+            </div>
+            <p class="flex items-center text-xs sm:text-sm md:text-base text-gray-200 whitespace-nowrap">
+                +300 pessoas já utilizam o
+                <img src="{% static 'img/KingCoinLogo.svg' %}" alt="KingCoin" class="h-4 sm:h-5 md:h-6 ml-2 logo-hover">
+            </p>
+        </div>
+
+        <!-- Título -->
+        <h1
+            class="heroFadeUp hero-delay-2 text-3xl sm:text-5xl md:text-6xl font-normal leading-snug gradient-text text-white max-w-4xl mx-auto">
+            Nós somos o futuro<br class="block sm:hidden" />
+            da organização<br class="block sm:hidden" />
+            financeira pessoal
+        </h1>
+
+        <!-- Texto -->
+        <p
+            class="heroFadeUp hero-delay-3 text-base sm:text-lg md:text-xl text-gray-400 max-w-md sm:max-w-2xl mt-4 leading-relaxed">
+            O jeito mais moderno e seguro de controlar suas finanças pessoais chegou.
+            Cadastre-se e comece a se organizar financeiramente hoje mesmo!
+        </p>
+
+        <!-- Botões -->
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center mt-6 w-full sm:w-auto">
+            <a href="{% url 'register' %}"
+                class="heroFadeUp hero-delay-4 px-6 py-3 text-sm sm:text-lg font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition w-full max-w-xs mx-auto sm:max-w-none sm:w-auto text-center whitespace-nowrap">
+                Quero me organizar financeiramente
+            </a>
+            <a href="{% url 'login' %}"
+                class="heroFadeUp hero-delay-4 px-6 py-3 text-base sm:text-lg font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition w-full max-w-xs mx-auto sm:max-w-none sm:w-auto text-center">
+                Já tenho conta
+            </a>
+        </div>
+    </div>
+</section>
+
+
+<!-- Sobre Nos Section -->
+<section id="sobre-nos" class="min-h-screen py-16 px-4 flex items-center justify-center">
+    <div
+        class="scrollFade max-w-7xl w-full flex flex-col lgx:flex-row items-center justify-center space-y-12 lgx:space-y-0 lgx:space-x-12">
+
+        <!-- Texto (centralizado no container, mas alinhado à esquerda) -->
+        <div class="flex-1 w-full lgx:w-1/2 flex flex-col items-center lgx:items-start text-left space-y-6">
+
+            <!-- Novo título pequeno -->
+            <p class="mini-title mb-2">Quem somos?</p>
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lgx:text-6xl font-normal gradient-text text-left">
+                Descubra um pouco mais sobre o KingCoin
+            </h2>
+
+            <p class="text-base sm:text-lg md:text-xl text-gray-400 max-w-md mx-auto lgx:mx-0 lgx:max-w-none text-left">
+                Somos o futuro da gestão de finanças pessoais. Nascemos da vontade de inovar e proporcionar o melhor
+                software de organização financeira para você, valorizando conceitos como a simplicidade, objetividade e
+                a direção. Nossa missão é simples: oferecer uma ferramenta direta e eficiente que elimine a fricção
+                entre você e sua organização financeira. Acreditamos que o tempo é valioso e a energia deve ser
+                direcionada para o que realmente importa. Com a nossa solução, você não perde mais tempo com
+                configurações complexas, planilhas infinitas ou menus escondidos. Tudo está ao seu alcance, de forma
+                intuitiva e fácil. Comece a gerenciar suas finanças de uma forma que realmente faz sentido. Com nosso
+                software, o futuro da sua organização financeira começa agora.
+            </p>
+
+            <a href="#"
+                class="mt-4 px-6 py-3 text-sm sm:text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition mx-auto lgx:mx-0">
+                Me organizar financeiramente
+            </a>
+        </div>
+
+        <!-- Imagem (centro em mobile, à direita em lgx+) -->
+        <div class="flex-1 w-full lgx:w-1/2 p-4 lgx:p-0 flex justify-center lgx:justify-end">
+            <img src="{% static 'img/Ilustração_flat.png' %}"
+                alt="Representação visual do nosso software de organização financeira"
+                class="w-full max-w-lg lgx:max-w-none aspect-[1/1.1] sm:aspect-[1.1/1.2] lgx:aspect-[1/1.15] object-cover rounded-[50px]" />
+        </div>
+    </div>
+</section>
+
+
+<!-- Funcionalidades Section -->
+<section id="solucao" class="py-20 px-6 section-bg relative">
+    <div class="max-w-7xl mx-auto scrollFade text-center">
+
+        <!-- Novo título pequeno -->
+        <p class="mini-title mb-6">Descubra o que oferecemos</p>
+
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-normal gradient-text mb-12">
+            Solução simples, rápida e intuitiva. Perfeita para você!
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Card -->
+            <div
+                class="glass-card p-6 rounded-2xl flex flex-col items-start hover:border-green-400 transition scrollFade">
+                <div class="icon-wrapper mb-4">
+                    <img src="{% static 'img/attach_money_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24 (1).svg' %}"
+                        alt="Gestão de receitas" class="w-6 h-6">
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Gestão de receitas</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Controle todas as entradas financeiras de forma simples e rápida.
+                </p>
+                <a href="#" class="learn-more">Saber mais →</a>
+            </div>
+
+            <!-- Card -->
+            <div
+                class="glass-card p-6 rounded-2xl flex flex-col items-start hover:border-green-400 transition scrollFade">
+                <div class="icon-wrapper mb-4">
+                    <img src="{% static 'img/wallet_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+                        alt="Gestão de despesas" class="w-6 h-6">
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Gestão de despesas</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Acompanhe seus gastos e saiba exatamente para onde vai seu dinheiro.
+                </p>
+                <a href="#" class="learn-more">Saber mais →</a>
+            </div>
+
+            <!-- Card -->
+            <div
+                class="glass-card p-6 rounded-2xl flex flex-col items-start hover:border-green-400 transition scrollFade">
+                <div class="icon-wrapper mb-4">
+                    <img src="{% static 'img/timeline_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+                        alt="Visualização com gráficos" class="w-6 h-6">
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Visualização com gráficos</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Tenha insights claros e objetivos através de gráficos interativos.
+                </p>
+                <a href="#" class="learn-more">Saber mais →</a>
+            </div>
+
+            <!-- Card -->
+            <div
+                class="glass-card p-6 rounded-2xl flex flex-col items-start hover:border-green-400 transition scrollFade">
+                <div class="icon-wrapper mb-4">
+                    <img src="{% static 'img/query_stats_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+                        alt="Relatórios precisos" class="w-6 h-6">
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Relatórios precisos</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Receba relatórios detalhados que ajudam a tomar decisões financeiras.
+                </p>
+                <a href="#" class="learn-more">Saber mais →</a>
+            </div>
+
+            <!-- Card -->
+            <div
+                class="glass-card p-6 rounded-2xl flex flex-col items-start hover:border-green-400 transition scrollFade">
+                <div class="icon-wrapper mb-4">
+                    <img src="{% static 'img/desktop_windows_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg' %}"
+                        alt="Interface simples" class="w-6 h-6">
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Interface simples</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Design minimalista e intuitivo que facilita seu dia a dia.
+                </p>
+                <a href="#" class="learn-more">Saber mais →</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Feedbacks Section -->
+<section id="feedbacks" class="py-20 px-6 section-bg relative">
+    <div class="max-w-7xl mx-auto text-center scrollFade">
+        <!-- Novo título pequeno -->
+        <p class="mini-title mb-6">FEEDBACKS</p>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-normal gradient-text mb-12">
+            O que nossos usuários <br> dizem sobre a nossa solução?
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Card Feedback -->
+            <div class="feedback-card scrollFade">
+                <p class="text-gray-300 mb-4 italic">
+                    “O Kingcoin mudou a forma como organizo minhas finanças. Hoje tenho total controle das minhas
+                    receitas e despesas!”
+                </p>
+                <div class="flex items-center mt-auto">
+                    <img src="https://i.pravatar.cc/50?img=1" alt="Usuário" class="w-12 h-12 rounded-full">
+                    <div class="ml-4">
+                        <h4 class="text-gray-200 font-semibold">Ana Oliveira</h4>
+                        <span class="text-gray-400 text-sm">Empresária</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Feedback -->
+            <div class="feedback-card scrollFade">
+                <p class="text-gray-300 mb-4 italic">
+                    “Os gráficos são intuitivos e me ajudam a visualizar meus gastos de forma clara. Super recomendo!”
+                </p>
+                <div class="flex items-center mt-auto">
+                    <img src="https://i.pravatar.cc/50?img=2" alt="Usuário" class="w-12 h-12 rounded-full">
+                    <div class="ml-4">
+                        <h4 class="text-gray-200 font-semibold">Carlos Mendes</h4>
+                        <span class="text-gray-400 text-sm">Designer</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Feedback -->
+            <div class="feedback-card scrollFade">
+                <p class="text-gray-300 mb-4 italic">
+                    “Relatórios precisos e uma interface simples. Tudo que eu precisava para organizar minhas finanças
+                    pessoais.”
+                </p>
+                <div class="flex items-center mt-auto">
+                    <img src="https://i.pravatar.cc/50?img=3" alt="Usuário" class="w-12 h-12 rounded-full">
+                    <div class="ml-4">
+                        <h4 class="text-gray-200 font-semibold">Juliana Costa</h4>
+                        <span class="text-gray-400 text-sm">Estudante</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </section>
 {% endblock %}

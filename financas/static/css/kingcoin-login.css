@@ -20,9 +20,9 @@
   border-radius: 64px;
 }
 
-/* ============================= */
+
 /* 📱 Responsividade para Mobile */
-/* ============================= */
+
 @media (max-width: 468px) {
   #login-card {
     padding: 2.5rem ;        /* reduz o espaço interno */

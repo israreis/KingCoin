@@ -1,43 +1,127 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}KingCoin - Login{% endblock %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
 
-{% block content %}
-<section class="flex items-center justify-center min-h-[100dvh] px-4 pt-20">
-    <div class="glass fadeSlide delay-1 rounded-2xl shadow-xl w-full max-w-md p-8 space-y-6">
-        <h2 class="text-3xl font-semibold text-center text-gray-100">Entrar</h2>
-        <p class="text-center text-gray-400 text-sm">
-            Acesse sua conta e continue sua organização financeira
-        </p>
+{% block title %}Kingcoin - Entrar{% endblock %}
 
-        <form method="post" class="space-y-5">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
+{% block body %}
+<body class="transition-colors duration-500 bg-[#000805] text-white flex items-center justify-center min-h-screen font-[Archivo] relative overflow-hidden" id="body">
 
-            <div>
-                {{ form.username.errors }}
-                {{ form.username }}
-            </div>
+  <!-- Imagem de Background -->
+  <div id="bg-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 -z-10" style="background-image: url('{% static 'img/background-escuro.png' %}')"></div>
 
-            <div>
-                {{ form.password.errors }}
-                {{ form.password }}
-            </div>
+  <!-- Botão de tema -->
+  <div class="absolute top-6 right-8 flex items-center gap-2 z-20">
+    <label class="relative inline-flex items-center cursor-pointer">
+      <input type="checkbox" id="theme-toggle" class="sr-only peer">
+      <div class="w-12 h-6 bg-gray-400 rounded-full peer peer-checked:after:translate-x-6 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#23b785] after:h-5 after:w-5 after:rounded-full after:transition-all peer-checked:bg-[#23b785]/30"></div>
+    </label>
+  </div>
 
-            <button type="submit"
-                class="w-full mt-2 px-6 py-3 text-lg font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">
-                Entrar
-            </button>
-        </form>
+  <!-- Logo -->
+  <div class="absolute top-8 left-10 z-20 flex items-center">
+    <a href="{% url 'landing' %}" class="block"> 
+      <img id="logo-img" src="{% static 'img/KingCoinLogo.svg'%}" alt="Kingcoin" class="w-64 h-auto max-w-[160px] transition-all duration-500">
+    </a>
+  </div>
 
-        <div class="flex justify-between text-sm mt-2">
-            <a href="{% url 'password_reset' %}" class="text-green-400 hover:text-green-300 font-medium">
-                Esqueceu a senha?
-            </a>
-            <a href="{% url 'register' %}" class="text-green-400 hover:text-green-300 font-medium">
-                Cadastre-se
-            </a>
+  <!-- Conteúdo -->
+  <div class="flex flex-col items-center justify-center w-full px-6 relative z-10">
+    <!-- Card Login -->
+    <div id="login-card" class="glass-dark w-full max-w-md text-center shadow-xl animate-zoomIn">
+      <h2 class="text-4xl font-semibold mb-3 text-left">Entrar</h2>
+      <p id="description-text" class="text-left text-gray-300 mb-8">
+        Vamos organizar tudo. Faça <a href="{% url 'login' %}" class="text-[#23b785] font-medium">Login</a> ou 
+        <a href="{% url 'register' %}" class="text-[#23b785] font-medium">Cadastre-se</a> agora mesmo!
+      </p>
+      
+      <form method="post" class="flex flex-col gap-6 text-left">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div>
+          <label for="{{ form.username.id_for_label }}" class="block text-sm mb-1">{{ form.username.label }}</label>
+          {{ form.username }}
+          {{ form.username.errors }}
         </div>
+
+        <div>
+          <label for="{{ form.password.id_for_label }}" class="block text-sm mb-1">{{ form.password.label }}</label>
+          {{ form.password }}
+          {{ form.password.errors }}
+        </div>
+
+        <div class="text-right">
+          <a href="{% url 'password_reset' %}" class="text-[#23b785] text-sm font-medium">Esqueci Minha Senha</a>
+        </div>
+
+        <button type="submit" class="bg-[#23b785] text-[#000805] font-semibold py-3 rounded-full hover:opacity-90 transition">Entrar</button>
+
+        <p id="bottom-text" class="text-sm text-gray-300 text-center mt-2">
+          Não tem uma conta? <a href="{% url 'register' %}" class="text-[#23b785] font-medium">Cadastre-se</a>
+        </p>
+      </form>
     </div>
-</section>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const body = document.getElementById('body');
+    const card = document.getElementById('login-card');
+    const descText = document.getElementById('description-text');
+    const bottomText = document.getElementById('bottom-text');
+    const bgImage = document.getElementById('bg-image');
+    const logoImg = document.getElementById('logo-img');
+    
+    // Caminhos das imagens
+    const BG_DARK = "url('{% static 'img/background-escuro.png' %}')";
+    const BG_LIGHT = "url('{% static 'img/background-claro.png' %}')";
+    const LOGO_DARK = "{% static 'img/KingCoinLogo.svg' %}";
+    const LOGO_LIGHT = "{% static 'img/KingCoin-Logo-Light.svg' %}";
+
+    function applyTheme(isLight) {
+        if (isLight) {
+            // Tema CLARO
+            body.classList.remove('bg-[#000805]', 'text-white');
+            body.classList.add('bg-[#fffcf0]', 'text-[#000805]');
+            card.classList.remove('glass-dark');
+            card.classList.add('glass-light');
+            descText.classList.replace('text-gray-300', 'text-[#4b4b4b]');
+            bottomText.classList.replace('text-gray-300', 'text-[#4b4b4b]');
+            bgImage.style.backgroundImage = BG_LIGHT;
+            logoImg.src = LOGO_LIGHT;
+            toggle.checked = true;
+            localStorage.setItem('theme', 'light');
+        } else {
+            // Tema ESCURO
+            body.classList.remove('bg-[#fffcf0]', 'text-[#000805]');
+            body.classList.add('bg-[#000805]', 'text-white');
+            card.classList.remove('glass-light');
+            card.classList.add('glass-dark');
+            descText.classList.replace('text-[#4b4b4b]', 'text-gray-300');
+            bottomText.classList.replace('text-[#4b4b4b]', 'text-gray-300');
+            bgImage.style.backgroundImage = BG_DARK;
+            logoImg.src = LOGO_DARK;
+            toggle.checked = false;
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    // Aplica o tema salvo
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme === 'light');
+        body.classList.remove('transition-colors', 'duration-500');
+        setTimeout(() => {
+            body.classList.add('transition-colors', 'duration-500');
+        }, 100);
+    });
+
+    toggle.addEventListener('change', () => {
+        applyTheme(toggle.checked);
+    });
+  </script>
+</body>
 {% endblock %}
