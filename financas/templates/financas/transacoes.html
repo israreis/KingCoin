@@ -1,266 +1,435 @@
-{% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Minhas Transações{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGCOIN - Webapp</title>
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+</head>
+<body class="dark-mode"> <!-- Iniciar no tema escuro -->
+    
+    <div id="app-container">
+        
+        <aside id="sidebar" class="sidebar"> 
 
-{% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
-{% endblock %}
-
-{% block navbar %}{% endblock %}
-{% block footer %}{% endblock %}
-
-{% block content %}
-
-<section class="theme-dark">
-
-    <!-- Botão Menu Hamburger para Mobile -->
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu">
-        <i class="fa-solid fa-bars"></i>
-    </button>
-
-    <div class="app">
-
-        <!-- MAIN -->
-        <main class="py-10 main">
-            <!-- Cabeçalho / título -->
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between">
-                <div>
-                    <h1 class="page-title">Transações</h1>
+            <div class="sidebar-header desktop-only"> 
+                <div class="logo-container">
+                    <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                    <span class="logo-text">KINGCOIN</span>
                 </div>
+                
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i> <!-- Ícone de lua para tema escuro -->
+                </button>
             </div>
 
-            <!-- CARDS SUPERIORES - SCROLL HORIZONTAL EM MOBILE -->
-            <div class="top-cards" role="list" aria-label="Destaques financeiros">
-                <!-- Card 1 -->
-                <article class="card g-blue">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <div class="text-sm text-gray-300">Maior despesa <span
-                                    class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                            <h3 style="color:#e9f0ec"> <i class="fa-solid fa-circle-plus"
-                                    style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
-                            <div style="margin-top:6px; font-size:13px; color:#ff6b6b"><i
-                                    class="fa-solid fa-arrow-trend-down" style="margin-right:8px"></i>14% <span
-                                    style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
+            <nav class="sidebar-nav primary-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="#"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span class="nav-text">Carteira</span></a>
+                    </li>
+                    
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
                         </div>
-                    </div>
-                </article>
+                    </li>
 
-                <!-- Card 2 -->
-                <article class="card g-purple">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <div class="text-sm text-gray-300">Menor despesa <span
-                                    class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                            <h3 style="color:#f2e8ff"> <i class="fa-solid fa-face-laugh-beam"
-                                    style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
-                            <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                    class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                    style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                        </div>
-                    </div>
-                </article>
+                    <li class="nav-item">
+                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span class="nav-text">Transações</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
+                    </li>
+                </ul>
+            </nav>
 
-                <!-- Card 3 -->
-                <article class="card g-green">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <div class="text-sm text-gray-300">Maior entrada <span
-                                    class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                            <h3 style="color:#e8fff2"> <i class="fa-solid fa-dollar-sign"
-                                    style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
-                            <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                    class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                    style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                        </div>
+            <div class="sidebar-footer">
+                
+                <div class="user-profile">
+                    <div class="user-avatar"></div> 
+                    <div class="user-info">
+                        <span class="user-name">Israel Reis</span>
+                        <span class="user-email">israelreis2424@gmail.com</span>
                     </div>
-                </article>
+                </div>
+                
+                <nav class="sidebar-nav footer-nav-links">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
+                        </li>
+                        <li class="nav-item logout-item">
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                        </li>
+                    </ul>
+                </nav>
 
-                <!-- Card 4 -->
-                <article class="card g-navy">
-                    <div class="flex items-start justify-between">
-                        <div>
-                            <div class="text-sm text-gray-300">Maior invest. <span
-                                    class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                            <h3 style="color:#f5f8fb"> <i class="fa-solid fa-coins"
-                                    style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
-                            <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                    class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                    style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                        </div>
-                    </div>
-                </article>
             </div>
+        </aside>
 
-            <!-- Painel de histórico de transações - EMPILHADO VERTICALMENTE EM MOBILE -->
-            <section class="panel">
-                <div class="p-10">
-                    <div class="section-title">Hoje</div>
-
-                    <!-- Transação 1 -->
-                    <div class="tx-row">
-                        <div class="left">
-                            <div class="icon" style="background:#1f6fe0">
-                                <i class="fa-solid fa-hospital-user"></i>
-                            </div>
-                            <div class="tx-info">
-                                <div style="font-weight:600">Saúde - Remédios na farmácia</div>
-                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Categoria •
-                                    Subcategoria</div>
-                            </div>
+        <main id="main-content">
+            <div class="content-wrapper">
+                <div class="content-section">
+                    <!-- Cabeçalho / título -->
+                    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-6">
+                        <div>
+                            <h1 class="page-title">Transações</h1>
                         </div>
-                        <div class="tx-amount minus">- R$97,00</div>
                     </div>
 
-                    <!-- Transação 2 -->
-                    <div class="tx-row">
-                        <div class="left">
-                            <div class="icon" style="background:#f08fe3">
-                                <i class="fa-solid fa-face-laugh-beam"></i>
-                            </div>
-                            <div class="tx-info">
-                                <div style="font-weight:600">Diversão - Rolê com os amigos</div>
-                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Categoria •
-                                    Subcategoria</div>
-                            </div>
-                        </div>
-                        <div class="tx-amount minus">- R$148,90</div>
-                    </div>
-
-                    <!-- LINHA DIVISÓRIA ÚNICA - SEPARA HOJE DE ONTEM -->
-                    <div class="thin-hr"></div>
-
-                    <div class="section-title">Ontem</div>
-
-                    <!-- Transação 3 -->
-                    <div class="tx-row">
-                        <div class="left">
-                            <div class="icon" style="background:#b53b3b">
-                                <i class="fa-solid fa-file-invoice-dollar"></i>
-                            </div>
-                            <div class="tx-info">
-                                <div style="font-weight:600">Contas - Conta de Luz e Água</div>
-                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Fixo • Mensal
+                    <!-- CARDS SUPERIORES - SCROLL HORIZONTAL EM MOBILE -->
+                    <div class="top-cards" role="list" aria-label="Destaques financeiros">
+                        <!-- Card 1 -->
+                        <article class="card g-blue">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="text-sm text-gray-300">Maior despesa <span
+                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
+                                    <h3 style="color:#e9f0ec"> <i class="fa-solid fa-circle-plus"
+                                            style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
+                                    <div style="margin-top:6px; font-size:13px; color:#ff6b6b"><i
+                                            class="fa-solid fa-arrow-trend-down" style="margin-right:8px"></i>14% <span
+                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="tx-amount minus">- R$427,90</div>
+                        </article>
+
+                        <!-- Card 2 -->
+                        <article class="card g-purple">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="text-sm text-gray-300">Menor despesa <span
+                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
+                                    <h3 style="color:#f2e8ff"> <i class="fa-solid fa-face-laugh-beam"
+                                            style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
+                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
+                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 3 -->
+                        <article class="card g-green">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="text-sm text-gray-300">Maior entrada <span
+                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
+                                    <h3 style="color:#e8fff2"> <i class="fa-solid fa-dollar-sign"
+                                            style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
+                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
+                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Card 4 -->
+                        <article class="card g-navy">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <div class="text-sm text-gray-300">Maior invest. <span
+                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
+                                    <h3 style="color:#f5f8fb"> <i class="fa-solid fa-coins"
+                                            style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
+                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
+                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
 
-                    <!-- Transação 4 -->
-                    <div class="tx-row">
-                        <div class="left">
-                            <div class="icon" style="background:#1f6fe0">
-                                <i class="fa-solid fa-dollar-sign"></i>
+                    <!-- Painel de histórico de transações -->
+                    <section class="panel mt-8">
+                        <div class="p-6 md:p-10">
+                            <div class="section-title">Hoje</div>
+
+                            <!-- Transação 1 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#1f6fe0">
+                                        <i class="fa-solid fa-hospital-user"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Saúde - Remédios na farmácia</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Categoria • Subcategoria</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount minus">- R$97,00</div>
                             </div>
-                            <div class="tx-info">
-                                <div style="font-weight:600">Salário</div>
-                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Recebimento •
-                                    Emprego</div>
+
+                            <!-- Transação 2 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#f08fe3">
+                                        <i class="fa-solid fa-face-laugh-beam"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Diversão - Rolê com os amigos</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Categoria • Subcategoria</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount minus">- R$148,90</div>
+                            </div>
+
+                            <!-- LINHA DIVISÓRIA ÚNICA - SEPARA HOJE DE ONTEM -->
+                            <div class="thin-hr"></div>
+
+                            <div class="section-title">Ontem</div>
+
+                            <!-- Transação 3 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#b53b3b">
+                                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Contas - Conta de Luz e Água</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Fixo • Mensal</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount minus">- R$427,90</div>
+                            </div>
+
+                            <!-- Transação 4 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#1f6fe0">
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Salário</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Recebimento • Emprego</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount plus">+ R$5.456,37</div>
                             </div>
                         </div>
-                        <div class="tx-amount plus">+ R$5.456,37</div>
-                    </div>
+                    </section>
                 </div>
-            </section>
-
+            </div>
         </main>
     </div>
 
-    <!-- SCRIPTS -->
     <script>
-        // Inicializa tema conforme preferencia do usuário (localStorage)
-        (function () {
-            const body = document.body;
-            const stored = localStorage.getItem('kc-theme');
-            if (stored === 'light') {
-                body.classList.remove('theme-dark'); body.classList.add('theme-light');
-            } else {
-                body.classList.remove('theme-light'); body.classList.add('theme-dark');
-            }
-            applyBg();
-        })();
+        // *** Sistema Completo de Navegação ***
 
-        function applyBg() {
-            const body = document.body;
-            if (body.classList.contains('theme-dark')) {
-                body.style.background = '#000805';
-            } else {
-                body.style.background = '#fffcf0';
+        const sidebar = document.getElementById('sidebar');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        // 1. Inicialização - Garantir estado correto no carregamento
+        function initializeSidebar() {
+            // Verificar se é mobile e ajustar estado inicial
+            if (window.innerWidth <= 640) {
+                sidebar.classList.remove('collapsed'); // Garantir que comece como navbar inferior
             }
         }
 
-        // Toggle de tema
-        document.getElementById('themeToggle').addEventListener('click', function () {
-            const body = document.body;
-            if (body.classList.contains('theme-dark')) {
-                body.classList.remove('theme-dark'); body.classList.add('theme-light');
-                localStorage.setItem('kc-theme', 'light');
+        // 2. Alternar Tema Claro/Escuro
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            
+            // Alternar ícone (Sol <-> Lua)
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             } else {
-                body.classList.remove('theme-light'); body.classList.add('theme-dark');
-                localStorage.setItem('kc-theme', 'dark');
-            }
-            applyBg();
-        });
-
-        // Menu Hamburger para Mobile
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const sidenav = document.getElementById('sidenav');
-
-        mobileMenuBtn.addEventListener('click', function () {
-            sidenav.classList.toggle('mobile-open');
-            const icon = this.querySelector('i');
-            if (sidenav.classList.contains('mobile-open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+                 icon.classList.remove('fa-moon');
+                 icon.classList.add('fa-sun');
             }
         });
 
-        // Fechar menu ao clicar fora
-        document.addEventListener('click', function (event) {
-            if (!sidenav.contains(event.target) && !mobileMenuBtn.contains(event.target)) {
-                sidenav.classList.remove('mobile-open');
-                const icon = mobileMenuBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
+        // 3. Sistema de Navegação Ativa
+        navItems.forEach(item => {
+            if (!item.classList.contains('mobile-logo-placeholder')) {
+                item.addEventListener('click', (e) => {
+                    // Remove classe active de todos os itens
+                    navItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    // Adiciona classe active apenas ao item clicado
+                    item.classList.add('active');
+                    
+                    // Atualiza o conteúdo principal baseado no item clicado
+                    updateMainContent(item);
+                    
+                    // No mobile, recolhe o menu após clicar em um item (exceto logo)
+                    if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
+                        sidebar.classList.remove('collapsed');
+                    }
+                });
             }
         });
 
-        // Touch / mouse scroll suave para top-cards
-        const scroller = document.querySelector('.top-cards');
-        let isDown = false, startX, scrollLeft;
-        if (scroller) {
-            scroller.addEventListener('mousedown', (e) => { isDown = true; scroller.classList.add('active'); startX = e.pageX - scroller.offsetLeft; scrollLeft = scroller.scrollLeft; });
-            scroller.addEventListener('mouseleave', () => { isDown = false; scroller.classList.remove('active'); });
-            scroller.addEventListener('mouseup', () => { isDown = false; scroller.classList.remove('active'); });
-            scroller.addEventListener('mousemove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.pageX - scroller.offsetLeft;
-                const walk = (x - startX) * 1.2;
-                scroller.scrollLeft = scrollLeft - walk;
-            });
-
-            // Touch events para mobile
-            scroller.addEventListener('touchstart', (e) => {
-                isDown = true;
-                startX = e.touches[0].pageX - scroller.offsetLeft;
-                scrollLeft = scroller.scrollLeft;
-            });
-            scroller.addEventListener('touchend', () => { isDown = false; });
-            scroller.addEventListener('touchmove', (e) => {
-                if (!isDown) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - scroller.offsetLeft;
-                const walk = (x - startX) * 1.2;
-                scroller.scrollLeft = scrollLeft - walk;
+        // 4. Expandir/Contrair (Lógica Centralizada para Desktop e Mobile)
+        
+        // Listener para a logo do DESKTOP (dentro do sidebar-header)
+        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        if (desktopLogoContainer) {
+             desktopLogoContainer.addEventListener('click', () => {
+                if (window.innerWidth > 640) { 
+                    sidebar.classList.toggle('collapsed'); 
+                }
             });
         }
+        
+        // Listener para a logo do MOBILE (dentro do mobile-logo-placeholder)
+        const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
+        if (mobileLogoPlaceholder) {
+            mobileLogoPlaceholder.addEventListener('click', () => {
+                if (window.innerWidth <= 640) { 
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        }
+
+        // 5. Botão de voltar no menu expandido mobile
+        function createBackButton() {
+            const backButton = document.createElement('div');
+            backButton.className = 'mobile-back-button';
+            backButton.innerHTML = `
+                <button class="back-btn">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>Voltar ao Menu</span>
+                </button>
+            `;
+            return backButton;
+        }
+
+        // Adiciona botão de voltar quando em modo mobile expandido
+        function checkMobileMenu() {
+            const sidebarFooter = document.querySelector('.sidebar-footer');
+            const existingBackButton = document.querySelector('.mobile-back-button');
+            
+            if (window.innerWidth <= 640 && sidebar.classList.contains('collapsed')) {
+                if (!existingBackButton) {
+                    const backButton = createBackButton();
+                    sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
+                    
+                    // Adiciona evento de clique no botão voltar
+                    backButton.querySelector('.back-btn').addEventListener('click', () => {
+                        sidebar.classList.remove('collapsed');
+                    });
+                }
+            } else {
+                if (existingBackButton) {
+                    existingBackButton.remove();
+                }
+            }
+        }
+
+        // 6. Atualizar conteúdo principal
+        function updateMainContent(selectedItem) {
+            const mainContent = document.getElementById('main-content');
+            const itemText = selectedItem.querySelector('.nav-text').textContent;
+            
+            let contentHTML = '';
+            
+            switch(itemText) {
+                case 'Dashboard':
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Dashboard</h1>
+                            <div class="content-grid">
+                                <div class="card">Saldo Atual: R$ 1.250,00</div>
+                                <div class="card">Transações do Mês: 15</div>
+                                <div class="card">Investimentos: R$ 5.000,00</div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'Carteira':
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Carteira</h1>
+                            <div class="content-section">
+                                <h2>Suas Carteiras</h2>
+                                <p>Gerencie suas carteiras digitais aqui.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'Transações':
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Transações</h1>
+                            <div class="content-section">
+                                <h2>Histórico de Transações</h2>
+                                <p>Visualize todas as suas transações recentes.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'Relatórios':
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Relatórios</h1>
+                            <div class="content-section">
+                                <h2>Relatórios Financeiros</h2>
+                                <p>Gere relatórios detalhados do seu desempenho financeiro.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 'Configurações':
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Configurações</h1>
+                            <div class="content-section">
+                                <h2>Configurações da Conta</h2>
+                                <p>Personalize suas preferências e configurações de segurança.</p>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                default:
+                    contentHTML = `
+                        <div class="content-wrapper">
+                            <h1>Conteúdo Principal do Webapp</h1>
+                            <p>Aqui você verá o conteúdo das páginas.</p>
+                        </div>
+                    `;
+            }
+            
+            mainContent.innerHTML = contentHTML;
+        }
+
+        // 7. Gerenciamento de Responsividade
+        function handleResponsive() {
+            if (window.innerWidth <= 640) {
+                // Mobile: garantir que comece como navbar inferior
+                if (!sidebar.classList.contains('initialized-mobile')) {
+                    sidebar.classList.remove('collapsed');
+                    sidebar.classList.add('initialized-mobile');
+                }
+            } else {
+                // Desktop: remover marcação de mobile
+                sidebar.classList.remove('initialized-mobile');
+            }
+            checkMobileMenu();
+        }
+
+        // Event Listeners
+        sidebar.addEventListener('transitionend', checkMobileMenu);
+        window.addEventListener('resize', handleResponsive);
+        
+        // Inicialização
+        initializeSidebar();
+        handleResponsive();
+        checkMobileMenu();
     </script>
-
-</section>
-{% endblock %}
+</body>
+</html>

@@ -20,95 +20,8 @@ body {
     transition: background-color .25s ease, color .25s ease;
 }
 
-/* Layout */
-.app {
-    display: flex;
-    min-height: 100vh;
-    gap: 60px;
-    padding: 32px;
-}
 
-/* Lateral Nav - ESTILO CORRIGIDO CONFORME IMAGEM */
-.sidenav {
-    width: 72px;
-    border-radius: 20px;
-    padding: 20px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    position: relative;
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
-    flex-shrink: 0;
-    height: calc(100vh - 64px);
-    border: 1px solid rgba(35, 183, 133, 0.20);
-}
 
-.sidenav .logo {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    margin-bottom: 20px;
-    
-}
-
-/* Círculo verde para foto de perfil */
-.profile-circle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--accent-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.sidenav a,
-.sidenav button {
-    color: inherit;
-    opacity: .95;
-    transition: all 0.3s ease;
-    padding: 8px;
-    border-radius: 8px;
-}
-
-.sidenav a:hover,
-.sidenav button:hover {
-    background-color: rgba(35, 183, 133, 0.1);
-    transform: scale(1.05);
-}
-
-/* Espaçamento conforme imagem */
-.nav-spacer {
-    flex: 1;
-}
-
-/* Menu Hamburger para Mobile */
-.mobile-menu-btn {
-    display: none;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    border: none;
-    border-radius: 10px;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
 
 /* Main area */
 .main {
@@ -439,4 +352,97 @@ body {
         width: 40px;
         height: 40px;
     }
+}
+
+
+/* --- EFEITO VIDRO GLOBAL --- */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* --- CARDS SUPERIORES --- */
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 20px;
+  min-width: 260px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* --- EFEITO BRILHO VIDRO AO PASSAR O MOUSE --- */
+.card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255, 255, 255, 0.033) 50%, rgba(255,255,255,0) 100%);
+  transform: rotate(25deg);
+  transition: all 0.8s ease;
+  pointer-events: none;
+}
+.card:hover::before {
+  left: 125%;
+}
+
+/* --- PAINEL DE TRANSAÇÕES --- */
+.panel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  margin-top: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* --- SIDENAV COM VIDRO --- */
+.sidenav {
+  background: rgba(20, 25, 30, 0.45);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-radius: 20px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* --- ÍCONE DE PERFIL --- */
+.profile-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(76, 192, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4cc0ff;
+  font-size: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* --- FUNDO ESCURO DO TEMA --- */
+body.theme-dark {
+  background: radial-gradient(circle at top left, #000810, #010405 90%);
+  color: #fff;
 }

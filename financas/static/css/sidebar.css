@@ -1,0 +1,729 @@
+/* ========================================================= */
+/* 1. Variáveis de Tema (Claro e Escuro) */
+/* ========================================================= */
+:root {
+    /* Tema Claro (Padrão) */
+    --bg-site: #fffcf0;
+    --text-color: #000805;
+    --active-bg-color: #17b38d; /* Verde KINGCOIN */
+    --active-icon-color-default: #ffffff; /* Ícone Branco no item ativo (Claro) */
+    
+    /* Cores do Glassmorphism */
+    --bg-navbar-color: #000000; /* Preto */
+    --bg-navbar-opacity: 0.05; /* 5% */
+    --bg-navbar: rgba(0, 0, 0, 0.05); /* Preto 5% */
+    
+    /* Configurações da Navbar */
+    --sidebar-width-expanded: 280px;
+    --sidebar-width-collapsed: 90px;
+    --border-radius: 20px;
+}
+
+.dark-mode {
+    /* Tema Escuro */
+    --bg-site: #000805;
+    --text-color: #ffffff;
+    --active-bg-color: #17b38d;
+    --active-icon-color-default: #000805; /* Ícone Escuro no item ativo (Escuro) */
+    
+    /* Cores do Glassmorphism */
+    --bg-navbar-color: #ffffff; /* Branco */
+    --bg-navbar-opacity: 0.07; /* 7% */
+    --bg-navbar: rgba(255, 255, 255, 0.07); /* Branco 7% */
+}
+
+/* ========================================================= */
+/* 2. Estilos Globais e do Glassmorphism */
+/* ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif; 
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: var(--bg-site);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#app-container {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+.sidebar {
+    background-color: var(--bg-navbar);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    
+    position: fixed; 
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0; 
+    padding: 20px 0;
+    z-index: 1000;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    
+    transition: width 0.3s ease, border-radius 0.3s ease;
+}
+
+/* ========================================================= */
+/* 3. Layout Desktop (Padrão) */
+/* ========================================================= */
+
+/* Sidebar Expandida (Padrão Desktop) */
+.sidebar {
+    width: var(--sidebar-width-expanded);
+}
+
+#main-content {
+    margin-left: var(--sidebar-width-expanded);
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s ease;
+    width: calc(100% - var(--sidebar-width-expanded));
+    min-height: 100vh;
+}
+
+.content-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Conteúdo Principal */
+.content-section {
+    background: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin: 20px 0;
+    flex-grow: 1;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: var(--bg-navbar);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Conteúdo de demonstração */
+.demo-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.demo-card {
+    background: var(--bg-navbar);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sidebar Contraída (Estado .collapsed) */
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.sidebar.collapsed ~ #main-content {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+}
+
+/* Ocultar Texto com Transição */
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .user-info {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 0; 
+    overflow: hidden; 
+}
+.logo-text,
+.nav-text,
+.user-info {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    width: auto;
+}
+
+/* Esconde o placeholder da logo mobile no desktop */
+.mobile-logo-placeholder {
+    display: none; 
+}
+
+/* Esconde o botão de tema na versão contraída (Desktop) */
+.sidebar.collapsed .theme-toggle {
+    display: none !important; 
+}
+
+/* Estilos dos Componentes */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 30px; 
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.logo-icon {
+    width: 32px; 
+    height: 32px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.logo-text {
+    font-size: 1.2em;
+    font-weight: 600; 
+    white-space: nowrap; 
+    overflow: hidden;
+}
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px;
+    flex-shrink: 0;
+    transition: color 0.3s;
+}
+
+/* Navegação (Links) */
+.sidebar-nav ul {
+    list-style: none;
+}
+.sidebar-nav ul:not(.secondary-nav) {
+    padding: 0 10px;
+}
+.sidebar-nav.secondary-nav ul {
+    padding: 0 10px;
+}
+
+.nav-item, .nav-item.logout-item  {
+    margin-bottom: 8px;
+    padding: 0; 
+}
+.nav-item a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 12px 20px; 
+    border-radius: 12px; 
+    transition: background-color 0.2s, color 0.2s, opacity 0.3s;
+    overflow: hidden; 
+}
+.nav-item a i {
+    font-size: 1.2em;
+    width: 30px; 
+    text-align: left;
+    margin-right: 15px; 
+    flex-shrink: 0;
+}
+.nav-item.active a {
+    background-color: var(--active-bg-color);
+    color: var(--active-icon-color-default);
+}
+.nav-item:not(.active) a:hover {
+    background-color: rgba(
+        var(--bg-navbar-color-r, 0), 
+        var(--bg-navbar-color-g, 0), 
+        var(--bg-navbar-color-b, 0), 
+        0.15
+    ); 
+}
+.light-mode .nav-item.active a i {
+    color: var(--active-icon-color-default);
+}
+.dark-mode .nav-item.active a i {
+    color: var(--active-icon-color-default);
+}
+
+/* Garantir alinhamento à esquerda quando expandido */
+.sidebar:not(.collapsed) .nav-item a {
+    justify-content: flex-start;
+}
+
+/* Estilos de Itens Contraídos */
+.sidebar.collapsed .nav-item a {
+    justify-content: center;
+    padding: 12px;
+}
+.sidebar.collapsed .nav-item a i {
+    margin-right: 0;
+    width: auto;
+}
+.sidebar.collapsed .nav-item.active a {
+    width: 50px; 
+    height: 50px;
+    border-radius: 12px;
+    margin: 0 auto;
+    padding: 14px; 
+}
+
+/* Footer (Perfil e Logout) */
+.sidebar-footer {
+    padding: 20px 0 20px 0; 
+}
+
+/* Perfil do Usuário */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin: 20px 20px 20px 20px; 
+    padding: 10px;
+    border-radius: 10px;
+    transition: opacity 0.3s;
+}
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--active-bg-color); 
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.user-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.user-name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-email {
+    font-size: 0.8em;
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar.collapsed .user-profile {
+    justify-content: center;
+    padding: 0;
+    margin: 10px auto;
+}
+.sidebar.collapsed .user-avatar {
+    margin-right: 0;
+}
+
+/* Logout */
+.logout-item {
+    padding: 0 10px; 
+}
+.logout-item a {
+    padding: 12px 20px; 
+}
+.logout-item a i {
+    width: 30px; 
+    margin-right: 15px;
+}
+.sidebar.collapsed .logout-item a {
+    justify-content: center;
+    padding: 12px;
+}
+.sidebar.collapsed .logout-item a i {
+    margin-right: 0;
+}
+
+/* ========================================================= */
+/* 4. Layout Mobile (Telas Menores) - Navbar Inferior FIXA */
+/* ========================================================= */
+
+@media (max-width: 640px) {
+    
+    /* Reset para mobile */
+    body {
+        padding-bottom: 0 !important;
+    }
+    
+    #app-container {
+        min-height: 100vh;
+        padding-bottom: 0;
+    }
+    
+    /* OCULTA O HEADER DE DESKTOP NO MOBILE */
+    .sidebar-header.desktop-only {
+        display: none;
+    }
+
+    /* CONTEÚDO PRINCIPAL NO MOBILE */
+    #main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 15px;
+        padding-bottom: 100px; /* Espaço FIXO para a navbar inferior */
+        min-height: 100vh;
+        box-sizing: border-box;
+    }
+
+    .content-wrapper {
+        min-height: calc(100vh - 130px); /* Altura total menos padding e navbar */
+    }
+
+    /* BARRA INFERIOR FIXA - SEMPRE VISÍVEL */
+    .sidebar:not(.collapsed) {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 95% !important;
+        height: 80px !important;
+        border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+        padding: 0 10px !important;
+        margin: 0 !important;
+        
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        
+        /* Garantir que fique acima de todo conteúdo */
+        z-index: 1001 !important;
+    }
+
+    /* Esconder elementos desnecessários na barra inferior */
+    .sidebar:not(.collapsed) .nav-text, 
+    .sidebar:not(.collapsed) .theme-toggle,
+    .sidebar:not(.collapsed) .sidebar-footer,
+    .sidebar:not(.collapsed) .secondary-nav { 
+        display: none !important; 
+        opacity: 0 !important;
+        width: 0 !important;
+    }
+
+    /* Navegação principal como barra inferior */
+    .sidebar:not(.collapsed) .sidebar-nav.primary-nav {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center; 
+        height: 100%;
+        margin: 0;
+        padding: 0; 
+    }
+
+    /* Distribuição uniforme dos ícones na barra inferior */
+    .sidebar:not(.collapsed) .sidebar-nav ul {
+        display: flex;
+        justify-content: space-around; /* Distribuição uniforme */
+        align-items: center;
+        width: 100%; 
+        max-width: 100%; /* Ocupa toda a largura disponível */
+        padding: 0 5px;
+        margin: 0;
+    }
+
+    /* POSICIONAMENTO DA LOGO NO CENTRO DA BARRA INFERIOR */
+    .sidebar:not(.collapsed) .mobile-logo-placeholder {
+        display: flex !important; 
+        order: 3; 
+        flex-shrink: 0; 
+        width: 70px;
+        height: 70px;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent; 
+        border-radius: 0;
+        margin: 0 5px;
+    }
+
+    .sidebar:not(.collapsed) .mobile-logo-placeholder .logo-container {
+        width: 50px; 
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar:not(.collapsed) .mobile-logo-placeholder .logo-icon {
+        width: 100%; 
+        height: 100%;
+        margin-right: 0;
+    }
+
+    /* AJUSTE DOS ÍCONES NA BARRA INFERIOR - DISTRIBUIÇÃO FIXA */
+    .sidebar:not(.collapsed) .nav-item {
+        margin-bottom: 0;
+        flex: 1; /* Cada item ocupa espaço igual */
+        display: flex;
+        justify-content: center;
+        min-width: 60px; /* Largura mínima para cada ícone */
+    }
+
+    .sidebar:not(.collapsed) .nav-item a {
+        padding: 10px;
+        justify-content: center;
+        flex-direction: column; 
+        width: 100%;
+        height: 100%;
+        min-height: 60px;
+    }
+
+    .sidebar:not(.collapsed) .nav-item a i {
+        margin-right: 0;
+        width: auto;
+        font-size: 1.4em; /* Tamanho consistente */
+    }
+
+    .sidebar:not(.collapsed) .nav-item.active a {
+        width: 50px; 
+        height: 50px;
+        margin: 0 auto;
+        padding: 12px;
+        background-color: var(--active-bg-color); 
+        border-radius: 12px;
+    }
+
+    /* ORDEM DOS ITENS DE NAVEGAÇÃO NA BARRA INFERIOR */
+    .sidebar:not(.collapsed) .sidebar-nav ul li:nth-child(1) { order: 1; } /* Dashboard */
+    .sidebar:not(.collapsed) .sidebar-nav ul li:nth-child(2) { order: 2; } /* Carteira */
+    .sidebar:not(.collapsed) .sidebar-nav ul li:nth-child(3) { order: 3; } /* Logo (Placeholder) */
+    .sidebar:not(.collapsed) .sidebar-nav ul li:nth-child(4) { order: 4; } /* Transações */
+    .sidebar:not(.collapsed) .sidebar-nav ul li:nth-child(5) { order: 5; } /* Relatórios */
+
+    /* EXPANSÃO VERTICAL (MENU ABERTO NO MOBILE) */
+    .sidebar.collapsed {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        width: 100% !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1002;
+    }
+    
+    .sidebar.collapsed .logo-text,
+    .sidebar.collapsed .theme-toggle,
+    .sidebar.collapsed .sidebar-footer,
+    .sidebar.collapsed .secondary-nav,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .user-info {
+        display: flex !important; 
+        opacity: 1 !important; 
+        width: auto !important;
+    }
+
+    .sidebar.collapsed .mobile-logo-placeholder {
+        display: none !important;
+    }
+    
+    .sidebar.collapsed .sidebar-header { 
+          order: 1;
+          display: flex; 
+          padding: 0 0 30px 0;
+          margin: 0;
+          justify-content: space-between;
+          align-items: center;
+    }
+    
+    .sidebar.collapsed .logo-container {
+          width: auto;
+          height: auto;
+          justify-content: flex-start;
+    }
+    .sidebar.collapsed .logo-icon {
+        margin-right: 10px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .sidebar.collapsed .sidebar-nav {
+          order: 2;
+          flex-grow: 0;
+          margin: 0;
+          padding: 0;
+    }
+    .sidebar.collapsed .sidebar-nav ul {
+          flex-direction: column;
+          align-items: flex-start; 
+          width: 100%; 
+    }
+    .sidebar.collapsed .nav-item {
+          padding: 0; 
+          width: 100%; 
+          margin-bottom: 8px; 
+    }
+    .sidebar.collapsed .nav-item a {
+          justify-content: flex-start;
+          flex-direction: row;
+          padding: 12px 20px;
+    }
+    .sidebar.collapsed .nav-item.active a {
+          width: 100%;
+          height: auto;
+          margin: 0;
+          padding: 12px 20px;
+    }
+    .sidebar.collapsed .nav-item a i {
+        width: 30px;
+        margin-right: 15px;
+        font-size: 1.2em; 
+    }
+    
+    .sidebar.collapsed .sidebar-footer {
+        order: 3;
+        margin-top: auto; 
+        width: 100%;
+        padding: 20px 0; 
+        display: flex !important;
+        flex-direction: column;
+    }
+    .sidebar.collapsed .user-profile {
+        justify-content: flex-start;
+        padding: 10px 0;
+        margin: 20px 0; 
+        width: 100%;
+    }
+    .sidebar.collapsed .footer-nav-links {
+        width: 100%;
+    }
+    .sidebar.collapsed .footer-nav-links .nav-item {
+        width: 100%;
+    }
+    .sidebar.collapsed .logout-item {
+        padding: 0;
+    }
+    .sidebar.collapsed .logout-item a {
+        justify-content: flex-start;
+        padding: 12px 20px;
+    }
+}
+
+/* ========================================================= */
+/* 5. Correções para Mobile e Botão Voltar */
+/* ========================================================= */
+
+/* Botão de voltar para menu inferior */
+.mobile-back-button {
+    width: 100%;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(var(--bg-navbar-color-r, 0), 
+                                var(--bg-navbar-color-g, 0), 
+                                var(--bg-navbar-color-b, 0), 0.1);
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    font-size: 1em;
+}
+
+.back-btn:hover {
+    background-color: rgba(var(--bg-navbar-color-r, 0), 
+                         var(--bg-navbar-color-g, 0), 
+                         var(--bg-navbar-color-b, 0), 0.1);
+}
+
+.back-btn i {
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.back-btn span {
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+/* Garante que os ícones fiquem alinhados corretamente */
+.sidebar-nav .nav-item a {
+    align-items: center;
+}
+
+/* Ajuste específico para o footer no mobile expandido */
+@media (max-width: 640px) {
+    .sidebar.collapsed .sidebar-footer {
+        order: 3;
+        margin-top: auto;
+        display: flex !important;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .content-section {
+        margin: 10px 0;
+        padding: 20px;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Melhor distribuição dos ícones em telas muito pequenas */
+    @media (max-width: 380px) {
+        .sidebar:not(.collapsed) {
+            padding: 0 10px;
+        }
+        
+        .sidebar:not(.collapsed) .nav-item a i {
+            font-size: 1.2em;
+        }
+        
+        .sidebar:not(.collapsed) .mobile-logo-placeholder {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .sidebar:not(.collapsed) .mobile-logo-placeholder .logo-container {
+            width: 45px;
+            height: 45px;
+        }
+    }
+}

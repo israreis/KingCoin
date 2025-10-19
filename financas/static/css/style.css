@@ -1,6 +1,7 @@
 @import url("cadastro.css");
 @import url("kingcoin-login.css");
 @import url("carteira.css");
+@import url("sidebar.css");
 
 body {
   font-family: 'Archivo', sans-serif;

@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingcoin</title>
+    <title>{% block title %}Kingcoin{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
     
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -29,7 +30,7 @@
         
     {% block extra_head %}{% endblock %}
 </head>
-{% block body %}
+
 <body class="bg-[#000805]">
 
     {% block navbar %}
@@ -111,27 +112,21 @@
             <a href="#"
                 class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Contato</a>
             <div class="pt-4 border-t border-white/10 space-y-3">
-                <a href="#"
-                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Log
-                    in</a>
-                <a href="#"
-                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Sign
-                    up</a>
+                <a href="{% url 'login' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Entrar</a>
+                <a href="{% url 'register' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Cadastrar</a>
             </div>
         </div>
-
     </header>
-
     {% endblock %}
 
     {% block content %}
-    <!-- Conteúdo das páginas -->
+    <!-- Conteúdo principal das páginas -->
     {% endblock %}
 
-
-    {% block extra_js %}{% endblock %}
-
     {% block footer %}
+    <!-- Footer padrão -->
     <section id="footer-box" class="footer-container py-16 px-8">
         <footer id="footer" class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -180,8 +175,10 @@
     </section>
     {% endblock %}
 
+    {% block extra_js %}{% endblock %}
+
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
 
 </body>
-{% endblock %}
 </html>

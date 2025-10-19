@@ -43,39 +43,58 @@
       <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
         {% csrf_token %}
 
-        <!-- Nome completo -->
-        <div class="md:col-span-2">
-          <label for="{{ form.full_name.id_for_label }}" class="block text-sm mb-1">{{ form.full_name.label }}</label>
-          {{ form.full_name }}
-          {{ form.full_name.errors }}
+        <!-- Nome -->
+        <div>
+          <label for="{{ form.first_name.id_for_label }}" class="block text-sm mb-1">{{ form.first_name.label }}</label>
+          {{ form.first_name }}
+          {% if form.first_name.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.first_name.errors.0 }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Sobrenome -->
+        <div>
+          <label for="{{ form.last_name.id_for_label }}" class="block text-sm mb-1">{{ form.last_name.label }}</label>
+          {{ form.last_name }}
+          {% if form.last_name.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.last_name.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <!-- E-mail -->
-        <div>
+        <div class="md:col-span-2">
           <label for="{{ form.email.id_for_label }}" class="block text-sm mb-1">{{ form.email.label }}</label>
           {{ form.email }}
-          {{ form.email.errors }}
+          {% if form.email.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.email.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <!-- Telefone -->
-        <div>
+        <div class="md:col-span-2">
           <label for="{{ form.phone.id_for_label }}" class="block text-sm mb-1">{{ form.phone.label }}</label>
           {{ form.phone }}
-          {{ form.phone.errors }}
+          {% if form.phone.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.phone.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <!-- Senha -->
         <div>
           <label for="{{ form.password1.id_for_label }}" class="block text-sm mb-1">{{ form.password1.label }}</label>
           {{ form.password1 }}
-          {{ form.password1.errors }}
+          {% if form.password1.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.password1.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <!-- Confirmar senha -->
         <div>
           <label for="{{ form.password2.id_for_label }}" class="block text-sm mb-1">{{ form.password2.label }}</label>
           {{ form.password2 }}
-          {{ form.password2.errors }}
+          {% if form.password2.errors %}
+            <div class="text-red-400 text-xs mt-1">{{ form.password2.errors.0 }}</div>
+          {% endif %}
         </div>
 
         <!-- Botão e link para login -->
@@ -86,6 +105,15 @@
           </p>
         </div>
       </form>
+
+      <!-- Exibir erros não relacionados a campos específicos -->
+      {% if form.non_field_errors %}
+        <div class="mt-4 p-3 bg-red-500/20 border border-red-500 rounded-lg">
+          {% for error in form.non_field_errors %}
+            <p class="text-red-400 text-sm">{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 

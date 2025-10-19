@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.db import IntegrityError
+from .models import Profile
 from django.contrib.auth import login
 from .forms import (
     CustomLoginForm,
@@ -19,16 +23,47 @@ class CustomLoginView(LoginView):
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy("landing")
 
-# --- Registro ---
-class RegisterView(CreateView):
-    form_class = CustomUserCreationForm
-    template_name = "financas/register.html"
-    success_url = reverse_lazy("landing")
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return super().form_valid(form)
+def RegisterView(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            # Criar usuário usando o email como username
+            email = form.cleaned_data['email']
+            
+            try:
+                # Verificação extra para garantir que o email não existe
+                if User.objects.filter(username=email).exists():
+                    form.add_error('email', 'Este e-mail já está cadastrado.')
+                elif User.objects.filter(email=email).exists():
+                    form.add_error('email', 'Este e-mail já está cadastrado.')
+                else:
+                    user = User.objects.create_user(
+                        username=email,  # Usa o email como username
+                        email=email,
+                        password=form.cleaned_data['password1'],
+                        first_name=form.cleaned_data['first_name'],
+                        last_name=form.cleaned_data['last_name']
+                    )
+                    
+                    # Criar perfil com telefone
+                    Profile.objects.create(
+                        user=user,
+                        phone=form.cleaned_data['phone']
+                    )
+                    
+                    # Fazer login automaticamente
+                    login(request, user)
+                    messages.success(request, 'Cadastro realizado com sucesso!')
+                    return redirect('landing')  # Corrigido: era 'lading', deve ser 'landing'
+                    
+            except IntegrityError as e:
+                form.add_error('email', 'Erro ao criar conta. Este e-mail já pode estar em uso.')
+                print(f"Erro de integridade: {e}")
+                
+    else:
+        form = CustomUserCreationForm()
+    
+    return render(request, 'financas/register.html', {'form': form})
 
 # --- Landing page ---
 def landing(request):
