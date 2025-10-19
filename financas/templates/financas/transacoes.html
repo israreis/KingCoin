@@ -1,36 +1,18 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingcoin - Transações</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block title %}Minhas Transações{% endblock %}
 
-    <!-- Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    screens: {
-                        'lgx': '1200px',
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Fonte Archivo -->
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+{% endblock %}
 
-</head>
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
 
-<body class="theme-dark">
+{% block content %}
+
+<section class="theme-dark">
 
     <!-- Botão Menu Hamburger para Mobile -->
     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu">
@@ -38,54 +20,6 @@
     </button>
 
     <div class="app">
-        <!-- NAV LATERAL - ESTRUTURA CORRIGIDA CONFORME IMAGEM -->
-        <aside class="sidenav" id="sidenav">
-            <!-- Logo no topo -->
-            <div class="logo" aria-hidden="true">
-                <a href="{% url 'landing' %}" class="block">
-                    <img src="{% static 'img/LogoKingCoinQ.svg'%}" alt="Kingcoin"
-                        class="w-8 h-8 transition-all duration-500">
-                </a>
-            </div>
-
-            <!-- Espaço -->
-            <div style="height: 80px;"></div>
-
-            <!-- 5 ícones centralizados -->
-            <a class="p-2 rounded-lg" title="Dashboard">
-                <img src="{% static 'img/dashboard_icon.svg'%}" alt="Dashboard"
-                    class="w-6 h-6 transition-all duration-500">
-            </a>
-            <a class="p-2 rounded-lg" title="Carteira">
-                <img src="{% static 'img/wallet_icon.svg'%}" alt="Carteira" class="w-6 h-6 transition-all duration-500">
-            </a>
-            <a class="p-2 rounded-lg" title="Transações">
-                <img src="{% static 'img/transactions_icon.svg'%}" alt="Transações"
-                    class="w-6 h-6 transition-all duration-500">
-            </a>
-            <a class="p-2 rounded-lg" title="Relatórios">
-                <img src="{% static 'img/reports_icon.svg'%}" alt="Relatórios"
-                    class="w-6 h-6 transition-all duration-500">
-            </a>
-            <a class="p-2 rounded-lg" title="Configurações">
-                <img src="{% static 'img/setting_icon.svg'%}" alt="Configurações"
-                    class="w-6 h-6 transition-all duration-500">
-            </a>
-
-         <!-- Espaço -->
-            <div style="height: 100px;"></div>
-
-            <!-- Círculo verde para foto de perfil -->
-            <div class="profile-circle">
-                <i class="fa-solid fa-user"></i>
-            </div>
-
-            <div style="height: 60px;"></div>
-            <!-- Ícone de logout -->
-            <a class="p-2 rounded-lg" title="Sair">
-                <img src="{% static 'img/logout_icon.svg'%}" alt="Sair" class="w-6 h-6 transition-all duration-500">
-            </a>
-        </aside>
 
         <!-- MAIN -->
         <main class="py-10 main">
@@ -236,17 +170,17 @@
 
     <!-- SCRIPTS -->
     <script>
-            // Inicializa tema conforme preferencia do usuário (localStorage)
-            (function () {
-                const body = document.body;
-                const stored = localStorage.getItem('kc-theme');
-                if (stored === 'light') {
-                    body.classList.remove('theme-dark'); body.classList.add('theme-light');
-                } else {
-                    body.classList.remove('theme-light'); body.classList.add('theme-dark');
-                }
-                applyBg();
-            })();
+        // Inicializa tema conforme preferencia do usuário (localStorage)
+        (function () {
+            const body = document.body;
+            const stored = localStorage.getItem('kc-theme');
+            if (stored === 'light') {
+                body.classList.remove('theme-dark'); body.classList.add('theme-light');
+            } else {
+                body.classList.remove('theme-light'); body.classList.add('theme-dark');
+            }
+            applyBg();
+        })();
 
         function applyBg() {
             const body = document.body;
@@ -328,6 +262,5 @@
         }
     </script>
 
-</body>
-
-</html>
+</section>
+{% endblock %}
