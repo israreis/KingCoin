@@ -47,3 +47,9 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "financas/password_reset_confirm.html"
     success_url = reverse_lazy("login")
     form_class = CustomSetPasswordForm
+
+def sidebar(request):
+    return render(request, "financas/sidebar.html")
+
+def sidebar2(request):
+    return render(request, "financas/sidebar2.html")

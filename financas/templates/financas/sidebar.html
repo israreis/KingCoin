@@ -1,0 +1,857 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <!-- Configuração do Tailwind (modo rápido de teste via CDN) -->
+  <script>
+    // Configura darkMode para 'class' antes de carregar o tailwind CDN
+    window.tailwind = window.tailwind || {};
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {}
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  /* ===== Transição visual suave ===== */
+  html,
+  body {
+    transition: background-color 0.25s, color 0.25s;
+  }
+
+  /* ===== Sidebar - Transições ===== */
+  #logo-sidebar {
+    transition: width 0.25s ease, padding 0.25s ease, transform 0.25s ease;
+  }
+
+  /* ===== Sidebar recolhida ===== */
+  #logo-sidebar.minified {
+    width: 4.5rem;
+    min-width: 4.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  /* Ocultar labels e textos quando recolhida */
+  #logo-sidebar.hs-overlay-minified .sidebar-label,
+  #logo-sidebar.hs-overlay-minified .brand-label,
+  #logo-sidebar.minified .sidebar-label {
+    display: none !important;
+  }
+
+  /* Div interna animada */
+  #logo-sidebar .aside-inner {
+    transition: padding 0.25s ease, border-radius 0.25s ease;
+  }
+
+  #logo-sidebar.minified .aside-inner {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+
+  /* ===== Centralização dos links ===== */
+  #logo-sidebar.minified ul > li > a,
+  #logo-sidebar.hs-overlay-minified ul > li > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75rem 0;
+    gap: 0;
+    width: 100%;
+    min-height: 3rem;
+    border-radius: 0.5rem;
+    transition: all 0.25s ease;
+  }
+
+  /* ===== Ícones ===== */
+  #logo-sidebar ul > li > a svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  #logo-sidebar.minified svg,
+  #logo-sidebar.hs-overlay-minified svg {
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* ===== Tooltip ===== */
+  #logo-sidebar.minified a[data-title],
+  #logo-sidebar.hs-overlay-minified a[data-title] {
+    position: relative;
+  }
+
+  #logo-sidebar.minified a[data-title]:hover::after,
+  #logo-sidebar.hs-overlay-minified a[data-title]:hover::after {
+    content: attr(data-title);
+    position: absolute;
+    left: calc(100% + 0.5rem);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+  }
+
+  /* ===== Conteúdo principal ===== */
+  .content-shifted {
+    transition: margin-left 0.25s ease;
+  }
+
+  /* ===== Bottom Navigation Bar ===== */
+  #bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    width: 100%;
+    height: 4rem;
+    background: rgba(242, 239, 229, 0.95);
+    backdrop-blur-md;
+    border-top: 1px solid rgba(209, 213, 219, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  html.dark #bottom-nav {
+    background: rgba(5, 46, 22, 0.95);
+    border-top: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  #bottom-nav .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  #bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0.25rem;
+    transition: all 0.2s ease;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  #bottom-nav .nav-item:hover {
+    background: rgba(86, 241, 121, 0.2);
+  }
+
+  #bottom-nav .nav-item.active {
+    background: #56f179
+  }
+
+  #bottom-nav .nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+  }
+
+  #bottom-nav .nav-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  /* Light mode */
+  #bottom-nav .nav-icon {
+    color: #6b7280;
+  }
+
+  #bottom-nav .nav-label {
+    color: #6b7280;
+  }
+
+  #bottom-nav .nav-item:hover .nav-icon,
+  #bottom-nav .nav-item:hover .nav-label,
+  #bottom-nav .nav-item.active .nav-icon,
+  #bottom-nav .nav-item.active .nav-label {
+    color: #374151;
+  }
+
+  /* Dark mode */
+  html.dark #bottom-nav .nav-icon {
+    color: #9ca3af;
+  }
+
+  html.dark #bottom-nav .nav-label {
+    color: #9ca3af;
+  }
+
+  html.dark #bottom-nav .nav-item:hover .nav-icon,
+  html.dark #bottom-nav .nav-item:hover .nav-label,
+  html.dark #bottom-nav .nav-item.active .nav-icon,
+  html.dark #bottom-nav .nav-item.active .nav-label {
+    color: #374151;
+  }
+
+  /* ===== Botão Minify - CORREÇÃO PARA MOBILE ===== */
+  #btn-minify-sidebar {
+    display: none !important; /* Oculta por padrão - IMPORTANTE */
+  }
+
+  /* ===== Responsividade ===== */
+  @media (max-width: 639px) {
+    /* Oculta sidebar em mobile */
+    #logo-sidebar {
+        display: none !important;
+    }
+    
+    /* Mostra bottom nav em mobile */
+    #bottom-nav {
+        display: block;
+    }
+    
+    /* Ajusta o conteúdo principal para a bottom nav */
+    .content-shifted {
+        margin-left: 0 !important;
+        padding-bottom: 5rem;
+    }
+    
+    /* Ajusta a navbar superior */
+    nav .brand-label {
+        display: inline !important;
+    }
+
+    /* Garante que o botão de toggle da sidebar não apareça em mobile */
+    #btn-minify-sidebar {
+        display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    #bottom-nav {
+        display: none !important;
+    }
+    
+    #logo-sidebar {
+        display: block !important;
+    }
+    
+    /* Botão minify visível apenas em desktop (640px+) */
+    #btn-minify-sidebar {
+        display: inline-flex !important;
+    }
+  }
+
+  /* === Força botão claro em dark mode === */
+#btn-minify-sidebar,
+#btn-minify-sidebar svg {
+ color: inherit; 
+ stroke: currentColor; 
+ fill: none;
+}
+
+#btn-minify-sidebar {
+ color: #374151;
+ background-color: transparent;
+}
+
+html.dark #btn-minify-sidebar,
+body.dark #btn-minify-sidebar {
+ color: #D1D5DB !important; 
+ background-color: transparent !important; 
+ border-radius: 9999px;
+ border: 1px solid rgba(255,255,255,0.06);
+}
+
+html.dark #btn-minify-sidebar:hover,
+body.dark #btn-minify-sidebar:hover {
+ background: rgba(255,255,255,0.1) !important; 
+ color: #FFF !important;
+}
+
+html.dark #btn-minify-sidebar svg {
+    stroke: currentColor !important;
+    fill: none !important;
+    color: inherit !important;
+}
+
+  @media (max-width: 639px) {
+    /* ... outras regras ... */
+    
+    /* Oculta o botão hamburger da navbar em mobile */
+    nav button[aria-controls="logo-sidebar"] {
+        display: none !important;
+    }
+  }
+
+</style>
+
+</head>
+
+<body class="bg-[#fffcf0]" relative>
+
+  <!-- Imagem de Background -->
+  <!-- <div id="bg-image" class="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-80 -z-10"
+    style="background-image: url('{% static 'img/background-claro.png' %}')"></div> -->
+
+  <nav class="fixed top-0 z-50 w-full bg-transparent backdrop-blur-md bg-opacity-80">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center justify-start rtl:justify-end">
+          <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar"
+            type="button"
+            class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+            <span class="sr-only">Open sidebar</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd" fill-rule="evenodd"
+                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+              </path>
+            </svg>
+          </button>
+          <a href="{% url 'landing' %}" class="flex ms-2 md:me-24 items-center">
+            <img id="site-logo" src="{% static 'img/KingCoinLogo.svg' %}" alt="Kingcoin" class="h-8 me-3" />
+            <span class="brand-label hidden sm:inline self-center text-xl font-serif sm:text-2xl whitespace-nowrap dark:text-[#fffcf0]"></span>
+          </a>
+        </div>
+        <div class="flex items-center">
+          <div class="flex items-center ms-3">
+
+            <button id="btn-theme" aria-pressed="false" title="Alternar tema"
+              class="mr-3 inline-flex items-center p-2 rounded-full text-gray-600 border border-green-400 text-green-400 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:focus:ring-gray-600">
+              <!-- ícone lua (escuro) -->
+              <svg id="icon-moon" class="w-5 h-5 block" fill="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 21a9 9 0 0 1-.5-17.986V3c-.354.966-.5 1.911-.5 3a9 9 0 0 0 9 9c.239 0 .254.018.488 0A9.004 9.004 0 0 1 12 21Z" />
+              </svg>
+              <!-- ícone sol (claro) -->
+              <svg id="icon-sun" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 5V3m0 18v-2M7.05 7.05 5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636 16.95 7.05M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+              </svg>
+            </button>
+
+            <div>
+              <button type="button"
+                class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                <span class="sr-only">Open user menu</span>
+                <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  alt="user photo">
+              </button>
+            </div>
+            <div
+              class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-2xl shadow-sm dark:bg-gray-700 dark:divide-gray-600"
+              id="dropdown-user">
+              <div class="px-4 py-3 " role="none">
+                <p class="text-sm text-gray-900 dark:text-white" role="none">
+                  Bruno Alves
+                </p>
+                <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                  brunoalves@gmail.com
+                </p>
+              </div>
+              <ul class="py-1 p-2 " role="none">
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+                    role="menuitem">Minha Conta</a>
+                </li>
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+                    role="menuitem">Alterar senha</a>
+                </li>
+                <li>
+                  <a href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white rounded-lg"
+                    role="menuitem">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <aside id="logo-sidebar"
+    class="fixed top-0 left-0 z-40 w-56 h-screen pt-20 pb-20 transition-transform -translate-x-full bg-transparent backdrop-blur-md bg-opacity-80 border-r border-gray-200 border-none sm:translate-x-0 dark:bg-green-950 dark:border-gray-700 rounded-2xl dark:shadow-gray-900 bg-[#ffffff]/0.7"
+    aria-label="Sidebar">
+    <div class="aside-inner h-full m-2 pt-5 px-3 pb-4 overflow-y-auto  bg-[#f2efe5] dark:bg-green-950 rounded-2xl shadow-lg dark:shadow-gray-900">
+
+      <!-- BOTÃO MINIFY - AGORA CORRETAMENTE OCULTO EM MOBILE -->
+      <div class="flex justify-end px-1 mb-2">
+        <button id="btn-minify-sidebar"
+                type="button"
+                data-target="#logo-sidebar"
+                aria-expanded="true"
+                aria-controls="logo-sidebar"
+                aria-label="Minify navigation"
+                class="items-center gap-x-2 p-1 text-sm text-gray-600 hover:bg-gray-100 rounded-full focus:outline-hidden">
+                
+          <svg class="hs-icon-open shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/><path d="m8 9 3 3-3 3"/>
+          </svg>
+          <div></div>
+          <svg class="hs-icon-closed hidden shrink-0 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M15 3v18"/><path d="m10 15-3-3 3-3"/>
+          </svg>
+          <span class="sr-only">Minify navigation</span>
+        </button>
+      </div>
+
+      <ul class="space-y-2 font-medium font-semibold">
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Dashboard" aria-label="Dashboard">
+            <svg
+              class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+              <path
+                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+            </svg>
+            <span class="ms-3 sidebar-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Carteira" aria-label="Carteira">
+            <svg
+              class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M12 14a3 3 0 0 1 3-3h4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4a3 3 0 0 1-3-3Zm3-1a1 1 0 1 0 0 2h4v-2h-4Z"
+                clip-rule="evenodd" />
+              <path fill-rule="evenodd"
+                d="M12.293 3.293a1 1 0 0 1 1.414 0L16.414 6h-2.828l-1.293-1.293a1 1 0 0 1 0-1.414ZM12.414 6 9.707 3.293a1 1 0 0 0-1.414 0L5.586 6h6.828ZM4.586 7l-.056.055A2 2 0 0 0 3 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2h-4a5 5 0 0 1 0-10h4a2 2 0 0 0-1.53-1.945L17.414 7H4.586Z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="flex-1 ms-3 sidebar-label whitespace-nowrap">Carteira</span>
+          </a>
+        </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Transações" aria-label="Transações">
+            <svg
+              class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.488.486-1.865 2.724-2.899 4.998-2.31.982.236 1.87.793 2.538 1.592m-3.879 12.171V21m0-18v2.2" />
+            </svg>
+            <span class="flex-1 ms-3 sidebar-label whitespace-nowrap">Transações</span>
+          </a>
+        </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Relatórios" aria-label="Relatórios">
+            <svg
+              class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="flex-1 ms-3 sidebar-label whitespace-nowrap">Relatórios</span>
+          </a>
+        </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Configurações" aria-label="Configurações">
+            <svg
+              class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M9.586 2.586A2 2 0 0 1 11 2h2a2 2 0 0 1 2 2v.089l.473.196.063-.063a2.002 2.002 0 0 1 2.828 0l1.414 1.414a2 2 0 0 1 0 2.827l-.063.064.196.473H20a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-.089l-.196.473.063.063a2.002 2.002 0 0 1 0 2.828l-1.414 1.414a2 2 0 0 1-2.828 0l-.063-.063-.473.196V20a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-.089l-.473-.196-.063.063a2.002 2.002 0 0 1-2.828 0l-1.414-1.414a2 2 0 0 1 0-2.827l.063-.064L4.089 15H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h.09l.195-.473-.063-.063a2 2 0 0 1 0-2.828l1.414-1.414a2 2 0 0 1 2.827 0l.064.063L9 4.089V4a2 2 0 0 1 .586-1.414ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="flex-1 ms-3 sidebar-label whitespace-nowrap">Configurações</span>
+          </a>
+        </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            data-title="Logout" aria-label="Logout">
+            <svg
+              class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+              aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+            </svg>
+            <span class="flex-1 ms-3 sidebar-label whitespace-nowrap">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Bottom Navigation Bar -->
+  <div id="bottom-nav" class="bottom-nav rounded-lg  m-1 p-1">
+    <div class="nav-grid">
+      <!-- Dashboard -->
+      <a href="#" class="nav-item active" data-title="Dashboard">
+        <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+          <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
+        </svg>
+        <span class="nav-label font-light"></span>
+      </a>
+      
+      <!-- Carteira -->
+      <a href="#" class="nav-item" data-title="Carteira">
+        <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 22">
+          <path fill-rule="evenodd" d="M12 14a3 3 0 0 1 3-3h4a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-4a3 3 0 0 1-3-3Zm3-1a1 1 0 1 0 0 2h4v-2h-4Z" clip-rule="evenodd"/>
+          <path fill-rule="evenodd" d="M12.293 3.293a1 1 0 0 1 1.414 0L16.414 6h-2.828l-1.293-1.293a1 1 0 0 1 0-1.414ZM12.414 6 9.707 3.293a1 1 0 0 0-1.414 0L5.586 6h6.828ZM4.586 7l-.056.055A2 2 0 0 0 3 9v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2h-4a5 5 0 0 1 0-10h4a2 2 0 0 0-1.53-1.945L17.414 7H4.586Z" clip-rule="evenodd"/>
+        </svg>
+        <span class="nav-label"></span>
+      </a>
+      
+      <!-- Transações -->
+      <a href="#" class="nav-item" data-title="Transações">
+        <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 22">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17.345a4.76 4.76 0 0 0 2.558 1.618c2.274.589 4.512-.446 4.999-2.31.487-1.866-1.273-3.9-3.546-4.49-2.273-.59-4.034-2.623-3.547-4.488.486-1.865 2.724-2.899 4.998-2.31.982.236 1.87.793 2.538 1.592m-3.879 12.171V21m0-18v2.2"/>
+        </svg>
+        <span class="nav-label"></span>
+      </a>
+      
+      <!-- Relatórios -->
+      <a href="#" class="nav-item" data-title="Relatórios">
+        <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 22">
+          <path fill-rule="evenodd" d="M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
+        </svg>
+        <span class="nav-label"></span>
+      </a>
+      
+      <!-- Configurações -->
+      <a href="#" class="nav-item" data-title="Configurações">
+        <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 22">
+          <path fill-rule="evenodd" d="M9.586 2.586A2 2 0 0 1 11 2h2a2 2 0 0 1 2 2v.089l.473.196.063-.063a2.002 2.002 0 0 1 2.828 0l1.414 1.414a2 2 0 0 1 0 2.827l-.063.064.196.473H20a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-.089l-.196.473.063.063a2.002 2.002 0 0 1 0 2.828l-1.414 1.414a2 2 0 0 1-2.828 0l-.063-.063-.473.196V20a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-.089l-.473-.196-.063.063a2.002 2.002 0 0 1-2.828 0l-1.414-1.414a2 2 0 0 1 0-2.827l.063-.064L4.089 15H4a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h.09l.195-.473-.063-.063a2 2 0 0 1 0-2.828l1.414-1.414a2 2 0 0 1 2.827 0l.064.063L9 4.089V4a2 2 0 0 1 .586-1.414ZM8 12a4 4 0 1 1 8 0 4 4 0 0 1-8 0Z" clip-rule="evenodd"/>
+        </svg>
+        <span class="nav-label"></span>
+      </a>
+    </div>
+  </div>
+
+  <main id="main-content" class="p-4 sm:ml-56 pt-10 content-shifted">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+      <h1 class="text-2xl font-semibold mb-4">Conteúdo principal</h1>
+      <p>Substitua este bloco pelo conteúdo da sua página. A classe <code>content-shifted</code> faz o ajuste automático da margem quando a sidebar é minificada.</p>
+      <p class="mt-4">Em telas pequenas, a sidebar será substituída por uma barra de navegação inferior.</p>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const html = document.documentElement;
+      const body = document.body;
+      const btn = document.getElementById('btn-theme');
+      const iconMoon = document.getElementById('icon-moon');
+      const iconSun = document.getElementById('icon-sun');
+      const logo = document.getElementById('site-logo');
+      const asideInnerSelector = '#logo-sidebar > div';
+      const asideInnerById = document.getElementById('aside-content');
+      const logoLight = "{% static 'img/KingCoin-Logo-Light.svg' %}";
+      const logoDark = "{% static 'img/KingCoinLogo.svg' %}";
+      const bgImage = document.getElementById('bg-image');
+      const BG_DARK = "url('{% static 'img/background-escuro.png' %}')";
+      const BG_LIGHT = "url('{% static 'img/background-claro.png' %}')";
+
+      if (!btn) {
+        console.error('[theme] botão #btn-theme não encontrado.');
+        return;
+      }
+
+      function setIcons(isDark) {
+        if (iconMoon) iconMoon.classList.toggle('hidden', isDark);
+        if (iconSun) iconSun.classList.toggle('hidden', !isDark);
+        btn.setAttribute('aria-pressed', String(!!isDark));
+      }
+
+      function updateLogo(isDark) {
+        if (!logo) return;
+        const desired = isDark ? logoDark : logoLight;
+        if (!logo.src || !logo.src.endsWith(desired.split('/').pop())) {
+          logo.src = desired;
+        }
+      }
+
+      function updateUserDropdown(isDark) {
+        const dropdown = document.getElementById('dropdown-user');
+        if (!dropdown) return;
+
+        dropdown.classList.remove('bg-white', 'bg-gray-700', 'dark:bg-gray-700', 'bg-green-950','bg-yellow-50');
+        dropdown.classList.add(isDark ? 'bg-green-950' : 'bg-yellow-50', 'border');
+
+        dropdown.classList.remove('divide-gray-100', 'divide-gray-600', 'dark:divide-gray-600');
+        dropdown.classList.add(isDark ? 'divide-gray-600' : 'divide-gray-100');
+
+        const headerTexts = dropdown.querySelectorAll('.px-4.py-3 p');
+        headerTexts.forEach(p => {
+          p.classList.remove('text-gray-900', 'text-white', 'text-gray-300', 'dark:text-white', 'dark:text-gray-300');
+          if (p.classList.contains('truncate')) {
+            p.classList.add(isDark ? 'text-gray-300' : 'text-gray-900');
+          } else {
+            p.classList.add(isDark ? 'text-white' : 'text-gray-900');
+          }
+        });
+
+        const links = dropdown.querySelectorAll('a[role="menuitem"]');
+        links.forEach(link => {
+          link.classList.remove('text-gray-700', 'text-gray-300', 'hover:bg-gray-100', 'hover:bg-gray-600', 'dark:text-gray-300', 'dark:hover:bg-gray-600', 'dark:hover:text-white');
+          if (isDark) {
+            link.classList.add('text-gray-300', 'hover:bg-[#56f179]', 'hover:text-gray-950');
+          } else {
+            link.classList.add('text-gray-700', 'hover:bg-[#56f179]');
+          }
+        });
+      }
+
+      function updateAsideInnerDiv(isDark) {
+        const aside = document.getElementById('logo-sidebar');
+        const asideInner = asideInnerById || document.querySelector(asideInnerSelector);
+        if (!asideInner) return;
+
+        if (aside) {
+          aside.classList.remove('bg-[#fffcf0]', 'bg[#f2efe5]', 'bg-white', 'bg-gray-800', 'dark:bg-gray-800', 'dark:bg-white', 'bg[#000805]', 'bg-green-950');
+          if (isDark) {
+            aside.classList.add('bg[#000805]');
+          } else {
+            aside.classList.add('bg-[#fffcf0]');
+          }
+        }
+
+        asideInner.classList.remove('bg[#fffcf0]', 'bg[#f2efe5]', 'bg-white', 'bg-gray-800', 'dark:bg-gray-800', 'dark:bg-white', 'bg[#121B16]', 'bg-green-950','bg-green-950/80','border', 'border-green-900', 'rounded-2xl', 'shadow-2xl', 'shadow-green-900/100', 'bg[#f2efe5]/80', 'border', 'border-gray-300', 'rounded-2xl', 'shadow-2xl', 'shadow-gray-400/100');
+        if (isDark) {
+          asideInner.classList.add('bg-green-950/80','border', 'border-green-900', 'rounded-2xl', 'shadow-2xl', 'shadow-green-900/100');
+        } else {
+          asideInner.classList.add('bg[#f2efe5]/80', 'border', 'border-gray-300', 'rounded-2xl', 'shadow-2xl', 'shadow-gray-400/100');
+        }
+
+        const links = asideInner.querySelectorAll('a');
+        links.forEach(link => {
+          link.classList.remove('text-gray-900', 'text-gray-700', 'text-gray-500', 'text-white', 'dark:text-white', 'dark:text-gray-300', 'dark:text-gray-400');
+          link.classList.remove('hover:bg-gray-100', 'dark:hover:bg-gray-700', 'hover:bg-gray-200', 'dark:hover:bg-gray-600');
+
+          if (isDark) {
+            link.classList.add('text-white', 'hover:bg-[#56f179]', 'hover:text-gray-950');
+          } else {
+            link.classList.add('text-gray-900', 'hover:bg-[#56f179]');
+          }
+        });
+
+        const textEls = asideInner.querySelectorAll('span, p, li');
+        textEls.forEach(el => {
+          el.classList.remove('text-gray-900', 'text-gray-700', 'text-gray-500', 'text-white', 'dark:text-white', 'dark:text-gray-300', 'dark:text-gray-400');
+          if (isDark) {
+            el.classList.add('text-text-gray-600');
+          } else {
+            el.classList.add('text-gray-900');
+          }
+        });
+
+        const svgs = asideInner.querySelectorAll('svg');
+        svgs.forEach(s => {
+          s.classList.remove('text-gray-500', 'text-gray-400', 'dark:text-gray-400', 'group-hover:text-gray-900', 'dark:group-hover:text-white');
+          if (isDark) {
+            s.classList.add('text-gray-00', 'group-hover:text-gray-600');
+          } else {
+            s.classList.add('text-gray-500', 'group-hover:text-gray-900');
+          }
+        });
+
+        asideInner.style.backgroundColor = '';
+        asideInner.style.color = '';
+      }
+
+      function applyInlineVisuals(isDark) {
+        if (isDark) {
+          body.style.backgroundColor = '#000805';
+          body.style.color = '#e5e7eb';
+          if (bgImage) bgImage.style.backgroundImage = BG_DARK;
+        } else {
+          body.style.backgroundColor = '';
+          body.style.color = '';
+          if (bgImage) bgImage.style.backgroundImage = BG_LIGHT;
+        }
+      }
+
+      function applyTheme(isDark) {
+        html.classList.toggle('dark', !!isDark);
+        body.classList.toggle('dark', !!isDark);
+
+        setIcons(isDark);
+        updateLogo(isDark);
+        updateAsideInnerDiv(isDark);
+        updateUserDropdown(isDark);
+        applyInlineVisuals(isDark);
+
+        try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) { }
+        console.log('[theme] applied =>', isDark ? 'dark' : 'light');
+      }
+
+      function init() {
+        const stored = localStorage.getItem('theme');
+        let isDark;
+
+        if (stored === 'dark') {
+          isDark = true;
+        } else if (stored === 'light') {
+          isDark = false;
+        } else {
+          isDark = true;
+        }
+
+        applyTheme(isDark);
+      }
+
+      btn.addEventListener('click', () => {
+        const isDarkNow = !document.documentElement.classList.contains('dark');
+        applyTheme(isDarkNow);
+      });
+
+      init();
+    });
+  </script>
+
+  <!-- SCRIPTS PARA MINIFY SIDEBAR -->
+<script>
+        (function() {
+            const btn = document.getElementById('btn-minify-sidebar');
+            const targetSelector = btn ? btn.getAttribute('data-target') : null;
+            const aside = targetSelector ? document.querySelector(targetSelector) : null;
+            const content = document.querySelector('.content-shifted') || document.querySelector('main') || document.querySelector('#main-content');
+            const MOBILE_BREAKPOINT = 640; // Breakpoint consistente com 640px
+
+            if (!btn || !aside) return;
+
+            const STORAGE_KEY = 'sidebar-minified';
+            
+            // Só aplica minificação se estiver em desktop
+            if (window.innerWidth >= MOBILE_BREAKPOINT) {
+                const saved = localStorage.getItem(STORAGE_KEY) === 'true';
+                if (saved) {
+                    aside.classList.add('minified');
+                    aside.classList.add('hs-overlay-minified');
+                }
+            }
+
+            function syncContentMargin() {
+                if (!content) return;
+                
+                // Em telas pequenas, margem 0
+                if (window.innerWidth < MOBILE_BREAKPOINT) {
+                    content.style.marginLeft = '0';
+                    return; 
+                }
+
+                // Em telas maiores, aplica minificação
+                if (aside.classList.contains('minified')) {
+                    content.style.marginLeft = '4.5rem'; 
+                } else {
+                    content.style.marginLeft = '14rem'; 
+                }
+            }
+            syncContentMargin();
+
+            function updateToggleIcon() {
+                const openI = btn.querySelector('.hs-icon-open');
+                const closeI = btn.querySelector('.hs-icon-closed');
+                if (!openI || !closeI) return;
+                if (aside.classList.contains('minified')) {
+                    openI.classList.add('hidden');
+                    closeI.classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                } else {
+                    openI.classList.remove('hidden');
+                    closeI.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            }
+            updateToggleIcon();
+
+            btn.addEventListener('click', (ev) => {
+                // Só permite minificar em desktop
+                if (window.innerWidth >= MOBILE_BREAKPOINT) {
+                    aside.classList.toggle('minified');
+                    aside.classList.toggle('hs-overlay-minified');
+                    localStorage.setItem(STORAGE_KEY, aside.classList.contains('minified'));
+                    syncContentMargin();
+                    updateToggleIcon();
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth < MOBILE_BREAKPOINT) {
+                    // Mobile: remove minificação
+                    aside.classList.remove('minified');
+                    aside.classList.remove('hs-overlay-minified');
+                } else {
+                    // Desktop: reaplica estado salvo
+                    const saved = localStorage.getItem(STORAGE_KEY) === 'true';
+                    if (saved) {
+                        aside.classList.add('minified');
+                        aside.classList.add('hs-overlay-minified');
+                    } else {
+                        aside.classList.remove('minified');
+                        aside.classList.remove('hs-overlay-minified');
+                    }
+                }
+                syncContentMargin();
+                updateToggleIcon();
+            });
+        })();
+    </script>
+
+    <!-- Bottom Navigation functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const bottomNav = document.getElementById('bottom-nav');
+            const navItems = bottomNav.querySelectorAll('.nav-item');
+            
+            function activateNavItem(clickedItem) {
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                clickedItem.classList.add('active');
+            }
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    activateNavItem(this);
+                    const title = this.getAttribute('data-title');
+                    console.log('Navegando para:', title);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

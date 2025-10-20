@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import (
     landing,
+    sidebar,
+    sidebar2,
     CustomLoginView,
     CustomLogoutView,
     RegisterView,
@@ -11,12 +13,16 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # Página inicial
-    path("", landing, name="landing"),          
+    path("", landing, name="landing"), 
+    path("sidebar/", sidebar, name='sidebar'),
+    path("sidebar2/", sidebar2, name='sidebar2'),
+     
 
     # Autenticação
     path("login/", CustomLoginView.as_view(), name="login"),     
     path("logout/", CustomLogoutView.as_view(), name="logout"),   
     path("register/", RegisterView.as_view(), name="register"),
+   
 
     # Recuperação de senha usando a view customizada
     path(
@@ -40,4 +46,5 @@ urlpatterns = [
         CustomPasswordResetConfirmView.as_view(),
         name="password_reset_confirm"
     ),
+
 ]
