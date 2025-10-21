@@ -1,11 +1,13 @@
 /* --- Efeito Hover dos Cards --- */
-/* Define uma transição suave para os cards */
-#Cardsaldo{
+/* CORRIGIDO: Mudei de #Cardsaldo para as novas classes .cardMC1 e .cardMC2 */
+.cardMC1,
+.cardMC2 {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Quando passa o mouse, o card "levanta" e ganha uma sombra mais forte */
-#Cardsaldo:hover{
+/* CORRIGIDO: Aplica o hover em ambos os cards */
+.cardMC1:hover,
+.cardMC2:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
