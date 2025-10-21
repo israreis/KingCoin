@@ -121,4 +121,4 @@ EMAIL_HOST_PASSWORD = 'qgek rgmh umgq fcsf'  # usar a senha de app gerada
 DEFAULT_FROM_EMAIL = 'KingCoin <kingcoin.eixo3@gmail.com>'
 
 
-LOGIN_REDIRECT_URL = 'landing'
+LOGIN_REDIRECT_URL = 'minha-carteira'
