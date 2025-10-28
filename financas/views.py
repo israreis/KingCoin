@@ -88,3 +88,6 @@ def transacoes(request):
 
 def minha_carteira_view(request):
     return render(request, "financas/carteira.html") 
+
+def dashboard(request):
+    return render(request, "financas/dashboard.html") 

@@ -24,9 +24,13 @@
     
     <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
 
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
 </head>
-<body class="dark-mode"> <div id="app-container">
+<body class="dark-mode">
+
+     <div id="app-container">
         
         <aside id="sidebar" class="sidebar"> 
 
@@ -37,13 +41,13 @@
                 </div>
                 
                 <button class="theme-toggle">
-                    <i class="fas fa-moon"></i> </button>
+                    <i class="fas fa-sun"></i> </button>
             </div>
 
             <nav class="sidebar-nav primary-nav">
                 <ul>
-                    <li class="nav-item">
-                        <a href="#"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
+                    <!-- <li class="nav-item">
+                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
                     </li>
                     
                     <li class="nav-item active"> 
@@ -61,7 +65,42 @@
                     </li>
                     <li class="nav-item">
                         <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
+                    </li> -->
+                                        <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
                     </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
+                        <a href="{% url 'minha-carteira' %}">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="nav-text">Carteira</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'transacoes' %}active{% endif %}">
+                        <a href="{% url 'transacoes' %}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="nav-text">Transações</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'configuracoes' %}active{% endif %}">
+                        <a href="#">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Relatórios</span>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
 
@@ -91,7 +130,7 @@
 
         <main id="main-content" class="p-6 md:p-10">
 
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
                 Minha Carteira
             </h1>
 
@@ -101,12 +140,12 @@
                     <div class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
                         
                         <div class="flex justify-between items-center mb-3 relative p-4">
-                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
                                 Saldo
                             </h2>
 
                             <div class="relative">
-                                <button id="dropdownSaldoBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                                <button id="dropdownSaldoBtn" class="theme-text text-sm flex items-center gap-1 cursor-pointer">
                                     <span id="selectedPeriodoSaldo">Este mês</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -129,7 +168,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                             <span id="saldoPorcentagem">14%</span>
-                            <span class="text-gray-400" id="saldoVariacao">+R$2.576,00 este mês</span>
+                            <span id="saldoVariacao">+R$2.576,00 este mês</span>
                         </p>
                     </div>
                 </div>
@@ -138,12 +177,12 @@
                     <div class="bg-gradient-to-l from-red-600/40 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-red-600/100 shadow-lg transition-all duration-300 ease-in-out">
                         
                         <div class="flex justify-between items-center mb-3 relative p-4">
-                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
                                 Investimentos
                             </h2>
 
                             <div class="relative">
-                                <button id="dropdownInvestBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                                <button id="dropdownInvestBtn" class="theme-text text-sm flex items-center gap-1 cursor-pointer">
                                     <span id="selectedPeriodoInvest">Este mês</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -151,7 +190,7 @@
                                 </button>
 
                                 <div id="dropdownInvest" class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-50 min-w-[160px]">
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este mês</button>
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#301010] bg from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 " data-value="Este mês">Este mês</button>
                                     <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último mês</button>
                                     <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos 3 meses</button>
                                 </div>
@@ -164,7 +203,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                             <span id="investPorcentagem">-7,5%</span>
-                            <span class="text-gray-400" id="investVariacao">neste mês</span>
+                            <span class="theme-text" id="investVariacao">neste mês</span>
                         </p>
                     </div>
                 </div>
@@ -172,9 +211,10 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-slide-fade delay-5 mb-12">
                 
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Ganhos</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div class="bg from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">Ganhos</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
                         <button id="btnGanhos" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Ganhos
@@ -182,9 +222,10 @@
                     </div>
                 </div>
 
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Despesas</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">Despesas</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
                         <button id="btnDespesas" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Despesas
@@ -192,9 +233,10 @@
                     </div>
                 </div>
 
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/3D bg-clip-text text-transparent text-gray-300 mb-2">Investir</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">    
+                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/3D bg-clip-text mb-2 theme-text">Investir</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
                         <button id="btnInvestir" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Investimentos
@@ -203,7 +245,7 @@
                 </div>
             </div>
 
-            <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+            <!-- <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
                 <div class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
                     <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
                         Evolução da Carteira
@@ -212,7 +254,46 @@
                         <canvas id="graficoCarteira"></canvas>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
+                                <!-- Painel de histórico de transações -->
+                    <section class="panel mt-8 w-full max-w-full">
+                        <div class="p-6 md:p-10">
+                            <div class="section-title">Hoje</div>
+
+                            <!-- Transação 1 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#1f6fe0">
+                                        <i class="fa-solid fa-hospital-user"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Saúde - Remédios na farmácia</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                            Categoria • Subcategoria</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount minus">- R$97,00</div>
+                            </div>
+
+                            <!-- Transação 2 -->
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:#f08fe3">
+                                        <i class="fa-solid fa-face-laugh-beam"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">Diversão - Rolê com os amigos</div>
+                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                            Categoria • Subcategoria</div>
+                                    </div>
+                                </div>
+                                <div class="tx-amount minus">- R$148,90</div>
+                            </div>
+
+                            
+                        </div>
+                    </section>
 
         </main>
     </div>
@@ -242,11 +323,11 @@
             
             const icon = themeToggle.querySelector('i');
             if (body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         });
 

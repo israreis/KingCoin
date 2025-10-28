@@ -1,0 +1,281 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGCOIN - Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'lgx': '1200px',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+</head>
+<body class="dark-mode"> <div id="app-container">
+        
+        <aside id="sidebar" class="sidebar"> 
+
+            <div class="sidebar-header desktop-only"> 
+                <div class="logo-container">
+                    <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                    <span class="logo-text">KINGCOIN</span>
+                </div>
+                
+                <button class="theme-toggle">
+                    <i class="fas fa-sun"></i> </button>
+            </div>
+
+            <nav class="sidebar-nav primary-nav">
+                <ul>
+                    <!-- <li class="nav-item">
+                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    
+                    <li class="nav-item active"> 
+                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span class="nav-text">Carteira</span></a>
+                    </li>
+                    
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span class="nav-text">Transações</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
+                    </li> -->
+
+                                        <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'carteira' %}active{% endif %}">
+                        <a href="{% url 'minha-carteira' %}">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="nav-text">Carteira</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'transacoes' %}active{% endif %}">
+                        <a href="{% url 'transacoes' %}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="nav-text">Transações</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'configuracoes' %}active{% endif %}">
+                        <a href="#">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Relatórios</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                
+                <div class="user-profile">
+                    <div class="user-avatar"></div> 
+                    <div class="user-info">
+                        <span class="user-name">Israel Reis</span>
+                        <span class="user-email">israelreis2424@gmail.com</span>
+                    </div>
+                </div>
+                
+                <nav class="sidebar-nav footer-nav-links">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
+                        </li>
+                        <li class="nav-item logout-item">
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </aside>
+
+        <main id="main-content" class="p-6 md:p-10">
+
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
+                Dashboard
+            </h1>
+
+            
+
+            <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+                <div class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
+                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                        Evolução da Carteira
+                    </h2>
+                    <div class="w-3/4 h-[300px]">
+                        <canvas id="graficoCarteira"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'financas/js/dashboard.js' %}"></script>
+
+    <script>
+        // *** Sistema Completo de Navegação ***
+
+        const sidebar = document.getElementById('sidebar');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        // 1. Inicialização
+        function initializeSidebar() {
+            if (window.innerWidth <= 640) {
+                sidebar.classList.remove('collapsed'); 
+            }
+        }
+
+        // 2. Alternar Tema Claro/Escuro
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+          
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // 3. Sistema de Navegação Ativa (CLIQUE)
+        navItems.forEach(item => {
+            if (!item.classList.contains('mobile-logo-placeholder')) {
+                item.addEventListener('click', (e) => {
+                    // Se o item clicado NÃO for o já ativo
+                    if (!item.classList.contains('active')) {
+                        navItems.forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        item.classList.add('active');
+                    }
+                    
+                    if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
+                        sidebar.classList.remove('collapsed');
+                    }
+                });
+            }
+        });
+
+        // 4. Expandir/Contrair
+        
+        // Listener para a logo do DESKTOP
+        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        if (desktopLogoContainer) {
+             desktopLogoContainer.addEventListener('click', () => {
+                if (window.innerWidth > 640) { 
+                    sidebar.classList.toggle('collapsed'); 
+                }
+            });
+        }
+        
+        // Listener para a logo do MOBILE
+        const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
+        if (mobileLogoPlaceholder) {
+            mobileLogoPlaceholder.addEventListener('click', () => {
+                if (window.innerWidth <= 640) { 
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        }
+
+        // 5. Botão de voltar no menu expandido mobile
+        function createBackButton() {
+            const backButton = document.createElement('div');
+            backButton.className = 'mobile-back-button';
+            backButton.innerHTML = `
+                <button class="back-btn">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>Voltar ao Menu</span>
+                </button>
+            `;
+            return backButton;
+        }
+
+        // Adiciona/Remove botão de voltar
+        function checkMobileMenu() {
+            const sidebarFooter = document.querySelector('.sidebar-footer');
+            const existingBackButton = document.querySelector('.mobile-back-button');
+            
+            if (window.innerWidth <= 640 && sidebar.classList.contains('collapsed')) {
+                if (!existingBackButton) {
+                    const backButton = createBackButton();
+                    sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
+                    
+                    backButton.querySelector('.back-btn').addEventListener('click', () => {
+                        sidebar.classList.remove('collapsed');
+                    });
+                }
+            } else {
+                if (existingBackButton) {
+                    existingBackButton.remove();
+                }
+            }
+        }
+        
+        // 7. Gerenciamento de Responsividade
+        function handleResponsive() {
+            if (window.innerWidth <= 640) {
+                if (!sidebar.classList.contains('initialized-mobile')) {
+                    sidebar.classList.remove('collapsed');
+                    sidebar.classList.add('initialized-mobile');
+                }
+            } else {
+                sidebar.classList.remove('initialized-mobile');
+            }
+            checkMobileMenu();
+        }
+
+        // Event Listeners
+        sidebar.addEventListener('transitionend', checkMobileMenu);
+        window.addEventListener('resize', handleResponsive);
+        
+        // Inicialização
+        initializeSidebar();
+        handleResponsive();
+        checkMobileMenu();
+    </script>
+</body>
+</html>

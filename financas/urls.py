@@ -7,7 +7,8 @@ from .views import (  # <-- importando corretamente das views
     RegisterView,
     CustomPasswordResetView,
     CustomPasswordResetConfirmView,
-    minha_carteira_view
+    minha_carteira_view,
+    dashboard
 )
 from django.contrib.auth import views as auth_views
 
@@ -49,4 +50,7 @@ urlpatterns = [
 
     # Nova URL da Carteira
     path('minha-carteira/', minha_carteira_view, name='minha-carteira'),
+
+     # Nova URL da dashboard
+    path('dashboard/', dashboard, name='dashboard'),
 ]
