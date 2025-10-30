@@ -2,10 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINGCOIN - Minha Carteira</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> -->
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -19,31 +21,36 @@
             }
         }
     </script>
-    
+
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-    
+
     <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
-</head>
-<body class="dark-mode"> <div id="app-container">
-        
-        <aside id="sidebar" class="sidebar"> 
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
 
-            <div class="sidebar-header desktop-only"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body class="dark-mode">
+
+    <div id="app-container">
+
+        <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-header desktop-only">
                 <div class="logo-container">
                     <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
                     <span class="logo-text">KINGCOIN</span>
                 </div>
-                
+
                 <button class="theme-toggle">
-                    <i class="fas fa-moon"></i> </button>
+                    <i class="fas fa-sun"></i> </button>
             </div>
 
             <nav class="sidebar-nav primary-nav">
                 <ul>
-                    <li class="nav-item">
-                        <a href="#"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
+                    <!-- <li class="nav-item">
+                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
                     </li>
                     
                     <li class="nav-item active"> 
@@ -61,20 +68,55 @@
                     </li>
                     <li class="nav-item">
                         <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
+                    </li> -->
+                    <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
                     </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
+                        <a href="{% url 'minha-carteira' %}">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="nav-text">Carteira</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'transacoes' %}active{% endif %}">
+                        <a href="{% url 'transacoes' %}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="nav-text">Transações</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'configuracoes' %}active{% endif %}">
+                        <a href="#">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Relatórios</span>
+                        </a>
+                    </li>
+
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-                
+
                 <div class="user-profile">
-                    <div class="user-avatar"></div> 
+                    <div class="user-avatar"></div>
                     <div class="user-info">
                         <span class="user-name">Israel Reis</span>
                         <span class="user-email">israelreis2424@gmail.com</span>
                     </div>
                 </div>
-                
+
                 <nav class="sidebar-nav footer-nav-links">
                     <ul>
                         <li class="nav-item">
@@ -89,34 +131,44 @@
             </div>
         </aside>
 
-        <main id="main-content" class="p-6 md:p-10">
+        <main id="main-content" class="relative p-6 md:p-10">
 
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 text-gray-300 animate-slide-fade delay-1 text-center md:text-left">
+            <h1
+                class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
                 Minha Carteira
             </h1>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10 relative">
 
-                <div class="cardMC1 rounded-4xl animate-slide-fade delay-2 relative z-10">
-                    <div class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
-                        
+                <div class="cardMC1 rounded-[3rem] animate-slide-fade delay-2 relative z-10">
+                    <div
+                        class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+
                         <div class="flex justify-between items-center mb-3 relative p-4">
-                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+                            <h2
+                                class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
                                 Saldo
                             </h2>
 
                             <div class="relative">
-                                <button id="dropdownSaldoBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                                <button id="dropdownSaldoBtn"
+                                    class="theme-text text-sm flex items-center gap-1 cursor-pointer">
                                     <span id="selectedPeriodoSaldo">Este mês</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
 
-                                <div id="dropdownSaldo" class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-50 min-w-[160px]">
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Este mês">Este mês</button>
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Último mês">Último mês</button>
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#123124]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+                                <div id="dropdownSaldo"
+                                    class="hidden absolute right-0 mt-2 bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] z-50 min-w-[160px] bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785]"
+                                        data-value="Este mês">Este mês</button>
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785]"
+                                        data-value="Último mês">Último mês</button>
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785]"
+                                        data-value="Últimos 3 meses">Últimos 3 meses</button>
                                 </div>
                             </div>
                         </div>
@@ -125,85 +177,138 @@
                             R$16.550,00
                         </p>
                         <p class="text-emerald-400 text-xs sm:text-sm flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                             <span id="saldoPorcentagem">14%</span>
-                            <span class="text-gray-400" id="saldoVariacao">+R$2.576,00 este mês</span>
+                            <span id="saldoVariacao">+R$2.576,00 este mês</span>
                         </p>
                     </div>
                 </div>
-            
-                <div class="cardMC2 rounded-4xl animate-slide-fade delay-2 relative z-10">
-                    <div class="bg-gradient-to-l from-red-600/40 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-red-600/100 shadow-lg transition-all duration-300 ease-in-out">
-                        
+
+                <div class="cardMC2 rounded-[3rem] animate-slide-fade delay-2 relative z-10">
+                    <div
+                        class="bg-gradient-to-l from-red-600/40 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-red-600/100 shadow-lg transition-all duration-300 ease-in-out">
+
                         <div class="flex justify-between items-center mb-3 relative p-4">
-                            <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
+                            <h2
+                                class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
                                 Investimentos
                             </h2>
 
                             <div class="relative">
-                                <button id="dropdownInvestBtn" class="text-gray-400 text-sm flex items-center gap-1 cursor-pointer">
+                                <button id="dropdownInvestBtn"
+                                    class="theme-text text-sm flex items-center gap-1 cursor-pointer">
                                     <span id="selectedPeriodoInvest">Este mês</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
 
-                                <div id="dropdownInvest" class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-50 min-w-[160px]">
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Este mês">Este mês</button>
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Último mês">Último mês</button>
-                                    <button class="block px-4 py-2 w-full text-left hover:bg-[#301010]" data-value="Últimos 3 meses">Últimos 3 meses</button>
+                                <div id="dropdownInvest"
+                                    class="hidden absolute right-0 mt-2 bg-[#1a0f0f] rounded-md shadow-lg border border-[#5a1717] z-50 min-w-[160px] bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-red-700"
+                                        data-value="Este mês">Este mês</button>
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-red-700"
+                                        data-value="Último mês">Último mês</button>
+                                    <button class="block px-4 py-2 w-full text-left hover:bg-red-700"
+                                        data-value="Últimos 3 meses">Últimos 3 meses</button>
                                 </div>
                             </div>
                         </div>
 
-                        <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-2 transition-colors duration-300 ease-in-out" id="investValor">R$177.650,00</p>
-                        <p class="text-red-600 text-xs sm:text-sm flex items-center gap-2 transition-colors duration-300 ease-in-out">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 rotate-180 transition-transform duration-300 ease-in-out" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        <p class="text-3xl sm:text-4xl md:text-5xl font-bold text-red-600 mb-2 transition-colors duration-300 ease-in-out"
+                            id="investValor">R$177.650,00</p>
+                        <p
+                            class="text-red-600 text-xs sm:text-sm flex items-center gap-2 transition-colors duration-300 ease-in-out">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-4 w-4 rotate-180 transition-transform duration-300 ease-in-out" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                             <span id="investPorcentagem">-7,5%</span>
-                            <span class="text-gray-400" id="investVariacao">neste mês</span>
+                            <span class="theme-text" id="investVariacao">neste mês</span>
                         </p>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-slide-fade delay-5 mb-12">
-                
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Ganhos</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
+
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div
+                    class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+                    <h2
+                        class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
+                        Ganhos</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todas as suas entradas</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
-                        <button id="btnGanhos" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                        <!-- <button id="btnGanhos"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                            Adicionar Ganhos
+                        </button> -->
+                        <button id="open-crud-modal"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Ganhos
                         </button>
                     </div>
                 </div>
 
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">Despesas</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
+
+
+                <!-- BOTÃO: remova data-modal-toggle/data-modal-target se existirem -->
+                <!-- <button id="open-crud-modal"
+                    class="block text-white bg-[#23b785] hover:bg-[#1f9d72] focus:ring-4 focus:outline-none focus:ring-[#23b785]/50 font-medium rounded-lg text-sm px-5 py-2.5">
+                    Abrir Modal
+                </button> -->
+
+
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div
+                    class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+                    <h2
+                        class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2 theme-text">
+                        Despesas</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todas as suas despesas</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
-                        <button id="btnDespesas" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                        <!-- <button id="btnDespesas"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                            Adicionar Despesas
+                        </button> -->
+                        <button id="open-crud-modal2"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Despesas
                         </button>
+
                     </div>
                 </div>
 
-                <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/3D bg-clip-text text-transparent text-gray-300 mb-2">Investir</h2>
-                    <p class="text-gray-400 mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
+                <!-- <div class="bg-[#131917] rounded-[3rem] p-6 sm:p-8 border border-[#1c2a24] shadow-md text-left"> -->
+                <div
+                    class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-10 sm:p-8 border border-emerald-900/100 ">
+                    <h2
+                        class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/3D bg-clip-text mb-2 theme-text">
+                        Investir</h2>
+                    <p class="theme-text mb-4 sm:mb-6">Registre aqui todos os seus investimentos</p>
                     <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block">
-                        <button id="btnInvestir" class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                        <!-- <button id="btnInvestir"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                            Adicionar Investimentos
+                        </button> -->
+                        <button id="open-crud-modal3"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             Adicionar Investimentos
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+            <!-- <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
                 <div class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
                     <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-transparent text-gray-300 mb-2">
                         Evolução da Carteira
@@ -212,13 +317,347 @@
                         <canvas id="graficoCarteira"></canvas>
                     </div>
                 </div>
+            </div> -->
+
+            <!-- Painel de histórico de transações -->
+            <section class="panel mt-8 w-full max-w-full">
+                <div class="p-6 md:p-10">
+                    <div class="section-title">Últimas movimentações</div>
+
+                    <!-- Transação 1 -->
+                    <div class="tx-row">
+                        <div class="left">
+                            <div class="icon" style="background:#1f6fe0">
+                                <i class="fa-solid fa-hospital-user"></i>
+                            </div>
+                            <div class="tx-info">
+                                <div style="font-weight:600">Saúde - Remédios na farmácia</div>
+                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    Categoria • Subcategoria</div>
+                            </div>
+                        </div>
+                        <div class="tx-amount minus">- R$97,00</div>
+                    </div>
+
+                    <!-- Transação 2 -->
+                    <div class="tx-row">
+                        <div class="left">
+                            <div class="icon" style="background:#f08fe3">
+                                <i class="fa-solid fa-face-laugh-beam"></i>
+                            </div>
+                            <div class="tx-info">
+                                <div style="font-weight:600">Diversão - Rolê com os amigos</div>
+                                <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    Categoria • Subcategoria</div>
+                            </div>
+                        </div>
+                        <div class="tx-amount minus">- R$148,90</div>
+                    </div>
+
+
+                </div>
+            </section>
+
+
+            <!-- MODAL -->
+            <!-- <div id="crud-modal" aria-hidden="true" class="hidden absolute inset-0 z-50 flex items-center justify-center"> -->
+            <div id="crud-modal" aria-hidden="true"
+                class="hidden absolute inset-0 z-50 flex items-start md:items-center justify-center py-6 md:py-12 overflow-y-auto">
+
+
+
+                <!-- Overlay -->
+                <div id="crud-modal-overlay" class="absolute inset-0 bg-black/10 backdrop-blur-lg"></div>
+
+                <!-- Conteúdo do modal -->
+                <div role="dialog" aria-modal="true" aria-labelledby="crud-modal-title"
+                    class="relative h- w-full max-w-xl mx-4 shadow-xl rounded-3xl" style="z-index: 60;">
+                    <div
+                        class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
+                            <h3 id="crud-modal-title" class="text-2xl font-semibold theme-text">Adicionar Ganhos</h3>
+
+                            <!-- Remova data-modal-toggle do botão fechar para evitar conflito -->
+                            <button id="crud-modal-close" type="button"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                <span class="sr-only theme-text">Fechar</span>
+                            </button>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="crud-modal-form" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div class="sm:col-span-2">
+                                <label for="category" class="block text-sm mb-1 theme-text">Categoria</label>
+                                <select id="category" name="category"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Selecione">
+                                    <option class="text-gray-800">Selecione</option>
+                                    <option class="text-gray-800">Salário</option>
+                                    <option class="text-gray-800">Freelance</option>
+                                    <option class="text-gray-800">Aluguel</option>
+                                    <option class="text-gray-800">Aposentadoria</option>
+                                    <option class="text-gray-800">Outros Rendimentos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="date" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
+                                <input id="date" name="date" type="date"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
+                            </div>
+
+
+                            <div>
+                                <label for="price" class="block text-sm mb-1 theme-text">Valor</label>
+                                <input id="price" name="price" type="number"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="R$ 0,00" required>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="description" class="block text-sm mb-1 theme-text">Descrição</label>
+                                <textarea id="description" name="description" rows="4"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Descrição"></textarea>
+                            </div>
+
+                            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button id="crud-modal-save" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
+                                    Salvar
+                                </button>
+                                <button id="crud-modal-cancel" type="button"
+                                    class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
+                                    Cancelar
+                                </button>
+                            </div>
+
+                            <!-- <div class="sm:col-span-2 flex flex-col gap-3">
+                                <button id="crud-modal-save" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-lg py-2.5">
+                                    Salvar Produto
+                                </button>
+                                <button id="crud-modal-cancel" type="button"
+                                    class="w-full bg-transparent border border-white/10 theme-text rounded-lg py-2.5 hover:bg-white/3">
+                                    Cancelar
+                                </button>
+                            </div> -->
+
+                        </form>
+
+                    </div>
+                </div>
             </div>
+
+            <!-- MODAL -->
+            <!-- <div id="crud-modal" aria-hidden="true" class="hidden absolute inset-0 z-50 flex items-center justify-center"> -->
+            <div id="crud-modal2" aria-hidden="true"
+                class="hidden absolute inset-0 z-50 flex items-start md:items-center justify-center py-6 md:py-12 overflow-y-auto">
+
+
+
+                <!-- Overlay -->
+                <div id="crud-modal-overlay2" class="absolute inset-0 bg-black/10 backdrop-blur-lg"></div>
+
+                <!-- Conteúdo do modal -->
+                <div role="dialog" aria-modal="true" aria-labelledby="crud-modal-title"
+                    class="relative h- w-full max-w-xl mx-4 shadow-xl rounded-3xl" style="z-index: 60;">
+                    <div
+                        class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
+                            <h3 id="crud-modal-title2" class="text-2xl font-semibold theme-text">Adicionar Despesas
+                            </h3>
+
+                            <!-- Remova data-modal-toggle do botão fechar para evitar conflito -->
+                            <button id="crud-modal-close2" type="button"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                <span class="sr-only theme-text">Fechar</span>
+                            </button>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="crud-modal-form2" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div class="sm:col-span-2">
+                                <label for="category" class="block text-sm mb-1 theme-text">Categoria</label>
+                                <select id="category2" name="category"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Selecione">
+                                    <option class="text-gray-800">Selecione</option>
+                                    <option class="text-gray-800">Moradia</option>
+                                    <option class="text-gray-800">Alimentação</option>
+                                    <option class="text-gray-800">Transporte</option>
+                                    <option class="text-gray-800">Saúde</option>
+                                    <option class="text-gray-800">Educação</option>
+                                    <option class="text-gray-800">Lazer</option>
+                                    <option class="text-gray-800">Outros gastos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="date" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
+                                <input id="date2" name="date" type="date"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
+                            </div>
+
+
+                            <div>
+                                <label for="price" class="block text-sm mb-1 theme-text">Valor</label>
+                                <input id="price2" name="price" type="number"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="R$ 0,00" required>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="description" class="block text-sm mb-1 theme-text">Descrição</label>
+                                <textarea id="description2" name="description" rows="4"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Descrição"></textarea>
+                            </div>
+
+                            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button id="crud-modal-save2" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
+                                    Salvar
+                                </button>
+                                <button id="crud-modal-cancel2" type="button"
+                                    class="w-full bg-transparent border theme-text rounded-3xl py-2.5 hover:bg-white/20 border-[#23b785]">
+                                    Cancelar
+                                </button>
+                            </div>
+
+                            <!-- <div class="sm:col-span-2 flex flex-col gap-3">
+                                <button id="crud-modal-save" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-lg py-2.5">
+                                    Salvar Produto
+                                </button>
+                                <button id="crud-modal-cancel" type="button"
+                                    class="w-full bg-transparent border border-white/10 theme-text rounded-lg py-2.5 hover:bg-white/3">
+                                    Cancelar
+                                </button>
+                            </div> -->
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL -->
+            <!-- <div id="crud-modal" aria-hidden="true" class="hidden absolute inset-0 z-50 flex items-center justify-center"> -->
+            <div id="crud-modal3" aria-hidden="true"
+                class="hidden absolute inset-0 z-50 flex items-start md:items-center justify-center py-6 md:py-12 overflow-y-auto">
+
+
+
+                <!-- Overlay -->
+                <div id="crud-modal-overlay3" class="absolute inset-0 bg-white/5 backdrop-blur-lg"></div>
+
+                <!-- Conteúdo do modal -->
+                <div role="dialog" aria-modal="true" aria-labelledby="crud-modal-title"
+                    class="relative h- w-full max-w-xl mx-4 shadow-xl rounded-3xl" style="z-index: 60;">
+                    <div
+                        class="relative shadow-xl border border-white/10 bg-black/10 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <!-- Header -->
+                        <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
+                            <h3 id="crud-modal-title3" class="text-2xl font-semibold theme-text">Adicionar Investimentos
+                            </h3>
+
+                            <!-- Remova data-modal-toggle do botão fechar para evitar conflito -->
+                            <button id="crud-modal-close3" type="button"
+                                class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                <span class="sr-only theme-text">Fechar</span>
+                            </button>
+                        </div>
+
+                        <!-- Form -->
+                        <form id="crud-modal-form3" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                            <div class="sm:col-span-2">
+                                <label for="category" class="block text-sm mb-1 theme-text">Categoria</label>
+                                <select id="category3" name="category"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Selecione">
+                                    <option class="text-gray-800">Selecione</option>
+                                    <option class="text-gray-800">Poupança</option>
+                                    <option class="text-gray-800">Previdência privada</option>
+                                    <option class="text-gray-800">Outros investimentos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="date" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
+                                <input id="date3" name="date" type="date"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
+                            </div>
+
+
+                            <div>
+                                <label for="price" class="block text-sm mb-1 theme-text">Valor</label>
+                                <input id="price3" name="price" type="number"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="R$ 0,00" required>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="description" class="block text-sm mb-1 theme-text">Descrição</label>
+                                <textarea id="description3" name="description" rows="4"
+                                    class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                    placeholder="Descrição"></textarea>
+                            </div>
+
+                            <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <button id="crud-modal-save3" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
+                                    Salvar
+                                </button>
+                                <button id="crud-modal-cancel3" type="button"
+                                    class="w-full bg-transparent border theme-text rounded-3xl py-2.5 hover:bg-white/20 border-[#23b785]">
+                                    <!-- border-white/50 -->
+                                    Cancelar
+                                </button>
+                            </div>
+
+                            <!-- <div class="sm:col-span-2 flex flex-col gap-3">
+                                <button id="crud-modal-save" type="submit"
+                                    class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-lg py-2.5">
+                                    Salvar Produto
+                                </button>
+                                <button id="crud-modal-cancel" type="button"
+                                    class="w-full bg-transparent border border-white/10 theme-text rounded-lg py-2.5 hover:bg-white/3">
+                                    Cancelar
+                                </button>
+                            </div> -->
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
 
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'financas/js/carteira.js' %}"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> -->
+
 
     <script>
         // *** Sistema Completo de Navegação ***
@@ -227,11 +666,11 @@
         const themeToggle = document.querySelector('.theme-toggle');
         const body = document.body;
         const navItems = document.querySelectorAll('.nav-item');
-        
+
         // 1. Inicialização
         function initializeSidebar() {
             if (window.innerWidth <= 640) {
-                sidebar.classList.remove('collapsed'); 
+                sidebar.classList.remove('collapsed');
             }
         }
 
@@ -239,14 +678,14 @@
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
-            
+
             const icon = themeToggle.querySelector('i');
             if (body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
             }
         });
 
@@ -261,7 +700,7 @@
                         });
                         item.classList.add('active');
                     }
-                    
+
                     if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
                         sidebar.classList.remove('collapsed');
                     }
@@ -270,22 +709,22 @@
         });
 
         // 4. Expandir/Contrair
-        
+
         // Listener para a logo do DESKTOP
         const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
         if (desktopLogoContainer) {
-             desktopLogoContainer.addEventListener('click', () => {
-                if (window.innerWidth > 640) { 
-                    sidebar.classList.toggle('collapsed'); 
+            desktopLogoContainer.addEventListener('click', () => {
+                if (window.innerWidth > 640) {
+                    sidebar.classList.toggle('collapsed');
                 }
             });
         }
-        
+
         // Listener para a logo do MOBILE
         const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
         if (mobileLogoPlaceholder) {
             mobileLogoPlaceholder.addEventListener('click', () => {
-                if (window.innerWidth <= 640) { 
+                if (window.innerWidth <= 640) {
                     sidebar.classList.toggle('collapsed');
                 }
             });
@@ -308,12 +747,12 @@
         function checkMobileMenu() {
             const sidebarFooter = document.querySelector('.sidebar-footer');
             const existingBackButton = document.querySelector('.mobile-back-button');
-            
+
             if (window.innerWidth <= 640 && sidebar.classList.contains('collapsed')) {
                 if (!existingBackButton) {
                     const backButton = createBackButton();
                     sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
-                    
+
                     backButton.querySelector('.back-btn').addEventListener('click', () => {
                         sidebar.classList.remove('collapsed');
                     });
@@ -324,7 +763,7 @@
                 }
             }
         }
-        
+
         // 7. Gerenciamento de Responsividade
         function handleResponsive() {
             if (window.innerWidth <= 640) {
@@ -341,11 +780,357 @@
         // Event Listeners
         sidebar.addEventListener('transitionend', checkMobileMenu);
         window.addEventListener('resize', handleResponsive);
-        
+
         // Inicialização
         initializeSidebar();
         handleResponsive();
         checkMobileMenu();
     </script>
+
+
+    <!-- SCRIPT: Modal -->
+    <script>
+        (function () {
+            const openBtn = document.getElementById('open-crud-modal');
+            const modal = document.getElementById('crud-modal');
+            const overlay = document.getElementById('crud-modal-overlay');
+            const closeBtn = document.getElementById('crud-modal-close');
+            const cancelBtn = document.getElementById('crud-modal-cancel');
+            const form = document.getElementById('crud-modal-form');
+            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+            let previouslyFocused = null;
+
+            function openModal() {
+                // guarda foco anterior
+                previouslyFocused = document.activeElement;
+
+                // mostra modal
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+
+                // impede scroll do body sem aplicar classes complexas
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+
+                // foco no primeiro input disponível
+                if (firstFocusable) firstFocusable.focus();
+
+                // adiciona listener de teclado para ESC e Tab trap simples
+                document.addEventListener('keydown', handleKeyDown);
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+
+                // restaura scroll
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+
+                // restaura foco
+                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+
+                // remove listener de teclado
+                document.removeEventListener('keydown', handleKeyDown);
+            }
+
+            function handleKeyDown(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+                // se quiser implementar um trap de Tab completo, dá pra acrescentar aqui
+            }
+
+            // Abertura
+            if (openBtn) openBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                openModal();
+            });
+
+            // Fechar por botão X
+            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar por Cancel
+            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar clicando no overlay
+            if (overlay) overlay.addEventListener('click', (ev) => {
+                // se o clique foi exatamente no overlay (fora do modal)
+                if (ev.target === overlay) closeModal();
+            });
+
+            // Submissão do formulário (exemplo: evita reload e fecha modal)
+            if (form) {
+                form.addEventListener('submit', function (ev) {
+                    ev.preventDefault();
+                    // aqui você pode usar AJAX/fetch para enviar os dados
+                    // exemplo mínimo: fechar modal após "salvar"
+                    // TODO: integracao com seu backend
+                    const category = document.getElementById('category').value.trim();
+                    const date = document.getElementById('date').value.trim();
+                    const price = document.getElementById('price').value.trim();
+                    const description = document.getElementById('description').value.trim();
+
+                    // Verifica se os campos obrigatórios estão preenchidos
+                    if (
+                        category === "Selecione" ||
+                        category === "" ||
+                        date === "" ||
+                        price === "" ||
+                        description === ""
+                    ) {
+                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
+                        return;
+                    }
+
+                    // Se estiver tudo certo:
+                    alert("✅ Ganho adicionado com sucesso!");
+                    // closeModal();
+                    form.reset(); // limpa o formulário
+                });
+            }
+
+            // Importante: se estiver usando Flowbite, remova data-modal-toggle/data-modal-target do botão
+            // para evitar que o Flowbite e este script disputem o modal.
+        })();
+    </script>
+
+    <!-- SCRIPT: Modal2 -->
+    <script>
+        (function () {
+            const openBtn = document.getElementById('open-crud-modal2');
+            const modal = document.getElementById('crud-modal2');
+            const overlay = document.getElementById('crud-modal-overlay2');
+            const closeBtn = document.getElementById('crud-modal-close2');
+            const cancelBtn = document.getElementById('crud-modal-cancel2');
+            const form = document.getElementById('crud-modal-form2');
+            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+            let previouslyFocused = null;
+
+            function openModal() {
+                // guarda foco anterior
+                previouslyFocused = document.activeElement;
+
+                // mostra modal
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+
+                // impede scroll do body sem aplicar classes complexas
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+
+                // foco no primeiro input disponível
+                if (firstFocusable) firstFocusable.focus();
+
+                // adiciona listener de teclado para ESC e Tab trap simples
+                document.addEventListener('keydown', handleKeyDown);
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+
+                // restaura scroll
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+
+                // restaura foco
+                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+
+                // remove listener de teclado
+                document.removeEventListener('keydown', handleKeyDown);
+            }
+
+            function handleKeyDown(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+                // se quiser implementar um trap de Tab completo, dá pra acrescentar aqui
+            }
+
+            // Abertura
+            if (openBtn) openBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                openModal();
+            });
+
+            // Fechar por botão X
+            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar por Cancel
+            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar clicando no overlay
+            if (overlay) overlay.addEventListener('click', (ev) => {
+                // se o clique foi exatamente no overlay (fora do modal)
+                if (ev.target === overlay) closeModal();
+            });
+
+            // Submissão do formulário (exemplo: evita reload e fecha modal)
+            if (form) {
+                form.addEventListener('submit', function (ev) {
+                    ev.preventDefault();
+                    // aqui você pode usar AJAX/fetch para enviar os dados
+                    // exemplo mínimo: fechar modal após "salvar"
+                    // TODO: integracao com seu backend
+                    const category = document.getElementById('category2').value.trim();
+                    const date = document.getElementById('date2').value.trim();
+                    const price = document.getElementById('price2').value.trim();
+                    const description = document.getElementById('description2').value.trim();
+
+                    // Verifica se os campos obrigatórios estão preenchidos
+                    if (
+                        category === "Selecione" ||
+                        category === "" ||
+                        date === "" ||
+                        price === "" ||
+                        description === ""
+                    ) {
+                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
+                        return;
+                    }
+
+                    // Se estiver tudo certo:
+                    alert("✅ Despesa adicionada com sucesso!");
+                    // closeModal();
+                    form.reset(); // limpa o formulário
+                });
+            }
+
+            // Importante: se estiver usando Flowbite, remova data-modal-toggle/data-modal-target do botão
+            // para evitar que o Flowbite e este script disputem o modal.
+        })();
+    </script>
+
+    <!-- SCRIPT: Modal3 -->
+    <script>
+        (function () {
+            const openBtn = document.getElementById('open-crud-modal3');
+            const modal = document.getElementById('crud-modal3');
+            const overlay = document.getElementById('crud-modal-overlay3');
+            const closeBtn = document.getElementById('crud-modal-close3');
+            const cancelBtn = document.getElementById('crud-modal-cancel3');
+            const form = document.getElementById('crud-modal-form3');
+            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+            let previouslyFocused = null;
+
+            function openModal() {
+                // guarda foco anterior
+                previouslyFocused = document.activeElement;
+
+                // mostra modal
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+
+                // impede scroll do body sem aplicar classes complexas
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+
+                // foco no primeiro input disponível
+                if (firstFocusable) firstFocusable.focus();
+
+                // adiciona listener de teclado para ESC e Tab trap simples
+                document.addEventListener('keydown', handleKeyDown);
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+
+                // restaura scroll
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+
+                // restaura foco
+                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+
+                // remove listener de teclado
+                document.removeEventListener('keydown', handleKeyDown);
+            }
+
+            function handleKeyDown(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+                // se quiser implementar um trap de Tab completo, dá pra acrescentar aqui
+            }
+
+            // Abertura
+            if (openBtn) openBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                openModal();
+            });
+
+            // Fechar por botão X
+            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar por Cancel
+            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar clicando no overlay
+            if (overlay) overlay.addEventListener('click', (ev) => {
+                // se o clique foi exatamente no overlay (fora do modal)
+                if (ev.target === overlay) closeModal();
+            });
+
+            // Submissão do formulário (exemplo: evita reload e fecha modal)
+            if (form) {
+                form.addEventListener('submit', function (ev) {
+                    ev.preventDefault();
+                    // aqui você pode usar AJAX/fetch para enviar os dados
+                    // exemplo mínimo: fechar modal após "salvar"
+                    // TODO: integracao com seu backend
+
+                    const category = document.getElementById('category3').value.trim();
+                    const date = document.getElementById('date3').value.trim();
+                    const price = document.getElementById('price3').value.trim();
+                    const description = document.getElementById('description3').value.trim();
+
+                    // Verifica se os campos obrigatórios estão preenchidos
+                    if (
+                        category === "Selecione" ||
+                        category === "" ||
+                        date === "" ||
+                        price === "" ||
+                        description === ""
+                    ) {
+                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
+                        return;
+                    }
+
+                    // Se estiver tudo certo:
+                    alert("✅ Investimento adicionado com sucesso!");
+                    // closeModal();
+                    form.reset(); // limpa o formulário
+                });
+            }
+
+            // Importante: se estiver usando Flowbite, remova data-modal-toggle/data-modal-target do botão
+            // para evitar que o Flowbite e este script disputem o modal.
+        })();
+    </script>
+
 </body>
+
 </html>

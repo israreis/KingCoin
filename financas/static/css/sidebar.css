@@ -265,10 +265,10 @@ body {
 }
 .nav-item:not(.active) a:hover {
     background-color: rgba(
-        var(--bg-navbar-color-r, 0), 
-        var(--bg-navbar-color-g, 0), 
-        var(--bg-navbar-color-b, 0), 
-        0.15
+        var(--bg-navbar-color-r, 128), 
+        var(--bg-navbar-color-g, 128), 
+        var(--bg-navbar-color-b, 128), 
+        0.50
     ); 
 }
 .light-mode .nav-item.active a i {
