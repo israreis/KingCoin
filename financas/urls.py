@@ -8,7 +8,8 @@ from .views import (  # <-- importando corretamente das views
     CustomPasswordResetView,
     CustomPasswordResetConfirmView,
     minha_carteira_view,
-    dashboard
+    dashboard,
+    relatorios
 )
 from django.contrib.auth import views as auth_views
 
@@ -53,4 +54,7 @@ urlpatterns = [
 
      # Nova URL da dashboard
     path('dashboard/', dashboard, name='dashboard'),
+
+         # Nova URL da relatorios
+    path('relatorios/', relatorios, name='relatorios'),
 ]

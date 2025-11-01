@@ -91,3 +91,6 @@ def minha_carteira_view(request):
 
 def dashboard(request):
     return render(request, "financas/dashboard.html") 
+
+def relatorios(request):
+    return render(request, "financas/relatorios.html") 
