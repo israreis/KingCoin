@@ -1,0 +1,686 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGCOIN - Minha Carteira</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'lgx': '1200px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/relatorios.css' %}">
+
+    <!-- <link rel="stylesheet" href="{% static 'css/transactions.css' %}"> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body class="dark-mode">
+
+    <div id="app-container">
+
+        <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-header desktop-only">
+                <div class="logo-container">
+                    <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                    <span class="logo-text">KINGCOIN</span>
+                </div>
+
+                <button class="theme-toggle">
+                    <i class="fas fa-sun"></i> </button>
+            </div>
+
+            <nav class="sidebar-nav primary-nav">
+                <ul>
+                    <!-- <li class="nav-item">
+                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
+                    </li>
+                    
+                    <li class="nav-item active"> 
+                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span class="nav-text">Carteira</span></a>
+                    </li>
+                    
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span class="nav-text">Transações</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
+                    </li> -->
+                    <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
+                        <a href="{% url 'minha-carteira' %}">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="nav-text">Carteira</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'transacoes' %}active{% endif %}">
+                        <a href="{% url 'transacoes' %}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="nav-text">Transações</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'relatorios' %}active{% endif %}">
+                        <a href="{% url 'relatorios' %}">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Relatórios</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <div class="user-profile">
+                    <div class="user-avatar"></div>
+                    <div class="user-info">
+                        <span class="user-name">Israel Reis</span>
+                        <span class="user-email">israelreis2424@gmail.com</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav footer-nav-links">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
+                        </li>
+                        <li class="nav-item logout-item">
+                            <a href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </aside>
+
+        <main id="main-content" class="relative p-6 md:p-10">
+
+            <h1
+                class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
+                Relatórios
+            </h1>
+
+            <div
+                class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-8 md:p-10 border border-emerald-900/100 animate-slide-fade delay-2 mb-10">
+                <div class="max-w-6xl mx-auto">
+                    <!-- Período -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-semibold theme-text mb-4">Período</label>
+                        <div class="form-grid">
+                            <div>
+                                <label class="block text-sm theme-text mb-2">Data Inicial</label>
+                                <input type="date" class="date-input">
+                            </div>
+                            <div>
+                                <label class="block text-sm theme-text mb-2">Data Final</label>
+                                <input type="date" class="date-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categorias -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-semibold theme-text mb-4">Categorias</label>
+                        <div class="form-grid">
+                            <!-- Dropdown Ganhos -->
+                            <div class="dropdown-container">
+                                <label class="block text-sm theme-text mb-2">Ganhos</label>
+                                <button class="dropdown-button" type="button" id="ganhosDropdownBtn">
+                                    <span>Selecionar categorias</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu hidden" id="ganhosDropdown">
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="selecionar-todos-ganhos"
+                                                value="selecionar-todos-ganhos">
+                                            <label for="selecionar-todos-ganhos" class="theme-text text-sm">Selecionar
+                                                todos</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="ganho-salario" value="salario">
+                                            <label for="ganho-salario" class="theme-text text-sm">Salário</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="ganho-freelance" value="freelance">
+                                            <label for="ganho-freelance" class="theme-text text-sm">Freelance</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="ganho-aluguel" value="aluguel">
+                                            <label for="ganho-aluguel" class="theme-text text-sm">Aluguel</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="ganho-aposentadoria" value="aposentadoria">
+                                            <label for="ganho-aposentadoria"
+                                                class="theme-text text-sm">Aposentadoria</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="ganho-outros" value="outros">
+                                            <label for="ganho-outros" class="theme-text text-sm">Outros
+                                                Rendimentos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Despesas -->
+                            <div class="dropdown-container">
+                                <label class="block text-sm theme-text mb-2">Despesas</label>
+                                <button class="dropdown-button" type="button" id="despesasDropdownBtn">
+                                    <span>Selecionar categorias</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu hidden" id="despesasDropdown">
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="selecionar-todas-despesas"
+                                                value="selecionar-todas-despesas">
+                                            <label for="selecionar-todas-despesas" class="theme-text text-sm">Selecionar
+                                                todos</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-moradia" value="moradia">
+                                            <label for="despesa-moradia" class="theme-text text-sm">Moradia</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-alimentacao" value="alimentacao">
+                                            <label for="despesa-alimentacao"
+                                                class="theme-text text-sm">Alimentação</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-transporte" value="transporte">
+                                            <label for="despesa-transporte"
+                                                class="theme-text text-sm">Transporte</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-saude" value="saude">
+                                            <label for="despesa-saude" class="theme-text text-sm">Saúde</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-educacao" value="educacao">
+                                            <label for="despesa-educacao" class="theme-text text-sm">Educação</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-lazer" value="lazer">
+                                            <label for="despesa-lazer" class="theme-text text-sm">Lazer</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="despesa-outros" value="outros">
+                                            <label for="despesa-outros" class="theme-text text-sm">Outros Gastos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Investimentos -->
+                            <div class="dropdown-container">
+                                <label class="block text-sm theme-text mb-2">Investimentos</label>
+                                <button class="dropdown-button" type="button" id="investimentosDropdownBtn">
+                                    <span>Selecionar categorias</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu hidden" id="investimentosDropdown">
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="selecionar-todos-investimento"
+                                                value="selecionar-todos-investimento">
+                                            <label for="selecionar-todos-investimento"
+                                                class="theme-text text-sm">Selecionar todos</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="investimento-poupanca" value="poupanca">
+                                            <label for="investimento-poupanca"
+                                                class="theme-text text-sm">Poupança</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="investimento-previdencia" value="previdencia">
+                                            <label for="investimento-previdencia" class="theme-text text-sm">Previdência
+                                                Privada</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="investimento-outros" value="outros">
+                                            <label for="investimento-outros" class="theme-text text-sm">Outros
+                                                Investimentos</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dropdown Formato do Arquivo -->
+                            <div class="dropdown-container">
+                                <label class="block text-sm theme-text mb-2">Formato do Arquivo</label>
+                                <button class="dropdown-button" type="button" id="formatoDropdownBtn">
+                                    <span>Selecionar formato</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu hidden" id="formatoDropdown">
+                                    <div class="dropdown-item">
+                                        <div class="radio-item">
+                                            <input type="radio" id="formato-pdf" name="formato" value="pdf">
+                                            <label for="formato-pdf" class="theme-text text-sm">PDF</label>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="radio-item">
+                                            <input type="radio" id="formato-xlsx" name="formato" value="xlsx">
+                                            <label for="formato-xlsx" class="theme-text text-sm">XLSX (Excel)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão Gerar Relatório -->
+                    <div class="text-center">
+                        <button class="generate-btn">
+                            <i class="fas fa-download mr-2"></i>
+                            Gerar Relatório
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Área de preview do relatório (opcional) -->
+            <!-- <div
+                class="bg-gradient-to-l from-[#23b785]/15 via-transparent to-transparent rounded-[3rem] p-8 md:p-10 border border-emerald-900/70 animate-slide-fade delay-3">
+                <h2 class="text-2xl font-semibold theme-text mb-6 text-center">Pré-visualização do Relatório</h2>
+                <div class="text-center theme-text opacity-70">
+                    <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                    <p>Selecione as opções acima e clique em "Gerar Relatório" para visualizar seus dados.</p>
+                </div>
+            </div> -->
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'financas/js/carteira.js' %}"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> -->
+
+
+    <script>
+        // *** Sistema Completo de Navegação ***
+
+        const sidebar = document.getElementById('sidebar');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const navItems = document.querySelectorAll('.nav-item');
+
+        // 1. Inicialização
+        function initializeSidebar() {
+            if (window.innerWidth <= 640) {
+                sidebar.classList.remove('collapsed');
+            }
+        }
+
+        // 2. Alternar Tema Claro/Escuro
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // 3. Sistema de Navegação Ativa (CLIQUE)
+        navItems.forEach(item => {
+            if (!item.classList.contains('mobile-logo-placeholder')) {
+                item.addEventListener('click', (e) => {
+                    // Se o item clicado NÃO for o já ativo
+                    if (!item.classList.contains('active')) {
+                        navItems.forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        item.classList.add('active');
+                    }
+
+                    if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
+                        sidebar.classList.remove('collapsed');
+                    }
+                });
+            }
+        });
+
+        // 4. Expandir/Contrair
+
+        // Listener para a logo do DESKTOP
+        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        if (desktopLogoContainer) {
+            desktopLogoContainer.addEventListener('click', () => {
+                if (window.innerWidth > 640) {
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        }
+
+        // Listener para a logo do MOBILE
+        const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
+        if (mobileLogoPlaceholder) {
+            mobileLogoPlaceholder.addEventListener('click', () => {
+                if (window.innerWidth <= 640) {
+                    sidebar.classList.toggle('collapsed');
+                }
+            });
+        }
+
+        // 5. Botão de voltar no menu expandido mobile
+        function createBackButton() {
+            const backButton = document.createElement('div');
+            backButton.className = 'mobile-back-button';
+            backButton.innerHTML = `
+                <button class="back-btn">
+                    <i class="fas fa-chevron-down"></i>
+                    <span>Voltar ao Menu</span>
+                </button>
+            `;
+            return backButton;
+        }
+
+        // Adiciona/Remove botão de voltar
+        function checkMobileMenu() {
+            const sidebarFooter = document.querySelector('.sidebar-footer');
+            const existingBackButton = document.querySelector('.mobile-back-button');
+
+            if (window.innerWidth <= 640 && sidebar.classList.contains('collapsed')) {
+                if (!existingBackButton) {
+                    const backButton = createBackButton();
+                    sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
+
+                    backButton.querySelector('.back-btn').addEventListener('click', () => {
+                        sidebar.classList.remove('collapsed');
+                    });
+                }
+            } else {
+                if (existingBackButton) {
+                    existingBackButton.remove();
+                }
+            }
+        }
+
+        // 7. Gerenciamento de Responsividade
+        function handleResponsive() {
+            if (window.innerWidth <= 640) {
+                if (!sidebar.classList.contains('initialized-mobile')) {
+                    sidebar.classList.remove('collapsed');
+                    sidebar.classList.add('initialized-mobile');
+                }
+            } else {
+                sidebar.classList.remove('initialized-mobile');
+            }
+            checkMobileMenu();
+        }
+
+        // Event Listeners
+        sidebar.addEventListener('transitionend', checkMobileMenu);
+        window.addEventListener('resize', handleResponsive);
+
+        // Inicialização
+        initializeSidebar();
+        handleResponsive();
+        checkMobileMenu();
+    </script>
+
+    <script>
+        // Sistema de dropdowns
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configuração dos dropdowns
+            const dropdowns = [
+                { button: 'ganhosDropdownBtn', menu: 'ganhosDropdown' },
+                { button: 'despesasDropdownBtn', menu: 'despesasDropdown' },
+                { button: 'investimentosDropdownBtn', menu: 'investimentosDropdown' },
+                { button: 'formatoDropdownBtn', menu: 'formatoDropdown' }
+            ];
+
+            dropdowns.forEach(dropdown => {
+                const button = document.getElementById(dropdown.button);
+                const menu = document.getElementById(dropdown.menu);
+
+                if (button && menu) {
+                    button.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        // Fecha outros dropdowns
+                        dropdowns.forEach(other => {
+                            if (other.menu !== dropdown.menu) {
+                                const otherMenu = document.getElementById(other.menu);
+                                if (otherMenu) otherMenu.classList.add('hidden');
+                            }
+                        });
+                        // Alterna o dropdown atual
+                        menu.classList.toggle('hidden');
+                    });
+
+                    // Atualiza o texto do botão quando itens são selecionados
+                    if (dropdown.menu === 'formatoDropdown') {
+                        const radioInputs = menu.querySelectorAll('input[type="radio"]');
+                        radioInputs.forEach(radio => {
+                            radio.addEventListener('change', function () {
+                                button.querySelector('span').textContent = this.nextElementSibling.textContent;
+                                menu.classList.add('hidden');
+                            });
+                        });
+                    } else {
+                        const checkboxes = menu.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function () {
+                                const selectedCount = menu.querySelectorAll('input[type="checkbox"]:checked').length;
+                                if (selectedCount === 0) {
+                                    button.querySelector('span').textContent = 'Selecionar categorias';
+                                } else {
+                                    button.querySelector('span').textContent = `${selectedCount} selecionada(s)`;
+                                }
+                            });
+                        });
+                    }
+                }
+            });
+
+            // Fecha dropdowns ao clicar fora
+            document.addEventListener('click', function () {
+                dropdowns.forEach(dropdown => {
+                    const menu = document.getElementById(dropdown.menu);
+                    if (menu) menu.classList.add('hidden');
+                });
+            });
+
+        });
+        // // Adiciona evento ao botão Gerar Relatório
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const generateBtn = document.querySelector('.generate-btn');
+
+        //     if (generateBtn) {
+        //         generateBtn.addEventListener('click', function (e) {
+        //             e.preventDefault();
+        //             alert('Download iniciado! Seu relatório está sendo gerado.');
+        //         });
+        //     }
+        // });
+
+        // ========== VALIDAÇÃO DO FORMULÁRIO DE RELATÓRIOS ==========
+        const generateBtn = document.querySelector('.generate-btn');
+        const dateInputs = document.querySelectorAll('.date-input');
+
+        // Função para verificar se todos os campos estão preenchidos
+        function validateForm() {
+            // Verifica datas
+            const dataInicial = dateInputs[0].value;
+            const dataFinal = dateInputs[1].value;
+
+            if (!dataInicial || !dataFinal) {
+                return false;
+            }
+
+            // Verifica se pelo menos uma categoria de cada tipo foi selecionada
+            const ganhosSelecionados = document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:checked').length > 0;
+            const despesasSelecionadas = document.querySelectorAll('#despesasDropdown input[type="checkbox"]:checked').length > 0;
+            const investimentosSelecionados = document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:checked').length > 0;
+
+            if (!ganhosSelecionados || !despesasSelecionadas || !investimentosSelecionados) {
+                return false;
+            }
+
+            // Verifica se um formato foi selecionado
+            const formatoSelecionado = document.querySelector('#formatoDropdown input[type="radio"]:checked');
+            if (!formatoSelecionado) {
+                return false;
+            }
+
+            return true;
+        }
+
+        // Função para atualizar o estado do botão
+        function updateButtonState() {
+            if (validateForm()) {
+                generateBtn.disabled = false;
+                generateBtn.style.opacity = '1';
+                generateBtn.style.cursor = 'pointer';
+                generateBtn.style.transform = 'none';
+            } else {
+                generateBtn.disabled = true;
+                generateBtn.style.opacity = '0.6';
+                generateBtn.style.cursor = 'not-allowed';
+                generateBtn.style.transform = 'none';
+            }
+        }
+
+        // Adiciona eventos para todos os campos
+        dateInputs.forEach(input => {
+            input.addEventListener('change', updateButtonState);
+            input.addEventListener('input', updateButtonState);
+        });
+
+        // Adiciona eventos para checkboxes e radios
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+        allCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateButtonState);
+        });
+
+        // Adiciona evento ao botão
+        generateBtn.addEventListener('click', function (e) {
+            if (!validateForm()) {
+                e.preventDefault();
+                alert('Por favor, preencha todas as opções antes de gerar o relatório.');
+                return;
+            }
+
+            // Se tudo estiver válido, mostra o alerta de download
+            alert('Download iniciado! Seu relatório está sendo gerado.');
+        });
+
+        // Inicializa o estado do botão
+        updateButtonState();
+
+        // Adiciona estilo CSS para o botão desabilitado
+        const style = document.createElement('style');
+        style.textContent = `
+            .generate-btn:disabled {
+                background: linear-gradient(135deg, #666, #888) !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            
+            .generate-btn:disabled:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>
