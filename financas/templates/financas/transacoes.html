@@ -23,6 +23,20 @@
     <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
     <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <style>
+        .logo-text {
+            /* Aplica a fonte Unbounded  */
+            font-family: 'Unbounded', sans-serif; 
+
+             /* Estilos para a logo  */
+            font-size: 16px;
+            font-weight: 300; 
+            color: --text-color; 
+            text-transform: uppercase;
+        }
+    </style>
     
     <style>
         /* Estilos adicionais para garantir que os dropdowns fiquem acima de tudo */
@@ -121,7 +135,7 @@
                             <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
                         </li>
                     </ul>
                 </nav>

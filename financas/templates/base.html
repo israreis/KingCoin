@@ -26,6 +26,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <style>
+        .logo-text {
+            /* Aplica a fonte Unbounded  */
+            font-family: 'Unbounded', sans-serif; 
+
+             /* Estilos para a logo  */
+            font-size: 16px;
+            font-weight: 300; 
+            color: --text-color; 
+            text-transform: uppercase;
+        }
+    </style>
         
     {% block extra_head %}{% endblock %}
 </head>
@@ -60,11 +74,11 @@
             <!-- Ações (desktop) -->
             <div class="hidden lgx:flex items-center space-x-3 mr-7">
                 <!-- Botão Tema Desktop -->
-                <button id="theme-toggle"
+                <!-- <button id="theme-toggle"
                     class="w-10 h-10 flex items-center justify-center rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">
                     <span id="sun-icon" class="block">☀️</span>
                     <span id="moon-icon" class="hidden">🌙</span>
-                </button>
+                </button> -->
 
                 <a href="{% url 'register' %}"
                     class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastro</a>

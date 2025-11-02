@@ -29,6 +29,21 @@
     <!-- <link rel="stylesheet" href="{% static 'css/transactions.css' %}"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <style>
+        .logo-text {
+            /* Aplica a fonte Unbounded  */
+            font-family: 'Unbounded', sans-serif;
+
+            /* Estilos para a logo  */
+            font-size: 16px;
+            font-weight: 300;
+            color: --text-color;
+            text-transform: uppercase;
+        }
+
+    </style>
 
 </head>
 
@@ -124,7 +139,8 @@
                             <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="#"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span
+                                    class="nav-text">Logout</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -608,20 +624,20 @@
                 return false;
             }
 
-            // Verifica se pelo menos uma categoria de cada tipo foi selecionada
-            const ganhosSelecionados = document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:checked').length > 0;
-            const despesasSelecionadas = document.querySelectorAll('#despesasDropdown input[type="checkbox"]:checked').length > 0;
-            const investimentosSelecionados = document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:checked').length > 0;
+            // // Verifica se pelo menos uma categoria de cada tipo foi selecionada
+            // const ganhosSelecionados = document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:checked').length > 0;
+            // const despesasSelecionadas = document.querySelectorAll('#despesasDropdown input[type="checkbox"]:checked').length > 0;
+            // const investimentosSelecionados = document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:checked').length > 0;
 
-            if (!ganhosSelecionados || !despesasSelecionadas || !investimentosSelecionados) {
-                return false;
-            }
+            // if (!ganhosSelecionados || !despesasSelecionadas || !investimentosSelecionados) {
+            //     return false;
+            // }
 
-            // Verifica se um formato foi selecionado
-            const formatoSelecionado = document.querySelector('#formatoDropdown input[type="radio"]:checked');
-            if (!formatoSelecionado) {
-                return false;
-            }
+            // // Verifica se um formato foi selecionado
+            // const formatoSelecionado = document.querySelector('#formatoDropdown input[type="radio"]:checked');
+            // if (!formatoSelecionado) {
+            //     return false;
+            // }
 
             return true;
         }

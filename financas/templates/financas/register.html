@@ -13,11 +13,17 @@
   <div id="bg-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 -z-10" style="background-image: url('{% static 'img/background-escuro.png' %}')"></div>
 
   <!-- Botão de alternar tema (claro/escuro) -->
-  <div class="absolute top-6 right-8 flex items-center gap-2 z-20">
+  <!-- <div class="absolute top-6 right-8 flex items-center gap-2 z-20">
     <label class="relative inline-flex items-center cursor-pointer">
       <input type="checkbox" id="theme-toggle" class="sr-only peer">
       <div class="w-12 h-6 bg-gray-400 rounded-full peer peer-checked:after:translate-x-6 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-[#23b785] after:h-5 after:w-5 after:rounded-full after:transition-all peer-checked:bg-[#23b785]/30"></div>
     </label>
+  </div> -->
+
+  <div class="absolute top-6 right-8 flex items-center gap-2 z-20">
+    <button class="theme-toggle bg-transparent border-none cursor-pointer text-xl text-white" id="theme-toggle">
+      <i class="fas fa-sun text-[#fffcf0]"></i>
+    </button>
   </div>
 
   <!-- Logo do site -->
@@ -118,7 +124,7 @@
   </div>
 
   <!-- Script para alternar tema -->
-  <script>
+  <!-- <script>
     const toggle = document.getElementById('theme-toggle');
     const body = document.getElementById('body');
     const card = document.getElementById('register-card');
@@ -126,6 +132,7 @@
     const bottomText = document.getElementById('bottom-text');
     const bgImage = document.getElementById('bg-image');
     const logoImg = document.getElementById('logo-img');
+     const themeIcon = toggle.querySelector('i');
     
     const BG_DARK = "url('{% static 'img/background-escuro.png' %}')";
     const BG_LIGHT = "url('{% static 'img/background-claro.png' %}')";
@@ -144,7 +151,13 @@
         bottomText.classList.replace('text-gray-300', 'text-[#4b4b4b]');
         bgImage.style.backgroundImage = BG_LIGHT;
         logoImg.src = LOGO_LIGHT;
-        toggle.checked = true;
+        // toggle.checked = true;
+
+   // Atualizar ícone para lua
+        themeIcon.classList.remove('fa-sun', 'text-[#fffcf0]');
+        themeIcon.classList.add('fa-moon', 'text-[#000805]');
+
+
         localStorage.setItem('theme', 'light');
       } else {
         // Tema escuro
@@ -156,7 +169,11 @@
         bottomText.classList.replace('text-[#4b4b4b]', 'text-gray-300');
         bgImage.style.backgroundImage = BG_DARK;
         logoImg.src = LOGO_DARK;
-        toggle.checked = false;
+        // toggle.checked = false;
+        // Atualizar ícone para sol
+         themeIcon.classList.remove('fa-moon', 'text-[#000805]');
+      themeIcon.classList.add('fa-sun', 'text-[#fffcf0]');
+
         localStorage.setItem('theme', 'dark');
       }
     }
@@ -170,7 +187,106 @@
     });
 
     // Alternar tema ao clicar
-    toggle.addEventListener('change', () => applyTheme(toggle.checked));
-  </script>
+    // toggle.addEventListener('change', () => applyTheme(toggle.checked));
+        toggle.addEventListener('click', () => {
+      const isLight = body.classList.contains('bg-[#fffcf0]');
+      applyTheme(!isLight);
+        });
+  </script> -->
+
+  <script>
+  const toggle = document.getElementById('theme-toggle');
+  const body = document.getElementById('body');
+  const card = document.getElementById('register-card');
+  const descText = document.getElementById('description-text');
+  const bottomText = document.getElementById('bottom-text');
+  const bgImage = document.getElementById('bg-image');
+  const logoImg = document.getElementById('logo-img');
+  const themeIcon = toggle ? toggle.querySelector('i') : null;
+
+  const BG_DARK = "url('{% static 'img/background-escuro.png' %}')";
+  const BG_LIGHT = "url('{% static 'img/background-claro.png' %}')";
+  const LOGO_DARK = "{% static 'img/KingCoinLogo.svg' %}";
+  const LOGO_LIGHT = "{% static 'img/KingCoin-Logo-Light.svg' %}";
+
+  // Helpers para o ícone
+  function setIconToSun() {
+    if (!themeIcon) return;
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.remove('text-[#000805]');
+    themeIcon.classList.add('fa-sun');
+    themeIcon.classList.add('text-[#fffcf0]');
+  }
+
+  function setIconToMoon() {
+    if (!themeIcon) return;
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.remove('text-[#fffcf0]');
+    themeIcon.classList.add('fa-moon');
+    themeIcon.classList.add('text-[#000805]');
+  }
+
+  // Aplica o tema (isLight = true => claro, false => escuro)
+  function applyTheme(isLight) {
+    if (!body) return;
+    if (isLight) {
+      // Tema claro
+      body.classList.remove('bg-[#000805]', 'text-white');
+      body.classList.add('bg-[#fffcf0]', 'text-[#000805]');
+      if (card) { card.classList.remove('glass-dark'); card.classList.add('glass-light'); }
+      if (descText) { descText.classList.remove('text-gray-300'); descText.classList.add('text-[#4b4b4b]'); }
+      if (bottomText) { bottomText.classList.remove('text-gray-300'); bottomText.classList.add('text-[#4b4b4b]'); }
+      if (bgImage) bgImage.style.backgroundImage = BG_LIGHT;
+      if (logoImg) logoImg.src = LOGO_LIGHT;
+      setIconToMoon();
+      localStorage.setItem('theme', 'light');
+      body.setAttribute('data-theme', 'light');
+      console.log('[theme] aplicado: claro');
+    } else {
+      // Tema escuro
+      body.classList.remove('bg-[#fffcf0]', 'text-[#000805]');
+      body.classList.add('bg-[#000805]', 'text-white');
+      if (card) { card.classList.remove('glass-light'); card.classList.add('glass-dark'); }
+      if (descText) { descText.classList.remove('text-[#4b4b4b]'); descText.classList.add('text-gray-300'); }
+      if (bottomText) { bottomText.classList.remove('text-[#4b4b4b]'); bottomText.classList.add('text-gray-300'); }
+      if (bgImage) bgImage.style.backgroundImage = BG_DARK;
+      if (logoImg) logoImg.src = LOGO_DARK;
+      setIconToSun();
+      localStorage.setItem('theme', 'dark');
+      body.setAttribute('data-theme', 'dark');
+      console.log('[theme] aplicado: escuro');
+    }
+  }
+
+  // Inicialização: força tema escuro ao carregar
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      // Forçar escuro por padrão nesta página de cadastro
+      applyTheme(false);
+      localStorage.setItem('theme', 'dark');
+
+      // Evita flicker de transição na carga inicial
+      body.classList.remove('transition-colors', 'duration-500');
+      setTimeout(() => body.classList.add('transition-colors', 'duration-500'), 120);
+
+      console.log('[theme] inicialização completa (forçado escuro)');
+    } catch (err) {
+      console.error('[theme] erro na inicialização:', err);
+      // fallback
+      applyTheme(false);
+    }
+  });
+
+  // Alternar tema ao clicar no botão (mantém persistência)
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const isLightNow = body.getAttribute('data-theme') === 'light';
+      applyTheme(!isLightNow);
+    });
+  } else {
+    console.warn('[theme] botão de alternância (#theme-toggle) não encontrado.');
+  }
+</script>
+
 </body>
 {% endblock %}
