@@ -7,13 +7,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KINGCOIN - Transações</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'lgx': '1200px',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
     <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
-     <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Estilos adicionais para garantir que os dropdowns fiquem acima de tudo */
+        .dropdown-container {
+            position: relative;
+            z-index: 40;
+        }
+        
+        .dropdown-menu {
+            z-index: 50 !important;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 0.5rem;
+        }
+        
+        /* Garantir que o modal tenha z-index mais alto */
+        .modal-overlay {
+            z-index: 60;
+        }
+        
+        .modal-content {
+            z-index: 70;
+        }
+    </style>
 </head>
 
-<body class="dark-mode"> <!-- Iniciar no tema escuro -->
+<body class="dark-mode">
 
     <div id="app-container">
 
@@ -26,39 +63,11 @@
                 </div>
 
                 <button class="theme-toggle">
-                    <i class="fas fa-sun"></i> <!-- Ícone de lua para tema escuro fas fa-moon--> 
-                </button>
+                    <i class="fas fa-sun"></i> </button>
             </div>
 
             <nav class="sidebar-nav primary-nav">
                 <ul>
-                    <!-- <li class="nav-item">
-                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span
-                                class="nav-text">Dashboard</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span
-                                class="nav-text">Carteira</span></a>
-                    </li>
-
-                    <li class="nav-item mobile-logo-placeholder">
-                        <div class="logo-container">
-                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span
-                                class="nav-text">Transações</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
-                    </li> -->
-
-
-                    
-
-
                     <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
                             <i class="fas fa-th-large"></i>
@@ -66,13 +75,12 @@
                         </a>
                     </li>
 
-                    <li class="nav-item {% if request.resolver_match.url_name == 'carteira' %}active{% endif %}">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
                         <a href="{% url 'minha-carteira' %}">
                             <i class="fas fa-credit-card"></i>
                             <span class="nav-text">Carteira</span>
                         </a>
                     </li>
-
 
                     <li class="nav-item mobile-logo-placeholder">
                         <div class="logo-container">
@@ -88,15 +96,11 @@
                     </li>
 
                     <li class="nav-item {% if request.resolver_match.url_name == 'configuracoes' %}active{% endif %}">
-                        <a href="{% url 'relatorios' %}">
+                        <a href="#">
                             <i class="fas fa-chart-bar"></i>
                             <span class="nav-text">Relatórios</span>
                         </a>
                     </li>
-
-
-
-
 
                 </ul>
             </nav>
@@ -125,151 +129,279 @@
             </div>
         </aside>
 
-        <main id="main-content">
-            <div class="content-wrapper">
-                <div class="content-section">
-                    <!-- Cabeçalho / título -->
-                    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-6">
-                        <div>
-                            <h1 class="page-title">Transações</h1>
+        <!-- ESTRUTURA IDÊNTICA À CARTEIRA -->
+        <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
+            <div class="max-w-7xl mx-auto xl:ml-8 xl:mr-auto mt-6">
+
+                <h1
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
+                    Transações
+                </h1>
+
+                <!-- Filtros e Botão Adicionar -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4 animate-slide-fade delay-2 relative z-30">
+                    <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                        <!-- Filtro por período -->
+                        <div class="dropdown-container">
+                            <button id="dropdownPeriodoBtn"
+                                class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
+                                <span id="selectedPeriodo">Este mês</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <div id="dropdownPeriodo"
+                                class="dropdown-menu hidden bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] min-w-[160px] theme-text">
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Este mês">Este mês</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Último mês">Último mês</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Últimos 3 meses">Últimos 3 meses</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Este ano">Este ano</button>
+                            </div>
+                        </div>
+
+                        <!-- Filtro por categoria -->
+                        <div class="dropdown-container">
+                            <button id="dropdownCategoriaBtn"
+                                class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
+                                <span id="selectedCategoria">Todas categorias</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            <div id="dropdownCategoria"
+                                class="dropdown-menu hidden bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] min-w-[200px] theme-text">
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Todas categorias">Todas categorias</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Ganhos">Ganhos</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Despesas">Despesas</button>
+                                <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
+                                    data-value="Investimentos">Investimentos</button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- CARDS SUPERIORES - SCROLL HORIZONTAL EM MOBILE -->
-                    <div class="top-cards" role="list" aria-label="Destaques financeiros">
-                        <!-- Card 1 -->
-                        <article class="card g-blue">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="text-sm text-gray-300">Maior despesa <span
-                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                                    <h3 style="color:#e9f0ec"> <i class="fa-solid fa-circle-plus"
-                                            style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
-                                    <div style="margin-top:6px; font-size:13px; color:#ff6b6b"><i
-                                            class="fa-solid fa-arrow-trend-down" style="margin-right:8px"></i>14% <span
-                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Card 2 -->
-                        <article class="card g-purple">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="text-sm text-gray-300">Menor despesa <span
-                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                                    <h3 style="color:#f2e8ff"> <i class="fa-solid fa-face-laugh-beam"
-                                            style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
-                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Card 3 -->
-                        <article class="card g-green">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="text-sm text-gray-300">Maior entrada <span
-                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                                    <h3 style="color:#e8fff2"> <i class="fa-solid fa-dollar-sign"
-                                            style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
-                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Card 4 -->
-                        <article class="card g-navy">
-                            <div class="flex items-start justify-between">
-                                <div>
-                                    <div class="text-sm text-gray-300">Maior invest. <span
-                                            class="ml-2 text-xs text-gray-400">Este mês ▾</span></div>
-                                    <h3 style="color:#f5f8fb"> <i class="fa-solid fa-coins"
-                                            style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
-                                    <div style="margin-top:6px; font-size:13px; color:#6ee7b7"><i
-                                            class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                            style="color:#aab3b1; margin-left:6px; font-size:12px">este mês</span></div>
-                                </div>
-                            </div>
-                        </article>
+                    <!-- Botão Adicionar -->
+                    <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full md:w-auto">
+                        <button id="open-transaction-modal"
+                            class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
+                            <i class="fas fa-plus mr-2"></i> Nova Transação
+                        </button>
                     </div>
-
-                    <!-- Painel de histórico de transações -->
-                    <section class="panel mt-8">
-                        <div class="p-6 md:p-10">
-                            <div class="section-title">Hoje</div>
-
-                            <!-- Transação 1 -->
-                            <div class="tx-row">
-                                <div class="left">
-                                    <div class="icon" style="background:#1f6fe0">
-                                        <i class="fa-solid fa-hospital-user"></i>
-                                    </div>
-                                    <div class="tx-info">
-                                        <div style="font-weight:600">Saúde - Remédios na farmácia</div>
-                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
-                                            Categoria • Subcategoria</div>
-                                    </div>
-                                </div>
-                                <div class="tx-amount minus">- R$97,00</div>
-                            </div>
-
-                            <!-- Transação 2 -->
-                            <div class="tx-row">
-                                <div class="left">
-                                    <div class="icon" style="background:#f08fe3">
-                                        <i class="fa-solid fa-face-laugh-beam"></i>
-                                    </div>
-                                    <div class="tx-info">
-                                        <div style="font-weight:600">Diversão - Rolê com os amigos</div>
-                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
-                                            Categoria • Subcategoria</div>
-                                    </div>
-                                </div>
-                                <div class="tx-amount minus">- R$148,90</div>
-                            </div>
-
-                            <!-- LINHA DIVISÓRIA ÚNICA - SEPARA HOJE DE ONTEM -->
-                            <div class="thin-hr"></div>
-
-                            <div class="section-title">Ontem</div>
-
-                            <!-- Transação 3 -->
-                            <div class="tx-row">
-                                <div class="left">
-                                    <div class="icon" style="background:#b53b3b">
-                                        <i class="fa-solid fa-file-invoice-dollar"></i>
-                                    </div>
-                                    <div class="tx-info">
-                                        <div style="font-weight:600">Contas - Conta de Luz e Água</div>
-                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Fixo •
-                                            Mensal</div>
-                                    </div>
-                                </div>
-                                <div class="tx-amount minus">- R$427,90</div>
-                            </div>
-
-                            <!-- Transação 4 -->
-                            <div class="tx-row">
-                                <div class="left">
-                                    <div class="icon" style="background:#1f6fe0">
-                                        <i class="fa-solid fa-dollar-sign"></i>
-                                    </div>
-                                    <div class="tx-info">
-                                        <div style="font-weight:600">Salário</div>
-                                        <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
-                                            Recebimento • Emprego</div>
-                                    </div>
-                                </div>
-                                <div class="tx-amount plus">+ R$5.456,37</div>
-                            </div>
-                        </div>
-                    </section>
                 </div>
+
+                <!-- Painel de histórico de transações - MESMA LARGURA DA CARTEIRA -->
+                <section class="panel mt-8 w-full max-w-full animate-slide-fade delay-3 relative z-10">
+                    <div class="p-6 md:p-10">
+                        <div class="section-title">Hoje</div>
+
+                        <!-- Transação 1 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#1f6fe0">
+                                    <i class="fa-solid fa-hospital-user"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">Saúde - Remédios na farmácia</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                        Despesas • Saúde</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount minus">- R$97,00</div>
+                        </div>
+
+                        <!-- Transação 2 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#f08fe3">
+                                    <i class="fa-solid fa-face-laugh-beam"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">Diversão - Rolê com os amigos</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                        Despesas • Lazer</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount minus">- R$148,90</div>
+                        </div>
+
+                        <!-- LINHA DIVISÓRIA ÚNICA - SEPARA HOJE DE ONTEM -->
+                        <div class="thin-hr"></div>
+
+                        <div class="section-title">Ontem</div>
+
+                        <!-- Transação 3 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#b53b3b">
+                                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">Contas - Conta de Luz e Água</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Despesas • Fixo</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount minus">- R$427,90</div>
+                        </div>
+
+                        <!-- Transação 4 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#23b785">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">Salário</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                        Ganhos • Emprego</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount plus">+ R$5.456,37</div>
+                        </div>
+
+                        <!-- Transação 5 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#9fbefc">
+                                    <i class="fa-solid fa-coins"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">CDB 105%</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                        Investimentos • Renda Fixa</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount minus">- R$1.000,00</div>
+                        </div>
+
+                        <!-- LINHA DIVISÓRIA ÚNICA - SEPARA ONTEM DE 15 DE ABRIL -->
+                        <div class="thin-hr"></div>
+
+                        <div class="section-title">15 de Abril</div>
+
+                        <!-- Transação 6 -->
+                        <div class="tx-row">
+                            <div class="left">
+                                <div class="icon" style="background:#23b785">
+                                    <i class="fa-solid fa-code"></i>
+                                </div>
+                                <div class="tx-info">
+                                    <div style="font-weight:600">Freelancer - Desenvolvimento Web</div>
+                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                        Ganhos • Freelance</div>
+                                </div>
+                            </div>
+                            <div class="tx-amount plus">+ R$2.500,00</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MODAL NOVA TRANSAÇÃO -->
+                <div id="transaction-modal" aria-hidden="true"
+                    class="hidden absolute inset-0 z-50 flex items-start md:items-center justify-center py-6 md:py-12 overflow-y-auto">
+
+                    <!-- Overlay -->
+                    <div id="transaction-modal-overlay" class="absolute inset-0 bg-black/10 backdrop-blur-lg modal-overlay"></div>
+
+                    <!-- Conteúdo do modal -->
+                    <div role="dialog" aria-modal="true" aria-labelledby="transaction-modal-title"
+                        class="relative w-full max-w-xl mx-4 shadow-xl rounded-3xl modal-content">
+                        <div
+                            class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
+                            <!-- Header -->
+                            <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
+                                <h3 id="transaction-modal-title" class="text-2xl font-semibold theme-text">Nova Transação</h3>
+
+                                <button id="transaction-modal-close" type="button"
+                                    class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                    </svg>
+                                    <span class="sr-only theme-text">Fechar</span>
+                                </button>
+                            </div>
+
+                            <!-- Form -->
+                            <form id="transaction-modal-form" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                                <div class="sm:col-span-2">
+                                    <label for="transaction-type" class="block text-sm mb-1 theme-text">Tipo</label>
+                                    <select id="transaction-type" name="transaction-type"
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                        placeholder="Selecione">
+                                        <option class="text-gray-800">Selecione</option>
+                                        <option class="text-gray-800">Ganho</option>
+                                        <option class="text-gray-800">Despesa</option>
+                                        <option class="text-gray-800">Investimento</option>
+                                    </select>
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="transaction-category" class="block text-sm mb-1 theme-text">Categoria</label>
+                                    <select id="transaction-category" name="transaction-category"
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                        placeholder="Selecione">
+                                        <option class="text-gray-800">Selecione</option>
+                                        <option class="text-gray-800">Salário</option>
+                                        <option class="text-gray-800">Freelance</option>
+                                        <option class="text-gray-800">Alimentação</option>
+                                        <option class="text-gray-800">Transporte</option>
+                                        <option class="text-gray-800">Saúde</option>
+                                        <option class="text-gray-800">Lazer</option>
+                                        <option class="text-gray-800">Investimentos</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="transaction-date" class="block text-sm mb-1 theme-text">Data</label>
+                                    <input id="transaction-date" name="transaction-date" type="date"
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
+                                </div>
+
+                                <div>
+                                    <label for="transaction-value" class="block text-sm mb-1 theme-text">Valor</label>
+                                    <input id="transaction-value" name="transaction-value" type="number"
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                        placeholder="R$ 0,00" required>
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="transaction-description" class="block text-sm mb-1 theme-text">Descrição</label>
+                                    <textarea id="transaction-description" name="transaction-description" rows="4"
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
+                                        placeholder="Descrição da transação"></textarea>
+                                </div>
+
+                                <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <button id="transaction-modal-save" type="submit"
+                                        class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
+                                        Salvar
+                                    </button>
+                                    <button id="transaction-modal-cancel" type="button"
+                                        class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
+                                        Cancelar
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -282,11 +414,10 @@
         const body = document.body;
         const navItems = document.querySelectorAll('.nav-item');
 
-        // 1. Inicialização - Garantir estado correto no carregamento
+        // 1. Inicialização
         function initializeSidebar() {
-            // Verificar se é mobile e ajustar estado inicial
             if (window.innerWidth <= 640) {
-                sidebar.classList.remove('collapsed'); // Garantir que comece como navbar inferior
+                sidebar.classList.remove('collapsed');
             }
         }
 
@@ -295,7 +426,6 @@
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
 
-            // Alternar ícone (Sol <-> Lua)
             const icon = themeToggle.querySelector('i');
             if (body.classList.contains('dark-mode')) {
                 icon.classList.remove('fa-moon');
@@ -306,21 +436,18 @@
             }
         });
 
-        // 3. Sistema de Navegação Ativa
+        // 3. Sistema de Navegação Ativa (CLIQUE)
         navItems.forEach(item => {
             if (!item.classList.contains('mobile-logo-placeholder')) {
                 item.addEventListener('click', (e) => {
-                    // Remove classe active de todos os itens
-                    navItems.forEach(navItem => {
-                        navItem.classList.remove('active');
-                    });
-                    // Adiciona classe active apenas ao item clicado
-                    item.classList.add('active');
+                    // Se o item clicado NÃO for o já ativo
+                    if (!item.classList.contains('active')) {
+                        navItems.forEach(navItem => {
+                            navItem.classList.remove('active');
+                        });
+                        item.classList.add('active');
+                    }
 
-                    // Atualiza o conteúdo principal baseado no item clicado
-                    updateMainContent(item);
-
-                    // No mobile, recolhe o menu após clicar em um item (exceto logo)
                     if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
                         sidebar.classList.remove('collapsed');
                     }
@@ -328,27 +455,9 @@
             }
         });
 
-        // navItems.forEach(item => {
-        //     if (!item.classList.contains('mobile-logo-placeholder')) {
-        //         item.addEventListener('click', (e) => {
-        //             // Remove a classe 'active' de todos os itens
-        //             navItems.forEach(navItem => navItem.classList.remove('active'));
+        // 4. Expandir/Contrair
 
-        //             // Adiciona 'active' apenas ao item clicado
-        //             item.classList.add('active');
-
-        //             // No mobile, recolhe o menu após clicar (exceto logo)
-        //             if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
-        //                 sidebar.classList.remove('collapsed');
-        //             }
-        //         });
-        //     }
-        // });
-
-
-        // 4. Expandir/Contrair (Lógica Centralizada para Desktop e Mobile)
-
-        // Listener para a logo do DESKTOP (dentro do sidebar-header)
+        // Listener para a logo do DESKTOP
         const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
         if (desktopLogoContainer) {
             desktopLogoContainer.addEventListener('click', () => {
@@ -358,7 +467,7 @@
             });
         }
 
-        // Listener para a logo do MOBILE (dentro do mobile-logo-placeholder)
+        // Listener para a logo do MOBILE
         const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
         if (mobileLogoPlaceholder) {
             mobileLogoPlaceholder.addEventListener('click', () => {
@@ -381,7 +490,7 @@
             return backButton;
         }
 
-        // Adiciona botão de voltar quando em modo mobile expandido
+        // Adiciona/Remove botão de voltar
         function checkMobileMenu() {
             const sidebarFooter = document.querySelector('.sidebar-footer');
             const existingBackButton = document.querySelector('.mobile-back-button');
@@ -391,7 +500,6 @@
                     const backButton = createBackButton();
                     sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
 
-                    // Adiciona evento de clique no botão voltar
                     backButton.querySelector('.back-btn').addEventListener('click', () => {
                         sidebar.classList.remove('collapsed');
                     });
@@ -403,92 +511,14 @@
             }
         }
 
-        // // 6. Atualizar conteúdo principal
-        // function updateMainContent(selectedItem) {
-        //     const mainContent = document.getElementById('main-content');
-        //     const itemText = selectedItem.querySelector('.nav-text').textContent;
-
-        //     let contentHTML = '';
-
-        //     switch (itemText) {
-        //         case 'Dashboard':
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Dashboard</h1>
-        //                     <div class="content-grid">
-        //                         <div class="card">Saldo Atual: R$ 1.250,00</div>
-        //                         <div class="card">Transações do Mês: 15</div>
-        //                         <div class="card">Investimentos: R$ 5.000,00</div>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //             break;
-        //         case 'Carteira':
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Carteira</h1>
-        //                     <div class="content-section">
-        //                         <h2>Suas Carteiras</h2>
-        //                         <p>Gerencie suas carteiras digitais aqui.</p>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //             break;
-        //         case 'Transações':
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Transações</h1>
-        //                     <div class="content-section">
-        //                         <h2>Histórico de Transações</h2>
-        //                         <p>Visualize todas as suas transações recentes.</p>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //             break;
-        //         case 'Relatórios':
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Relatórios</h1>
-        //                     <div class="content-section">
-        //                         <h2>Relatórios Financeiros</h2>
-        //                         <p>Gere relatórios detalhados do seu desempenho financeiro.</p>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //             break;
-        //         case 'Configurações':
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Configurações</h1>
-        //                     <div class="content-section">
-        //                         <h2>Configurações da Conta</h2>
-        //                         <p>Personalize suas preferências e configurações de segurança.</p>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //             break;
-        //         default:
-        //             contentHTML = `
-        //                 <div class="content-wrapper">
-        //                     <h1>Conteúdo Principal do Webapp</h1>
-        //                     <p>Aqui você verá o conteúdo das páginas.</p>
-        //                 </div>
-        //             `;
-        //     }
-
-        //     mainContent.innerHTML = contentHTML;
-        // }
-
         // 7. Gerenciamento de Responsividade
         function handleResponsive() {
             if (window.innerWidth <= 640) {
-                // Mobile: garantir que comece como navbar inferior
                 if (!sidebar.classList.contains('initialized-mobile')) {
                     sidebar.classList.remove('collapsed');
                     sidebar.classList.add('initialized-mobile');
                 }
             } else {
-                // Desktop: remover marcação de mobile
                 sidebar.classList.remove('initialized-mobile');
             }
             checkMobileMenu();
@@ -502,7 +532,156 @@
         initializeSidebar();
         handleResponsive();
         checkMobileMenu();
+
+        // Dropdowns de filtro - CORRIGIDO
+        function setupDropdown(buttonId, dropdownId, selectedId) {
+            const button = document.getElementById(buttonId);
+            const dropdown = document.getElementById(dropdownId);
+            const selected = document.getElementById(selectedId);
+
+            if (button && dropdown) {
+                button.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    // Fecha outros dropdowns abertos
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        if (menu.id !== dropdownId) {
+                            menu.classList.add('hidden');
+                        }
+                    });
+                    
+                    // Alterna o dropdown atual
+                    dropdown.classList.toggle('hidden');
+                });
+
+                dropdown.querySelectorAll('button').forEach(item => {
+                    item.addEventListener('click', () => {
+                        selected.textContent = item.getAttribute('data-value');
+                        dropdown.classList.add('hidden');
+                    });
+                });
+
+                // Fechar dropdown ao clicar fora
+                document.addEventListener('click', (e) => {
+                    if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+                        dropdown.classList.add('hidden');
+                    }
+                });
+            }
+        }
+
+        setupDropdown('dropdownPeriodoBtn', 'dropdownPeriodo', 'selectedPeriodo');
+        setupDropdown('dropdownCategoriaBtn', 'dropdownCategoria', 'selectedCategoria');
+
+        // Modal de Nova Transação
+        (function () {
+            const openBtn = document.getElementById('open-transaction-modal');
+            const modal = document.getElementById('transaction-modal');
+            const overlay = document.getElementById('transaction-modal-overlay');
+            const closeBtn = document.getElementById('transaction-modal-close');
+            const cancelBtn = document.getElementById('transaction-modal-cancel');
+            const form = document.getElementById('transaction-modal-form');
+            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+
+            let previouslyFocused = null;
+
+            function openModal() {
+                // guarda foco anterior
+                previouslyFocused = document.activeElement;
+
+                // mostra modal
+                modal.classList.remove('hidden');
+                modal.setAttribute('aria-hidden', 'false');
+
+                // impede scroll do body sem aplicar classes complexas
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+
+                // foco no primeiro input disponível
+                if (firstFocusable) firstFocusable.focus();
+
+                // adiciona listener de teclado para ESC e Tab trap simples
+                document.addEventListener('keydown', handleKeyDown);
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.setAttribute('aria-hidden', 'true');
+
+                // restaura scroll
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+
+                // restaura foco
+                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
+
+                // remove listener de teclado
+                document.removeEventListener('keydown', handleKeyDown);
+            }
+
+            function handleKeyDown(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+                // se quiser implementar um trap de Tab completo, dá pra acrescentar aqui
+            }
+
+            // Abertura
+            if (openBtn) openBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                openModal();
+            });
+
+            // Fechar por botão X
+            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar por Cancel
+            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+
+            // Fechar clicando no overlay
+            if (overlay) overlay.addEventListener('click', (ev) => {
+                // se o clique foi exatamente no overlay (fora do modal)
+                if (ev.target === overlay) closeModal();
+            });
+
+            // Submissão do formulário
+            if (form) {
+                form.addEventListener('submit', function (ev) {
+                    ev.preventDefault();
+                    
+                    const type = document.getElementById('transaction-type').value.trim();
+                    const category = document.getElementById('transaction-category').value.trim();
+                    const date = document.getElementById('transaction-date').value.trim();
+                    const value = document.getElementById('transaction-value').value.trim();
+                    const description = document.getElementById('transaction-description').value.trim();
+
+                    // Verifica se os campos obrigatórios estão preenchidos
+                    if (
+                        type === "Selecione" ||
+                        category === "Selecione" ||
+                        date === "" ||
+                        value === "" ||
+                        description === ""
+                    ) {
+                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
+                        return;
+                    }
+
+                    // Se estiver tudo certo:
+                    alert("✅ Transação adicionada com sucesso!");
+                    form.reset(); // limpa o formulário
+                    closeModal();
+                });
+            }
+        })();
     </script>
+
 </body>
 
 </html>
