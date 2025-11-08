@@ -81,7 +81,7 @@
                 </button> -->
 
                 <a href="{% url 'register' %}"
-                    class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastro</a>
+                    class="px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastre-se</a>
                 <a href="{% url 'login' %}"
                     class="px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Entrar</a>
             </div>
@@ -89,11 +89,11 @@
             <!-- Botão Mobile -->
             <div class="lgx:hidden flex items-center space-x-3">
                 <!-- Botão Tema Mobile -->
-                <button id="theme-toggle-mobile"
+                <!-- <button id="theme-toggle-mobile"
                     class="w-10 h-10 flex items-center justify-center rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">
                     <span id="sun-icon-mobile" class="block">☀️</span>
                     <span id="moon-icon-mobile" class="hidden">🌙</span>
-                </button>
+                </button> -->
 
                 <button id="menu-btn" class="focus:outline-none">
                     <svg id="icon-open" class="w-7 h-7 text-gray-200 block" xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +125,10 @@
             <a href="#"
                 class="block text-base font-medium rounded-full px-3 py-2 transition hover:text-green-400 hover:bg-white/10 hover:backdrop-blur-md">Contato</a>
             <div class="pt-4 border-t border-white/10 space-y-3">
-                <a href="#"
-                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Log
-                    in</a>
-                <a href="#"
-                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Sign
-                    up</a>
+                <a href="{% url 'register' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full bg-green-400 text-black hover:bg-green-500 transition">Cadastre-se</a>
+                <a href="{% url 'login' %}"
+                    class="block w-full text-center px-5 py-2 text-base font-medium rounded-full border border-green-400 text-green-400 hover:bg-green-400 hover:text-black transition">Entrar</a>
             </div>
         </div>
 

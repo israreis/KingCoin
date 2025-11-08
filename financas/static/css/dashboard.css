@@ -7,13 +7,15 @@
 }
 
 .cardMC1,
-.cardMC2 {
+.cardMC2,
+.card{
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 
 .cardMC1:hover,
-.cardMC2:hover {
+.cardMC2:hover,
+.card {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }

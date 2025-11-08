@@ -23,28 +23,28 @@
     <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
     <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
     <style>
         .logo-text {
             /* Aplica a fonte Unbounded  */
-            font-family: 'Unbounded', sans-serif; 
+            font-family: 'Unbounded', sans-serif;
 
-             /* Estilos para a logo  */
+            /* Estilos para a logo  */
             font-size: 16px;
-            font-weight: 300; 
-            color: --text-color; 
+            font-weight: 300;
+            color: --text-color;
             text-transform: uppercase;
         }
     </style>
-    
+
     <style>
         /* Estilos adicionais para garantir que os dropdowns fiquem acima de tudo */
         .dropdown-container {
             position: relative;
             z-index: 40;
         }
-        
+
         .dropdown-menu {
             z-index: 50 !important;
             position: absolute;
@@ -52,12 +52,12 @@
             left: 0;
             margin-top: 0.5rem;
         }
-        
+
         /* Garantir que o modal tenha z-index mais alto */
         .modal-overlay {
             z-index: 60;
         }
-        
+
         .modal-content {
             z-index: 70;
         }
@@ -135,7 +135,8 @@
                             <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span
+                                    class="nav-text">Logout</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -148,17 +149,18 @@
             <div class="max-w-7xl mx-auto xl:ml-8 xl:mr-auto mt-6">
 
                 <h1
-                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text  md:pl-16 md:mt-20">
                     Transações
                 </h1>
 
                 <!-- Filtros e Botão Adicionar -->
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4 animate-slide-fade delay-2 relative z-30">
+                <div
+                    class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4 animate-slide-fade delay-2 relative z-30 ">
                     <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                         <!-- Filtro por período -->
                         <div class="dropdown-container">
                             <button id="dropdownPeriodoBtn"
-                                class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
+                                class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
                                 <span id="selectedPeriodo">Este mês</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -168,7 +170,7 @@
                             </button>
 
                             <div id="dropdownPeriodo"
-                                class="dropdown-menu hidden bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] min-w-[160px] theme-text">
+                                class="dropdown-menu hidden shadow-lg border border-[#1f5b46] min-w-[160px] theme-text">
                                 <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
                                     data-value="Este mês">Este mês</button>
                                 <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
@@ -183,7 +185,7 @@
                         <!-- Filtro por categoria -->
                         <div class="dropdown-container">
                             <button id="dropdownCategoriaBtn"
-                                class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
+                                class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-2xl p-3 border border-emerald-900/100 theme-text text-sm flex items-center gap-2 cursor-pointer w-full md:w-auto">
                                 <span id="selectedCategoria">Todas categorias</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
@@ -193,7 +195,7 @@
                             </button>
 
                             <div id="dropdownCategoria"
-                                class="dropdown-menu hidden bg-[#0d1a15] rounded-md shadow-lg border border-[#1f5b46] min-w-[200px] theme-text">
+                                class="dropdown-menu hidden rounded-md shadow-lg border border-[#1f5b46] min-w-[200px] theme-text">
                                 <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
                                     data-value="Todas categorias">Todas categorias</button>
                                 <button class="block px-4 py-2 w-full text-left hover:bg-[#23b785] transition-colors"
@@ -207,7 +209,8 @@
                     </div>
 
                     <!-- Botão Adicionar -->
-                    <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full md:w-auto">
+                    <div
+                        class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full md:w-auto">
                         <button id="open-transaction-modal"
                             class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 sm:px-6 py-2 sm:py-3">
                             <i class="fas fa-plus mr-2"></i> Nova Transação
@@ -216,7 +219,8 @@
                 </div>
 
                 <!-- Painel de histórico de transações - MESMA LARGURA DA CARTEIRA -->
-                <section class="panel mt-8 w-full max-w-full animate-slide-fade delay-3 relative z-10">
+                <section
+                    class="panel mt-8 w-full max-w-full bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 animate-slide-fade delay-3 relative z-10 border border-emerald-900/100">
                     <div class="p-6 md:p-10">
                         <div class="section-title">Hoje</div>
 
@@ -226,9 +230,9 @@
                                 <div class="icon" style="background:#1f6fe0">
                                     <i class="fa-solid fa-hospital-user"></i>
                                 </div>
-                                <div class="tx-info">
+                                <div class="tx-info theme-text">
                                     <div style="font-weight:600">Saúde - Remédios na farmácia</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    <div style="font-size:13px; margin-top:4px">
                                         Despesas • Saúde</div>
                                 </div>
                             </div>
@@ -243,7 +247,7 @@
                                 </div>
                                 <div class="tx-info">
                                     <div style="font-weight:600">Diversão - Rolê com os amigos</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    <div style="font-size:13px; margin-top:4px">
                                         Despesas • Lazer</div>
                                 </div>
                             </div>
@@ -263,7 +267,7 @@
                                 </div>
                                 <div class="tx-info">
                                     <div style="font-weight:600">Contas - Conta de Luz e Água</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">Despesas • Fixo</div>
+                                    <div style="font-size:13px; margin-top:4px">Despesas • Fixo</div>
                                 </div>
                             </div>
                             <div class="tx-amount minus">- R$427,90</div>
@@ -277,7 +281,7 @@
                                 </div>
                                 <div class="tx-info">
                                     <div style="font-weight:600">Salário</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    <div style="font-size:13px; margin-top:4px">
                                         Ganhos • Emprego</div>
                                 </div>
                             </div>
@@ -292,7 +296,7 @@
                                 </div>
                                 <div class="tx-info">
                                     <div style="font-weight:600">CDB 105%</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    <div style="font-size:13px; margin-top:4px">
                                         Investimentos • Renda Fixa</div>
                                 </div>
                             </div>
@@ -312,7 +316,7 @@
                                 </div>
                                 <div class="tx-info">
                                     <div style="font-weight:600">Freelancer - Desenvolvimento Web</div>
-                                    <div style="font-size:13px; color:rgba(255,255,255,0.6); margin-top:4px">
+                                    <div style="font-size:13px; margin-top:4px">
                                         Ganhos • Freelance</div>
                                 </div>
                             </div>
@@ -326,7 +330,8 @@
                     class="hidden absolute inset-0 z-50 flex items-start md:items-center justify-center py-6 md:py-12 overflow-y-auto">
 
                     <!-- Overlay -->
-                    <div id="transaction-modal-overlay" class="absolute inset-0 bg-black/10 backdrop-blur-lg modal-overlay"></div>
+                    <div id="transaction-modal-overlay"
+                        class="absolute inset-0 bg-black/10 backdrop-blur-lg modal-overlay"></div>
 
                     <!-- Conteúdo do modal -->
                     <div role="dialog" aria-modal="true" aria-labelledby="transaction-modal-title"
@@ -335,7 +340,8 @@
                             class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
                             <!-- Header -->
                             <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
-                                <h3 id="transaction-modal-title" class="text-2xl font-semibold theme-text">Nova Transação</h3>
+                                <h3 id="transaction-modal-title" class="text-2xl font-semibold theme-text">Nova
+                                    Transação</h3>
 
                                 <button id="transaction-modal-close" type="button"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
@@ -364,7 +370,8 @@
                                 </div>
 
                                 <div class="sm:col-span-2">
-                                    <label for="transaction-category" class="block text-sm mb-1 theme-text">Categoria</label>
+                                    <label for="transaction-category"
+                                        class="block text-sm mb-1 theme-text">Categoria</label>
                                     <select id="transaction-category" name="transaction-category"
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
                                         placeholder="Selecione">
@@ -393,21 +400,23 @@
                                 </div>
 
                                 <div class="sm:col-span-2">
-                                    <label for="transaction-description" class="block text-sm mb-1 theme-text">Descrição</label>
+                                    <label for="transaction-description"
+                                        class="block text-sm mb-1 theme-text">Descrição</label>
                                     <textarea id="transaction-description" name="transaction-description" rows="4"
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
                                         placeholder="Descrição da transação"></textarea>
                                 </div>
 
                                 <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                    <button id="transaction-modal-save" type="submit"
-                                        class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
-                                        Salvar
-                                    </button>
                                     <button id="transaction-modal-cancel" type="button"
                                         class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
                                         Cancelar
                                     </button>
+                                    <button id="transaction-modal-save" type="submit"
+                                        class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
+                                        Salvar
+                                    </button>
+
                                 </div>
 
                             </form>
@@ -420,6 +429,85 @@
         </main>
     </div>
 
+<script>
+// =====================================================
+// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+// =====================================================
+
+(function() {
+    // 1. EVITAR FLASH DE TEMA - Execução Imediata
+    const body = document.body;
+    const savedTheme = localStorage.getItem('themeState');
+    
+    if (body) {
+        body.style.transition = 'none';
+        
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+        } else if (savedTheme === 'dark') {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+        }
+    }
+
+    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        if (!themeToggle) return;
+
+        // Remove TODOS os event listeners existentes
+        const newThemeToggle = themeToggle.cloneNode(true);
+        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+        // Função para atualizar ícone
+        function updateThemeIcon() {
+            const icon = newThemeToggle.querySelector('i');
+            if (icon) {
+                if (body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            }
+        }
+
+        // Função para salvar tema
+        function saveThemeState() {
+            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Adiciona NOVO event listener
+        newThemeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Botão de tema clicado!'); // Para debug
+            
+            // Alterna tema
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            
+            // Atualiza e salva
+            updateThemeIcon();
+            saveThemeState();
+            
+            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+        });
+
+        // Atualiza ícone inicial
+        updateThemeIcon();
+        
+        // Restaura transições
+        setTimeout(() => {
+            if (body) body.style.transition = '';
+        }, 100);
+    });
+})();
+</script>
+    
     <script>
         // *** Sistema Completo de Navegação ***
 
@@ -472,14 +560,14 @@
         // 4. Expandir/Contrair
 
         // Listener para a logo do DESKTOP
-        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
-        if (desktopLogoContainer) {
-            desktopLogoContainer.addEventListener('click', () => {
-                if (window.innerWidth > 640) {
-                    sidebar.classList.toggle('collapsed');
-                }
-            });
-        }
+        // const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        // if (desktopLogoContainer) {
+        //     desktopLogoContainer.addEventListener('click', () => {
+        //         if (window.innerWidth > 640) {
+        //             sidebar.classList.toggle('collapsed');
+        //         }
+        //     });
+        // }
 
         // Listener para a logo do MOBILE
         const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
@@ -556,14 +644,14 @@
             if (button && dropdown) {
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    
+
                     // Fecha outros dropdowns abertos
                     document.querySelectorAll('.dropdown-menu').forEach(menu => {
                         if (menu.id !== dropdownId) {
                             menu.classList.add('hidden');
                         }
                     });
-                    
+
                     // Alterna o dropdown atual
                     dropdown.classList.toggle('hidden');
                 });
@@ -668,7 +756,7 @@
             if (form) {
                 form.addEventListener('submit', function (ev) {
                     ev.preventDefault();
-                    
+
                     const type = document.getElementById('transaction-type').value.trim();
                     const category = document.getElementById('transaction-category').value.trim();
                     const date = document.getElementById('transaction-date').value.trim();
@@ -695,6 +783,55 @@
             }
         })();
     </script>
+
+    <script>
+        // função única que aplica o tema para ambos
+        function applyDropdownTheme() {
+            const ids = ['dropdownPeriodo', 'dropdownCategoria'];
+            const isDark = document.body.classList.contains('dark-mode') || document.documentElement.classList.contains('dark');
+
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+
+                // remove gradiente/tailwind bg se existir (opcional)
+                el.style.backgroundImage = 'none';
+
+                if (isDark) {
+                    el.style.setProperty('background-color', '#000805', 'important');
+                    el.style.setProperty('color', '#e9f0ec', 'important');
+                } else {
+                    el.style.setProperty('background-color', '#fffcf0', 'important');
+                    el.style.setProperty('color', '#07120f', 'important');
+                }
+            });
+        }
+
+        // aplica ao carregar
+        document.addEventListener('DOMContentLoaded', applyDropdownTheme);
+
+        // aplica ao trocar o tema (usa o botão que você já tem)
+        const themeToggleBtn = document.querySelector('.theme-toggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                // seu toggle original já altera classes; espera um tick e reaplica
+                setTimeout(applyDropdownTheme, 40);
+            });
+        }
+
+        // observa mudanças nas classes do <html> (opcional, cobre outros toggles)
+        const mo = new MutationObserver(muts => {
+            for (const m of muts) {
+                if (m.attributeName === 'class') {
+                    applyDropdownTheme();
+                    break;
+                }
+            }
+        });
+        mo.observe(document.documentElement, { attributes: true });
+    </script>
+
+
 
 </body>
 

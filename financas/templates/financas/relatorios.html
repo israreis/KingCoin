@@ -149,17 +149,18 @@
         </aside>
 
         <!-- <main id="main-content" class="relative p-6 md:p-10"> -->
-        <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
+        <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10 ">
             <div class="max-w-7xl mx-auto xl:ml-8 xl:mr-auto mt-6">
 
 
                 <h1
-                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text  md:pl-16 md:mt-20">
                     Relatórios
                 </h1>
 
                 <div
-                    class="bg-gradient-to-l from-[#23b785]/25 via-transparent to-transparent rounded-[3rem] p-8 md:p-10 border border-emerald-900/100 animate-slide-fade delay-2 mb-10">
+                    class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 md:p-10 border border-emerald-900/100 animate-slide-fade delay-2 mb-10 ">
+                    <!-- via-transparent to-transparent -->
                     <div class="max-w-6xl mx-auto">
                         <!-- Período -->
                         <div class="mb-8">
@@ -407,6 +408,86 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> -->
 
 
+<script>
+// =====================================================
+// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+// =====================================================
+
+(function() {
+    // 1. EVITAR FLASH DE TEMA - Execução Imediata
+    const body = document.body;
+    const savedTheme = localStorage.getItem('themeState');
+    
+    if (body) {
+        body.style.transition = 'none';
+        
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+        } else if (savedTheme === 'dark') {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+        }
+    }
+
+    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        if (!themeToggle) return;
+
+        // Remove TODOS os event listeners existentes
+        const newThemeToggle = themeToggle.cloneNode(true);
+        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+        // Função para atualizar ícone
+        function updateThemeIcon() {
+            const icon = newThemeToggle.querySelector('i');
+            if (icon) {
+                if (body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            }
+        }
+
+        // Função para salvar tema
+        function saveThemeState() {
+            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Adiciona NOVO event listener
+        newThemeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Botão de tema clicado!'); // Para debug
+            
+            // Alterna tema
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            
+            // Atualiza e salva
+            updateThemeIcon();
+            saveThemeState();
+            
+            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+        });
+
+        // Atualiza ícone inicial
+        updateThemeIcon();
+        
+        // Restaura transições
+        setTimeout(() => {
+            if (body) body.style.transition = '';
+        }, 100);
+    });
+})();
+</script>
+
+
     <script>
         // *** Sistema Completo de Navegação ***
 
@@ -459,14 +540,14 @@
         // 4. Expandir/Contrair
 
         // Listener para a logo do DESKTOP
-        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
-        if (desktopLogoContainer) {
-            desktopLogoContainer.addEventListener('click', () => {
-                if (window.innerWidth > 640) {
-                    sidebar.classList.toggle('collapsed');
-                }
-            });
-        }
+        // const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        // if (desktopLogoContainer) {
+        //     desktopLogoContainer.addEventListener('click', () => {
+        //         if (window.innerWidth > 640) {
+        //             sidebar.classList.toggle('collapsed');
+        //         }
+        //     });
+        // }
 
         // Listener para a logo do MOBILE
         const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');

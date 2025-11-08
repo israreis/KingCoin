@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,37 +20,40 @@
             }
         }
     </script>
-    
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-    
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> 
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
     <style>
         .logo-text {
             /* Aplica a fonte Unbounded  */
-            font-family: 'Unbounded', sans-serif; 
+            font-family: 'Unbounded', sans-serif;
 
-             /* Estilos para a logo  */
+            /* Estilos para a logo  */
             font-size: 16px;
-            font-weight: 300; 
-            color: --text-color; 
+            font-weight: 300;
+            color: --text-color;
             text-transform: uppercase;
         }
     </style>
 </head>
-<body class="dark-mode"> <div id="app-container">
-        
-        <aside id="sidebar" class="sidebar"> 
 
-            <div class="sidebar-header desktop-only"> 
+<body class="dark-mode">
+    <div id="app-container">
+
+        <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-header desktop-only">
                 <div class="logo-container">
                     <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
                     <span class="logo-text">KINGCOIN</span>
                 </div>
-                
+
                 <button class="theme-toggle">
                     <i class="fas fa-sun"></i> </button>
             </div>
@@ -77,7 +81,7 @@
                         <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
                     </li> -->
 
-                                        <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
                             <i class="fas fa-th-large"></i>
                             <span class="nav-text">Dashboard</span>
@@ -116,22 +120,23 @@
             </nav>
 
             <div class="sidebar-footer">
-                
+
                 <div class="user-profile">
-                    <div class="user-avatar"></div> 
+                    <div class="user-avatar"></div>
                     <div class="user-info">
                         <span class="user-name">Israel Reis</span>
                         <span class="user-email">israelreis2424@gmail.com</span>
                     </div>
                 </div>
-                
+
                 <nav class="sidebar-nav footer-nav-links">
                     <ul>
                         <li class="nav-item">
                             <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span class="nav-text">Logout</span></a>
+                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span
+                                    class="nav-text">Logout</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -139,21 +144,152 @@
             </div>
         </aside>
 
-        <main id="main-content" class="p-6 md:p-10">
+        <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
+            <div class="max-w-7xl mx-auto xl:ml-8 xl:mr-auto mt-6">
+                <h1
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text  md:pl-16 md:mt-20">
+                    Dashboard
+                </h1>
+                <!-- CARDS SUPERIORES - SCROLL HORIZONTAL EM MOBILE -->
+                <!-- <div class="top-cards flex animate-slide-fade delay-1" role="list" aria-label="Destaques financeiros">
+      
+                    <article class="card g-blue theme-text">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior despesa <span
+                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
+                                <h3 style=""> <i class="fa-solid fa-circle-plus theme-text"
+                                        style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
+                                <div style="margin-top:6px; font-size:13px; color:#ff6b6b"><i
+                                        class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14% <span
+                                        style="margin-left:6px; font-size:12px">este mês</span></div>
+                            </div>
+                        </div>
+                    </article>
 
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text">
-                Dashboard
-            </h1>
+     
+                    <article class="card g-purple">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Menor despesa <span
+                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
+                                <h3 style=""> <i class="fa-solid fa-face-laugh-beam theme-text"
+                                        style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
+                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
+                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                        style="margin-left:6px; font-size:12px">este mês</span></div>
+                            </div>
+                        </div>
+                    </article>
 
-            
 
-            <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
-                <div class="bg-[#ffffff]/7 border border-[#1c2a24] rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
-                    <h2 class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
-                        Evolução da Carteira
-                    </h2>
-                    <div class="w-3/4 h-[300px]">
-                        <canvas id="graficoCarteira"></canvas>
+                    <article class="card g-green">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior entrada <span
+                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
+                                <h3 style=""> <i class="fa-solid fa-dollar-sign theme-text"
+                                        style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
+                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
+                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                        style=" margin-left:6px; font-size:12px">este mês</span></div>
+                            </div>
+                        </div>
+                    </article>
+
+
+                    <article class="card g-navy">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior invest. <span
+                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
+                                <h3 style=""> <i class="fa-solid fa-coins theme-text"
+                                        style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
+                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
+                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
+                                        style="margin-left:6px; font-size:12px">este mês</span></div>
+                            </div>
+                        </div>
+                    </article>
+                </div> -->
+                <!-- CARDS SUPERIORES - FLEXBOX TAILWIND -->
+                <div class="flex flex-wrap gap-4 md:gap-6 mb-8 animate-slide-fade delay-1 w-full ">
+                    <!-- Card 1 -->
+                    <article
+                        class="card g-blue bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 theme-text flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior despesa <span class="ml-2 text-xs theme-text">Este
+                                        mês ▾</span></div>
+                                <h3 class="mt-1"> <i class="fa-solid fa-circle-plus theme-text"
+                                        style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
+                                <div class="mt-2 text-sm" style="color:#ff6b6b"><i
+                                        class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14%
+                                    <span class="ml-2 text-xs">este mês</span></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article
+                        class="card g-purple  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Menor despesa <span class="ml-2 text-xs theme-text">Este
+                                        mês ▾</span></div>
+                                <h3 class="mt-1"> <i class="fa-solid fa-face-laugh-beam theme-text"
+                                        style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
+                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
+                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article
+                        class="card g-green bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior entrada <span class="ml-2 text-xs theme-text">Este
+                                        mês ▾</span></div>
+                                <h3 class="mt-1"> <i class="fa-solid fa-dollar-sign theme-text"
+                                        style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
+                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
+                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article
+                        class="card g-navy bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-sm theme-text">Maior invest. <span class="ml-2 text-xs theme-text">Este
+                                        mês ▾</span></div>
+                                <h3 class="mt-1"> <i class="fa-solid fa-coins theme-text"
+                                        style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
+                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
+                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+                    <div
+                        class="bg-[#ffffff]/7 border border-[#1c2a24]  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
+                        <h2
+                            class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                            Evolução da Carteira
+                        </h2>
+                        <div class="w-3/4 h-[300px]">
+                            <canvas id="graficoCarteira"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -164,6 +300,87 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'financas/js/dashboard.js' %}"></script>
 
+
+<script>
+// =====================================================
+// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+// =====================================================
+
+(function() {
+    // 1. EVITAR FLASH DE TEMA - Execução Imediata
+    const body = document.body;
+    const savedTheme = localStorage.getItem('themeState');
+    
+    if (body) {
+        body.style.transition = 'none';
+        
+        if (savedTheme === 'light') {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+        } else if (savedTheme === 'dark') {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+        }
+    }
+
+    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+    document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        if (!themeToggle) return;
+
+        // Remove TODOS os event listeners existentes
+        const newThemeToggle = themeToggle.cloneNode(true);
+        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+        // Função para atualizar ícone
+        function updateThemeIcon() {
+            const icon = newThemeToggle.querySelector('i');
+            if (icon) {
+                if (body.classList.contains('dark-mode')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+            }
+        }
+
+        // Função para salvar tema
+        function saveThemeState() {
+            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Adiciona NOVO event listener
+        newThemeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('Botão de tema clicado!'); // Para debug
+            
+            // Alterna tema
+            body.classList.toggle('dark-mode');
+            body.classList.toggle('light-mode');
+            
+            // Atualiza e salva
+            updateThemeIcon();
+            saveThemeState();
+            
+            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+        });
+
+        // Atualiza ícone inicial
+        updateThemeIcon();
+        
+        // Restaura transições
+        setTimeout(() => {
+            if (body) body.style.transition = '';
+        }, 100);
+    });
+})();
+</script>
+
+
     <script>
         // *** Sistema Completo de Navegação ***
 
@@ -171,11 +388,11 @@
         const themeToggle = document.querySelector('.theme-toggle');
         const body = document.body;
         const navItems = document.querySelectorAll('.nav-item');
-        
+
         // 1. Inicialização
         function initializeSidebar() {
             if (window.innerWidth <= 640) {
-                sidebar.classList.remove('collapsed'); 
+                sidebar.classList.remove('collapsed');
             }
         }
 
@@ -183,7 +400,7 @@
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             body.classList.toggle('light-mode');
-          
+
             const icon = themeToggle.querySelector('i');
             if (body.classList.contains('dark-mode')) {
                 icon.classList.remove('fa-moon');
@@ -205,7 +422,7 @@
                         });
                         item.classList.add('active');
                     }
-                    
+
                     if (window.innerWidth <= 640 && !item.classList.contains('mobile-logo-placeholder')) {
                         sidebar.classList.remove('collapsed');
                     }
@@ -214,22 +431,22 @@
         });
 
         // 4. Expandir/Contrair
-        
+
         // Listener para a logo do DESKTOP
-        const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
-        if (desktopLogoContainer) {
-             desktopLogoContainer.addEventListener('click', () => {
-                if (window.innerWidth > 640) { 
-                    sidebar.classList.toggle('collapsed'); 
-                }
-            });
-        }
-        
+        // const desktopLogoContainer = document.querySelector('.sidebar-header .logo-container');
+        // if (desktopLogoContainer) {
+        //      desktopLogoContainer.addEventListener('click', () => {
+        //         if (window.innerWidth > 640) { 
+        //             sidebar.classList.toggle('collapsed'); 
+        //         }
+        //     });
+        // }
+
         // Listener para a logo do MOBILE
         const mobileLogoPlaceholder = document.querySelector('.mobile-logo-placeholder .logo-container');
         if (mobileLogoPlaceholder) {
             mobileLogoPlaceholder.addEventListener('click', () => {
-                if (window.innerWidth <= 640) { 
+                if (window.innerWidth <= 640) {
                     sidebar.classList.toggle('collapsed');
                 }
             });
@@ -252,12 +469,12 @@
         function checkMobileMenu() {
             const sidebarFooter = document.querySelector('.sidebar-footer');
             const existingBackButton = document.querySelector('.mobile-back-button');
-            
+
             if (window.innerWidth <= 640 && sidebar.classList.contains('collapsed')) {
                 if (!existingBackButton) {
                     const backButton = createBackButton();
                     sidebarFooter.parentNode.insertBefore(backButton, sidebarFooter);
-                    
+
                     backButton.querySelector('.back-btn').addEventListener('click', () => {
                         sidebar.classList.remove('collapsed');
                     });
@@ -268,7 +485,7 @@
                 }
             }
         }
-        
+
         // 7. Gerenciamento de Responsividade
         function handleResponsive() {
             if (window.innerWidth <= 640) {
@@ -285,11 +502,12 @@
         // Event Listeners
         sidebar.addEventListener('transitionend', checkMobileMenu);
         window.addEventListener('resize', handleResponsive);
-        
+
         // Inicialização
         initializeSidebar();
         handleResponsive();
         checkMobileMenu();
     </script>
 </body>
+
 </html>
