@@ -41,6 +41,18 @@
             text-transform: uppercase;
         }
     </style>
+    <script>
+        // Debug: Verificar se os elementos canvas existem
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Canvas elementos:');
+            console.log('graficoBarras:', document.getElementById('graficoBarras'));
+            console.log('graficoPizza:', document.getElementById('graficoPizza'));
+            console.log('graficoRosca:', document.getElementById('graficoRosca'));
+
+            // Verificar se Chart.js está carregado
+            console.log('Chart.js:', typeof Chart);
+        });
+    </script>
 </head>
 
 <body class="dark-mode">
@@ -225,7 +237,8 @@
                                         style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
                                 <div class="mt-2 text-sm" style="color:#ff6b6b"><i
                                         class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14%
-                                    <span class="ml-2 text-xs">este mês</span></div>
+                                    <span class="ml-2 text-xs">este mês</span>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -280,9 +293,12 @@
                 </div>
 
 
-                <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+                <!-- <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
                     <div
-                        class="bg-[#ffffff]/7 border border-[#1c2a24]  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8">
+                         class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1 min-w-[300px]">
+                        
+                        class="bg-[#ffffff]/7 border border-[#1c2a24]  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8"
+                        
                         <h2
                             class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
                             Evolução da Carteira
@@ -291,94 +307,168 @@
                             <canvas id="graficoCarteira"></canvas>
                         </div>
                     </div>
+                </div> -->
+
+                <div class="animate-slide-fade delay-4 mb-12">
+    <div class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full">
+        
+        <h2 class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+            Evolução da Carteira
+        </h2>
+
+        <div class="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
+            <canvas id="graficoCarteira"></canvas>
+        </div>
+
+    </div>
+</div>
+
+
+
+                <!-- NOVOS GRÁFICOS - BARRA, PIZZA E ROSCA -->
+                <div class="animate-slide-fade delay-5 mb-12">
+                    <div class="flex flex-col lg:flex-row gap-8 justify-center">
+
+                        <!-- Gráfico de Barras -->
+                        <div
+                            class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1 min-w-[300px]">
+                            <h2
+                                class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                                Despesas por Categoria
+                            </h2>
+                            <div class="w-full h-[300px]">
+                                <canvas id="graficoBarras"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Container para Pizza e Rosca lado a lado -->
+                        <div class="flex flex-col md:flex-row gap-8 flex-1 min-w-[300px]">
+
+                            <!-- Gráfico de Pizza -->
+                            <div
+                                class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1">
+                                <h2
+                                    class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                                    Distribuição de Receitas
+                                </h2>
+                                <div class="w-full h-[250px]">
+                                    <canvas id="graficoPizza"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Gráfico de Rosca -->
+                            <div
+                                class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1">
+                                <h2
+                                    class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                                    Metas de Economia
+                                </h2>
+                                <div class="w-full h-[250px]">
+                                    <canvas id="graficoRosca"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
             </div>
 
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{% static 'financas/js/dashboard.js' %}"></script>
+    <!-- <script src="{% static 'financas/js/dashboard.js' %}"></script> -->
 
 
-<script>
-// =====================================================
-// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
-// =====================================================
+    <script>
+        // =====================================================
+        // SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+        // =====================================================
 
-(function() {
-    // 1. EVITAR FLASH DE TEMA - Execução Imediata
-    const body = document.body;
-    const savedTheme = localStorage.getItem('themeState');
-    
-    if (body) {
-        body.style.transition = 'none';
-        
-        if (savedTheme === 'light') {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-        } else if (savedTheme === 'dark') {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-        }
-    }
+        (function () {
+            // 1. EVITAR FLASH DE TEMA - Execução Imediata
+            const body = document.body;
+            const savedTheme = localStorage.getItem('themeState');
 
-    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
-    document.addEventListener('DOMContentLoaded', function() {
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
+            if (body) {
+                body.style.transition = 'none';
 
-        if (!themeToggle) return;
-
-        // Remove TODOS os event listeners existentes
-        const newThemeToggle = themeToggle.cloneNode(true);
-        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
-
-        // Função para atualizar ícone
-        function updateThemeIcon() {
-            const icon = newThemeToggle.querySelector('i');
-            if (icon) {
-                if (body.classList.contains('dark-mode')) {
-                    icon.className = 'fas fa-sun';
-                } else {
-                    icon.className = 'fas fa-moon';
+                if (savedTheme === 'light') {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                } else if (savedTheme === 'dark') {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
                 }
             }
-        }
 
-        // Função para salvar tema
-        function saveThemeState() {
-            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
+            // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+            document.addEventListener('DOMContentLoaded', function () {
+                const themeToggle = document.querySelector('.theme-toggle');
+                const body = document.body;
 
-        // Adiciona NOVO event listener
-        newThemeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Botão de tema clicado!'); // Para debug
-            
-            // Alterna tema
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode');
-            
-            // Atualiza e salva
-            updateThemeIcon();
-            saveThemeState();
-            
-            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
-        });
+                if (!themeToggle) return;
 
-        // Atualiza ícone inicial
-        updateThemeIcon();
-        
-        // Restaura transições
-        setTimeout(() => {
-            if (body) body.style.transition = '';
-        }, 100);
-    });
-})();
-</script>
+                // Remove TODOS os event listeners existentes
+                const newThemeToggle = themeToggle.cloneNode(true);
+                themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+                // Função para atualizar ícone
+                function updateThemeIcon() {
+                    const icon = newThemeToggle.querySelector('i');
+                    if (icon) {
+                        if (body.classList.contains('dark-mode')) {
+                            icon.className = 'fas fa-sun';
+                        } else {
+                            icon.className = 'fas fa-moon';
+                        }
+                    }
+                }
+
+                // Função para salvar tema
+                function saveThemeState() {
+                    localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+                }
+
+                // Adiciona NOVO event listener
+                newThemeToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    console.log('Botão de tema clicado!'); // Para debug
+
+                    // Alterna tema
+                    body.classList.toggle('dark-mode');
+                    body.classList.toggle('light-mode');
+
+                    // Atualiza e salva
+                    updateThemeIcon();
+                    saveThemeState();
+
+                    console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+                });
+
+                // Atualiza ícone inicial
+                updateThemeIcon();
+
+                // Restaura transições
+                setTimeout(() => {
+                    if (body) body.style.transition = '';
+                }, 100);
+            });
+        })();
+    </script>
 
 
     <script>
@@ -508,6 +598,224 @@
         handleResponsive();
         checkMobileMenu();
     </script>
+
+
+<script>
+    
+// Aguardar o DOM carregar completamente
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Iniciando carregamento dos gráficos...');
+    
+    // --- Gráfico de Linha (Evolução da Carteira) ---
+    const ctxLine = document.getElementById('graficoCarteira');
+    if (ctxLine) {
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
+                datasets: [{
+                    label: 'Saldo (R$)',
+                    data: [14500, 15200, 15800, 16300, 16550, 16800],
+                    fill: true,
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#10b981' }, 
+                        grid: { display: false }
+                    },
+                    y: { 
+                        ticks: { color: '#10b981' }, 
+                        grid: { color: 'rgba(255,255,255,0.05)' }
+                    }
+                }
+            }
+        });
+        console.log('Gráfico de linha criado');
+    }
+
+    // --- Gráfico de Barras (Despesas por Categoria) ---
+    const ctxBarras = document.getElementById('graficoBarras');
+    if (ctxBarras) {
+        new Chart(ctxBarras, {
+            type: 'bar',
+            data: {
+                labels: ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Educação'],
+                datasets: [{
+                    label: 'Valor Gasto (R$)',
+                    data: [1200, 800, 1500, 600, 400, 300],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                        'rgba(255, 159, 64, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    borderRadius: 8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `R$ ${context.parsed.y.toLocaleString('pt-BR')}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { 
+                            color: '#10b981',
+                            font: { size: 11 }
+                        },
+                        grid: { display: false }
+                    },
+                    y: {
+                        ticks: { 
+                            color: '#10b981',
+                            callback: function(value) {
+                                return 'R$ ' + value.toLocaleString('pt-BR');
+                            }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        console.log('Gráfico de barras criado');
+    }
+
+    // --- Gráfico de Pizza (Distribuição de Receitas) ---
+    const ctxPizza = document.getElementById('graficoPizza');
+    if (ctxPizza) {
+        new Chart(ctxPizza, {
+            type: 'pie',
+            data: {
+                labels: ['Salário', 'Freelance', 'Investimentos', 'Bônus', 'Outros'],
+                datasets: [{
+                    data: [65, 15, 12, 5, 3],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(168, 85, 247, 0.8)',
+                        'rgba(249, 115, 22, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(34, 197, 94, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(168, 85, 247, 1)',
+                        'rgba(249, 115, 22, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#10b981',
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.parsed}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        console.log('Gráfico de pizza criado');
+    }
+
+    // --- Gráfico de Rosca (Metas de Economia) ---
+    const ctxRosca = document.getElementById('graficoRosca');
+    if (ctxRosca) {
+        new Chart(ctxRosca, {
+            type: 'doughnut',
+            data: {
+                labels: ['Concluído', 'Em Andamento', 'Pendente'],
+                datasets: [{
+                    data: [45, 30, 25],
+                    backgroundColor: [
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(34, 197, 94, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(239, 68, 68, 1)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 15,
+                    cutout: '60%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#10b981',
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.parsed}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        console.log('Gráfico de rosca criado');
+    }
+
+    console.log('Todos os gráficos processados');
+});
+</script>
+
+
 </body>
 
 </html>
