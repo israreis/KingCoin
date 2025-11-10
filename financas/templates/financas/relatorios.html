@@ -42,7 +42,6 @@
             color: --text-color;
             text-transform: uppercase;
         }
-
     </style>
 
 </head>
@@ -60,31 +59,12 @@
                 </div>
 
                 <button class="theme-toggle">
-                    <i class="fas fa-sun"></i> </button>
+                    <i class="fas fa-sun"></i>
+                </button>
             </div>
 
             <nav class="sidebar-nav primary-nav">
                 <ul>
-                    <!-- <li class="nav-item">
-                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
-                    </li>
-                    
-                    <li class="nav-item active"> 
-                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span class="nav-text">Carteira</span></a>
-                    </li>
-                    
-                    <li class="nav-item mobile-logo-placeholder">
-                        <div class="logo-container">
-                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span class="nav-text">Transações</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
-                    </li> -->
                     <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
                             <i class="fas fa-th-large"></i>
@@ -98,7 +78,6 @@
                             <span class="nav-text">Carteira</span>
                         </a>
                     </li>
-
 
                     <li class="nav-item mobile-logo-placeholder">
                         <div class="logo-container">
@@ -119,32 +98,60 @@
                             <span class="nav-text">Relatórios</span>
                         </a>
                     </li>
-
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-
                 <div class="user-profile">
-                    <div class="user-avatar"></div>
+                    <!-- Avatar com foto do perfil -->
+                    <div class="user-avatar">
+                        {% if request.user.profile.photo %}
+                        <img src="{{ request.user.profile.photo.url }}" alt="Foto de perfil" class="user-avatar-img">
+                        {% else %}
+                        <!-- Avatar padrão com inicial -->
+                        <div class="user-avatar-default">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
                     <div class="user-info">
-                        <span class="user-name">Israel Reis</span>
-                        <span class="user-email">israelreis2424@gmail.com</span>
+                        <!-- Nome completo -->
+                        <span class="user-name">
+                            {% if request.user.first_name and request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                            {% elif request.user.first_name %}
+                            {{ request.user.first_name }}
+                            {% else %}
+                            {{ request.user.username }}
+                            {% endif %}
+                        </span>
+                        <!-- Email -->
+                        <span class="user-email">{{ request.user.email }}</span>
                     </div>
                 </div>
 
                 <nav class="sidebar-nav footer-nav-links">
                     <ul>
-                        <li class="nav-item">
-                            <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
+                        <li class="nav-item {% if request.resolver_match.url_name == 'minha-conta' %}active{% endif %}">
+                            <a href="{% url 'minha-conta' %}"><i class="fas fa-user"></i> <span class="nav-text">Minha
+                                    Conta</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span
-                                    class="nav-text">Logout</span></a>
+                            <!-- Formulário de logout com método POST -->
+                            <form method="post" action="{% url 'logout' %}" class="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span class="nav-text">Logout</span>
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </nav>
-
             </div>
         </aside>
 
@@ -408,84 +415,84 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script> -->
 
 
-<script>
-// =====================================================
-// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
-// =====================================================
+    <script>
+            // =====================================================
+            // SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+            // =====================================================
 
-(function() {
-    // 1. EVITAR FLASH DE TEMA - Execução Imediata
-    const body = document.body;
-    const savedTheme = localStorage.getItem('themeState');
-    
-    if (body) {
-        body.style.transition = 'none';
-        
-        if (savedTheme === 'light') {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-        } else if (savedTheme === 'dark') {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-        }
-    }
+            (function () {
+                // 1. EVITAR FLASH DE TEMA - Execução Imediata
+                const body = document.body;
+                const savedTheme = localStorage.getItem('themeState');
 
-    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
-    document.addEventListener('DOMContentLoaded', function() {
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
+                if (body) {
+                    body.style.transition = 'none';
 
-        if (!themeToggle) return;
-
-        // Remove TODOS os event listeners existentes
-        const newThemeToggle = themeToggle.cloneNode(true);
-        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
-
-        // Função para atualizar ícone
-        function updateThemeIcon() {
-            const icon = newThemeToggle.querySelector('i');
-            if (icon) {
-                if (body.classList.contains('dark-mode')) {
-                    icon.className = 'fas fa-sun';
-                } else {
-                    icon.className = 'fas fa-moon';
+                    if (savedTheme === 'light') {
+                        body.classList.remove('dark-mode');
+                        body.classList.add('light-mode');
+                    } else if (savedTheme === 'dark') {
+                        body.classList.remove('light-mode');
+                        body.classList.add('dark-mode');
+                    }
                 }
-            }
-        }
 
-        // Função para salvar tema
-        function saveThemeState() {
-            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
+                // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+                document.addEventListener('DOMContentLoaded', function () {
+                    const themeToggle = document.querySelector('.theme-toggle');
+                    const body = document.body;
 
-        // Adiciona NOVO event listener
-        newThemeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Botão de tema clicado!'); // Para debug
-            
-            // Alterna tema
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode');
-            
-            // Atualiza e salva
-            updateThemeIcon();
-            saveThemeState();
-            
-            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
-        });
+                    if (!themeToggle) return;
 
-        // Atualiza ícone inicial
-        updateThemeIcon();
-        
-        // Restaura transições
-        setTimeout(() => {
-            if (body) body.style.transition = '';
-        }, 100);
-    });
-})();
-</script>
+                    // Remove TODOS os event listeners existentes
+                    const newThemeToggle = themeToggle.cloneNode(true);
+                    themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+                    // Função para atualizar ícone
+                    function updateThemeIcon() {
+                        const icon = newThemeToggle.querySelector('i');
+                        if (icon) {
+                            if (body.classList.contains('dark-mode')) {
+                                icon.className = 'fas fa-sun';
+                            } else {
+                                icon.className = 'fas fa-moon';
+                            }
+                        }
+                    }
+
+                    // Função para salvar tema
+                    function saveThemeState() {
+                        localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+                    }
+
+                    // Adiciona NOVO event listener
+                    newThemeToggle.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        console.log('Botão de tema clicado!'); // Para debug
+
+                        // Alterna tema
+                        body.classList.toggle('dark-mode');
+                        body.classList.toggle('light-mode');
+
+                        // Atualiza e salva
+                        updateThemeIcon();
+                        saveThemeState();
+
+                        console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+                    });
+
+                    // Atualiza ícone inicial
+                    updateThemeIcon();
+
+                    // Restaura transições
+                    setTimeout(() => {
+                        if (body) body.style.transition = '';
+                    }, 100);
+                });
+            })();
+    </script>
 
 
     <script>

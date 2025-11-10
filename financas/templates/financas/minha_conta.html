@@ -1,0 +1,426 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINGCOIN - Minha Conta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    screens: {
+                        'lgx': '1200px',
+                        'md': '768px',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/carteira.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <style>
+        .logo-text {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+        
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #23b785;
+        }
+        
+        .photo-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #23b785, #1f9d72);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            border: 3px solid #23b785;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+
+    <div id="app-container">
+
+       <aside id="sidebar" class="sidebar">
+
+            <div class="sidebar-header desktop-only">
+                <div class="logo-container">
+                    <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                    <span class="logo-text">KINGCOIN</span>
+                </div>
+
+                <button class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav primary-nav">
+                <ul>
+                    <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <a href="{% url 'dashboard' %}">
+                            <i class="fas fa-th-large"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
+                        <a href="{% url 'minha-carteira' %}">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="nav-text">Carteira</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item mobile-logo-placeholder">
+                        <div class="logo-container">
+                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
+                        </div>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'transacoes' %}active{% endif %}">
+                        <a href="{% url 'transacoes' %}">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span class="nav-text">Transações</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item {% if request.resolver_match.url_name == 'relatorios' %}active{% endif %}">
+                        <a href="{% url 'relatorios' %}">
+                            <i class="fas fa-chart-bar"></i>
+                            <span class="nav-text">Relatórios</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <!-- Avatar com foto do perfil -->
+                    <div class="user-avatar">
+                        {% if request.user.profile.photo %}
+                        <img src="{{ request.user.profile.photo.url }}" alt="Foto de perfil" class="user-avatar-img">
+                        {% else %}
+                        <!-- Avatar padrão com inicial -->
+                        <div class="user-avatar-default">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="user-info">
+                        <!-- Nome completo -->
+                        <span class="user-name">
+                            {% if request.user.first_name and request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                            {% elif request.user.first_name %}
+                            {{ request.user.first_name }}
+                            {% else %}
+                            {{ request.user.username }}
+                            {% endif %}
+                        </span>
+                        <!-- Email -->
+                        <span class="user-email">{{ request.user.email }}</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav footer-nav-links">
+                    <ul>
+                        <li class="nav-item {% if request.resolver_match.url_name == 'minha-conta' %}active{% endif %}">
+                            <a href="{% url 'minha-conta' %}"><i class="fas fa-user"></i> <span class="nav-text">Minha
+                                    Conta</span></a>
+                        </li>
+                        <li class="nav-item logout-item">
+                            <!-- Formulário de logout com método POST -->
+                            <form method="post" action="{% url 'logout' %}" class="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span class="nav-text">Logout</span>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
+            <div class="max-w-4xl mx-auto xl:ml-8 xl:mr-auto mt-6">
+
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text md:pl-16 md:mt-20">
+                    Minha Conta
+                </h1>
+
+                {% if messages %}
+                <div class="max-w-2xl mx-auto mb-8 animate-slide-fade delay-2">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-2xl bg-gradient-to-r from-[#23b785]/25 to-black/5 border border-emerald-900/100">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-emerald-400 mr-3"></i>
+                            <span class="theme-text">{{ message }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-slide-fade delay-3">
+                    <!-- Coluna da Foto -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100 text-center">
+                            <div class="flex justify-center mb-6">
+                                {% if profile.photo %}
+                                    <img src="{{ profile.photo.url }}" alt="Foto de perfil" class="profile-photo">
+                                {% else %}
+                                    <div class="photo-placeholder">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            
+                            <h3 class="text-xl font-semibold theme-text mb-2">
+                                {% if user.first_name and user.last_name %}
+                                    {{ user.first_name }} {{ user.last_name }}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
+                            </h3>
+                            <p class="text-gray-400 text-sm mb-4">{{ user.email }}</p>
+                            
+                            <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full">
+                                <button type="button" onclick="document.getElementById('id_photo').click()" 
+                                        class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 py-3">
+                                    Alterar Foto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coluna do Formulário -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100">
+                            <h2 class="text-2xl font-semibold theme-text mb-6">Informações Pessoais</h2>
+                            
+                            <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                                {% csrf_token %}
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- Nome -->
+                                    <div>
+                                        <label for="id_first_name" class="block text-sm mb-2 theme-text">Nome</label>
+                                        {{ form.first_name }}
+                                        {% if form.first_name.errors %}
+                                            <div class="text-red-400 text-xs mt-1">{{ form.first_name.errors.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Sobrenome -->
+                                    <div>
+                                        <label for="id_last_name" class="block text-sm mb-2 theme-text">Sobrenome</label>
+                                        {{ form.last_name }}
+                                        {% if form.last_name.errors %}
+                                            <div class="text-red-400 text-xs mt-1">{{ form.last_name.errors.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <!-- Email -->
+                                <div>
+                                    <label for="id_email" class="block text-sm mb-2 theme-text">E-mail</label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <div class="text-red-400 text-xs mt-1">{{ form.email.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Telefone -->
+                                <div>
+                                    <label for="id_phone" class="block text-sm mb-2 theme-text">Telefone</label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <div class="text-red-400 text-xs mt-1">{{ form.phone.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Foto (hidden, acionado pelo botão) -->
+                                <div class="hidden">
+                                    <label for="id_photo" class="block text-sm mb-2 theme-text">Foto</label>
+                                    {{ form.photo }}
+                                    {% if form.photo.errors %}
+                                        <div class="text-red-400 text-xs mt-1">{{ form.photo.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <!-- Botões -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                                    <button type="button" onclick="window.history.back()" 
+                                            class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-3 hover:bg-white/20 transition">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" 
+                                            class="w-full bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-3xl py-3 transition">
+                                        Salvar Alterações
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção de Segurança -->
+                <div class="mt-8 animate-slide-fade delay-4">
+                    <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100">
+                        <h2 class="text-2xl font-semibold theme-text mb-6">Segurança</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5">
+                                <div>
+                                    <h3 class="theme-text font-semibold">Alterar Senha</h3>
+                                    <p class="text-gray-400 text-sm">Atualize sua senha regularmente para manter a segurança</p>
+                                </div>
+                                <a href="{% url 'password_reset' %}" 
+                                   class="bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-2xl px-6 py-2 transition">
+                                    Alterar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts do tema (mesmos do carteira.html) -->
+    <script>
+        // =====================================================
+        // SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+        // =====================================================
+
+        (function () {
+            // 1. EVITAR FLASH DE TEMA - Execução Imediata
+            const body = document.body;
+            const savedTheme = localStorage.getItem('themeState');
+
+            if (body) {
+                body.style.transition = 'none';
+
+                if (savedTheme === 'light') {
+                    body.classList.remove('dark-mode');
+                    body.classList.add('light-mode');
+                } else if (savedTheme === 'dark') {
+                    body.classList.remove('light-mode');
+                    body.classList.add('dark-mode');
+                }
+            }
+
+            // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+            document.addEventListener('DOMContentLoaded', function () {
+                const themeToggle = document.querySelector('.theme-toggle');
+                const body = document.body;
+
+                if (!themeToggle) return;
+
+                // Remove TODOS os event listeners existentes
+                const newThemeToggle = themeToggle.cloneNode(true);
+                themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+                // Função para atualizar ícone
+                function updateThemeIcon() {
+                    const icon = newThemeToggle.querySelector('i');
+                    if (icon) {
+                        if (body.classList.contains('dark-mode')) {
+                            icon.className = 'fas fa-sun';
+                        } else {
+                            icon.className = 'fas fa-moon';
+                        }
+                    }
+                }
+
+                // Função para salvar tema
+                function saveThemeState() {
+                    localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+                }
+
+                // Adiciona NOVO event listener
+                newThemeToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    console.log('Botão de tema clicado!'); // Para debug
+
+                    // Alterna tema
+                    body.classList.toggle('dark-mode');
+                    body.classList.toggle('light-mode');
+
+                    // Atualiza e salva
+                    updateThemeIcon();
+                    saveThemeState();
+
+                    console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+                });
+
+                // Atualiza ícone inicial
+                updateThemeIcon();
+
+                // Restaura transições
+                setTimeout(() => {
+                    if (body) body.style.transition = '';
+                }, 100);
+            });
+        })();
+    </script>
+
+    <!-- Script para preview da foto -->
+    <script>
+        document.getElementById('id_photo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.querySelector('.profile-photo') || document.querySelector('.photo-placeholder');
+                    if (img) {
+                        if (img.classList.contains('photo-placeholder')) {
+                            // Substitui o placeholder por uma imagem
+                            const newImg = document.createElement('img');
+                            newImg.src = e.target.result;
+                            newImg.className = 'profile-photo';
+                            newImg.alt = 'Foto de perfil';
+                            img.parentNode.replaceChild(newImg, img);
+                        } else {
+                            // Atualiza a imagem existente
+                            img.src = e.target.result;
+                        }
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

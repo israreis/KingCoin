@@ -7,12 +7,15 @@ from django.contrib import messages
 from django.db import IntegrityError
 from .models import Profile
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required 
 from .forms import (
     CustomLoginForm,
     CustomUserCreationForm,
     CustomPasswordResetForm,
     CustomSetPasswordForm,
+    ProfileForm  
 )
+
 
 # --- Login ---
 class CustomLoginView(LoginView):
@@ -51,10 +54,8 @@ def RegisterView(request):
                         phone=form.cleaned_data['phone']
                     )
                     
-                    # Fazer login automaticamente
-                    login(request, user)
-                    messages.success(request, 'Cadastro realizado com sucesso!')
-                    return redirect('landing')  # Corrigido: era 'lading', deve ser 'landing'
+                    # Redireciona para a página de confirmação
+                    return render(request, 'financas/register_done.html')
                     
             except IntegrityError as e:
                 form.add_error('email', 'Erro ao criar conta. Este e-mail já pode estar em uso.')
@@ -64,6 +65,10 @@ def RegisterView(request):
         form = CustomUserCreationForm()
     
     return render(request, 'financas/register.html', {'form': form})
+
+
+def register_done(request):
+    return render(request, 'financas/register_done.html')
 
 # --- Landing page ---
 def landing(request):
@@ -94,3 +99,37 @@ def dashboard(request):
 
 def relatorios(request):
     return render(request, "financas/relatorios.html") 
+
+
+@login_required
+def minha_conta(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            # Atualiza o perfil
+            form.save()
+            
+            # Atualiza os dados do usuário
+            user = request.user
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            user.save()
+            
+            messages.success(request, 'Perfil atualizado com sucesso!')
+            return redirect('minha-conta')
+    else:
+        # Preenche o formulário com os dados atuais
+        form = ProfileForm(initial={
+            'first_name': request.user.first_name,
+            'last_name': request.user.last_name,
+            'email': request.user.email,
+            'phone': profile.phone,
+        })
+    
+    return render(request, 'financas/minha_conta.html', {
+        'form': form,
+        'profile': profile
+    })

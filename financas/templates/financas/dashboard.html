@@ -57,8 +57,7 @@
 
 <body class="dark-mode">
     <div id="app-container">
-
-        <aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar">
 
             <div class="sidebar-header desktop-only">
                 <div class="logo-container">
@@ -67,32 +66,12 @@
                 </div>
 
                 <button class="theme-toggle">
-                    <i class="fas fa-sun"></i> </button>
+                    <i class="fas fa-sun"></i>
+                </button>
             </div>
 
             <nav class="sidebar-nav primary-nav">
                 <ul>
-                    <!-- <li class="nav-item">
-                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> <span class="nav-text">Dashboard</span></a>
-                    </li>
-                    
-                    <li class="nav-item active"> 
-                        <a href="{% url 'minha-carteira' %}"><i class="fas fa-credit-card"></i> <span class="nav-text">Carteira</span></a>
-                    </li>
-                    
-                    <li class="nav-item mobile-logo-placeholder">
-                        <div class="logo-container">
-                            <img src="{% static 'img/LogoKingCoinQ.svg' %}" alt="KINGCOIN Logo" class="logo-icon">
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{% url 'transacoes' %}"><i class="fas fa-exchange-alt"></i> <span class="nav-text">Transações</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#"><i class="fas fa-chart-bar"></i> <span class="nav-text">Relatórios</span></a>
-                    </li> -->
-
                     <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
                             <i class="fas fa-th-large"></i>
@@ -100,13 +79,12 @@
                         </a>
                     </li>
 
-                    <li class="nav-item {% if request.resolver_match.url_name == 'carteira' %}active{% endif %}">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
                         <a href="{% url 'minha-carteira' %}">
                             <i class="fas fa-credit-card"></i>
                             <span class="nav-text">Carteira</span>
                         </a>
                     </li>
-
 
                     <li class="nav-item mobile-logo-placeholder">
                         <div class="logo-container">
@@ -121,38 +99,66 @@
                         </a>
                     </li>
 
-                    <li class="nav-item {% if request.resolver_match.url_name == 'configuracoes' %}active{% endif %}">
+                    <li class="nav-item {% if request.resolver_match.url_name == 'relatorios' %}active{% endif %}">
                         <a href="{% url 'relatorios' %}">
                             <i class="fas fa-chart-bar"></i>
                             <span class="nav-text">Relatórios</span>
                         </a>
                     </li>
-
                 </ul>
             </nav>
 
             <div class="sidebar-footer">
-
                 <div class="user-profile">
-                    <div class="user-avatar"></div>
+                    <!-- Avatar com foto do perfil -->
+                    <div class="user-avatar">
+                        {% if request.user.profile.photo %}
+                        <img src="{{ request.user.profile.photo.url }}" alt="Foto de perfil" class="user-avatar-img">
+                        {% else %}
+                        <!-- Avatar padrão com inicial -->
+                        <div class="user-avatar-default">
+                            {% if request.user.first_name %}
+                            {{ request.user.first_name|first|upper }}
+                            {% else %}
+                            {{ request.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
                     <div class="user-info">
-                        <span class="user-name">Israel Reis</span>
-                        <span class="user-email">israelreis2424@gmail.com</span>
+                        <!-- Nome completo -->
+                        <span class="user-name">
+                            {% if request.user.first_name and request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                            {% elif request.user.first_name %}
+                            {{ request.user.first_name }}
+                            {% else %}
+                            {{ request.user.username }}
+                            {% endif %}
+                        </span>
+                        <!-- Email -->
+                        <span class="user-email">{{ request.user.email }}</span>
                     </div>
                 </div>
 
                 <nav class="sidebar-nav footer-nav-links">
                     <ul>
-                        <li class="nav-item">
-                            <a href="#"><i class="fas fa-cog"></i> <span class="nav-text">Configurações</span></a>
+                        <li class="nav-item {% if request.resolver_match.url_name == 'minha-conta' %}active{% endif %}">
+                            <a href="{% url 'minha-conta' %}"><i class="fas fa-user"></i> <span class="nav-text">Minha
+                                    Conta</span></a>
                         </li>
                         <li class="nav-item logout-item">
-                            <a href="{% url 'landing' %}"><i class="fas fa-sign-out-alt"></i> <span
-                                    class="nav-text">Logout</span></a>
+                            <!-- Formulário de logout com método POST -->
+                            <form method="post" action="{% url 'logout' %}" class="logout-form">
+                                {% csrf_token %}
+                                <button type="submit" class="logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span class="nav-text">Logout</span>
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </nav>
-
             </div>
         </aside>
 
@@ -310,18 +316,20 @@
                 </div> -->
 
                 <div class="animate-slide-fade delay-4 mb-12">
-    <div class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full">
-        
-        <h2 class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
-            Evolução da Carteira
-        </h2>
+                    <div
+                        class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full">
 
-        <div class="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
-            <canvas id="graficoCarteira"></canvas>
-        </div>
+                        <h2
+                            class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                            Evolução da Carteira
+                        </h2>
 
-    </div>
-</div>
+                        <div class="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
+                            <canvas id="graficoCarteira"></canvas>
+                        </div>
+
+                    </div>
+                </div>
 
 
 
@@ -600,220 +608,220 @@
     </script>
 
 
-<script>
-    
-// Aguardar o DOM carregar completamente
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Iniciando carregamento dos gráficos...');
-    
-    // --- Gráfico de Linha (Evolução da Carteira) ---
-    const ctxLine = document.getElementById('graficoCarteira');
-    if (ctxLine) {
-        new Chart(ctxLine, {
-            type: 'line',
-            data: {
-                labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
-                datasets: [{
-                    label: 'Saldo (R$)',
-                    data: [14500, 15200, 15800, 16300, 16550, 16800],
-                    fill: true,
-                    borderColor: '#10b981',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                    tension: 0.4,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { 
-                    legend: { display: false }
-                },
-                scales: {
-                    x: { 
-                        ticks: { color: '#10b981' }, 
-                        grid: { display: false }
-                    },
-                    y: { 
-                        ticks: { color: '#10b981' }, 
-                        grid: { color: 'rgba(255,255,255,0.05)' }
-                    }
-                }
-            }
-        });
-        console.log('Gráfico de linha criado');
-    }
+    <script>
 
-    // --- Gráfico de Barras (Despesas por Categoria) ---
-    const ctxBarras = document.getElementById('graficoBarras');
-    if (ctxBarras) {
-        new Chart(ctxBarras, {
-            type: 'bar',
-            data: {
-                labels: ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Educação'],
-                datasets: [{
-                    label: 'Valor Gasto (R$)',
-                    data: [1200, 800, 1500, 600, 400, 300],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)',
-                        'rgba(255, 159, 64, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    borderRadius: 8,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `R$ ${context.parsed.y.toLocaleString('pt-BR')}`;
+        // Aguardar o DOM carregar completamente
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Iniciando carregamento dos gráficos...');
+
+            // --- Gráfico de Linha (Evolução da Carteira) ---
+            const ctxLine = document.getElementById('graficoCarteira');
+            if (ctxLine) {
+                new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
+                        datasets: [{
+                            label: 'Saldo (R$)',
+                            data: [14500, 15200, 15800, 16300, 16550, 16800],
+                            fill: true,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: '#10b981' },
+                                grid: { display: false }
+                            },
+                            y: {
+                                ticks: { color: '#10b981' },
+                                grid: { color: 'rgba(255,255,255,0.05)' }
                             }
                         }
                     }
-                },
-                scales: {
-                    x: {
-                        ticks: { 
-                            color: '#10b981',
-                            font: { size: 11 }
-                        },
-                        grid: { display: false }
+                });
+                console.log('Gráfico de linha criado');
+            }
+
+            // --- Gráfico de Barras (Despesas por Categoria) ---
+            const ctxBarras = document.getElementById('graficoBarras');
+            if (ctxBarras) {
+                new Chart(ctxBarras, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Alimentação', 'Transporte', 'Moradia', 'Lazer', 'Saúde', 'Educação'],
+                        datasets: [{
+                            label: 'Valor Gasto (R$)',
+                            data: [1200, 800, 1500, 600, 400, 300],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.8)',
+                                'rgba(54, 162, 235, 0.8)',
+                                'rgba(255, 206, 86, 0.8)',
+                                'rgba(75, 192, 192, 0.8)',
+                                'rgba(153, 102, 255, 0.8)',
+                                'rgba(255, 159, 64, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1,
+                            borderRadius: 8,
+                        }]
                     },
-                    y: {
-                        ticks: { 
-                            color: '#10b981',
-                            callback: function(value) {
-                                return 'R$ ' + value.toLocaleString('pt-BR');
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `R$ ${context.parsed.y.toLocaleString('pt-BR')}`;
+                                    }
+                                }
                             }
                         },
-                        grid: { color: 'rgba(255,255,255,0.05)' },
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-        console.log('Gráfico de barras criado');
-    }
-
-    // --- Gráfico de Pizza (Distribuição de Receitas) ---
-    const ctxPizza = document.getElementById('graficoPizza');
-    if (ctxPizza) {
-        new Chart(ctxPizza, {
-            type: 'pie',
-            data: {
-                labels: ['Salário', 'Freelance', 'Investimentos', 'Bônus', 'Outros'],
-                datasets: [{
-                    data: [65, 15, 12, 5, 3],
-                    backgroundColor: [
-                        'rgba(34, 197, 94, 0.8)',
-                        'rgba(59, 130, 246, 0.8)',
-                        'rgba(168, 85, 247, 0.8)',
-                        'rgba(249, 115, 22, 0.8)',
-                        'rgba(156, 163, 175, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(34, 197, 94, 1)',
-                        'rgba(59, 130, 246, 1)',
-                        'rgba(168, 85, 247, 1)',
-                        'rgba(249, 115, 22, 1)',
-                        'rgba(156, 163, 175, 1)'
-                    ],
-                    borderWidth: 2,
-                    hoverOffset: 15
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#10b981',
-                            padding: 15,
-                            font: { size: 11 }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.label}: ${context.parsed}%`;
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#10b981',
+                                    font: { size: 11 }
+                                },
+                                grid: { display: false }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#10b981',
+                                    callback: function (value) {
+                                        return 'R$ ' + value.toLocaleString('pt-BR');
+                                    }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                beginAtZero: true
                             }
                         }
                     }
-                }
+                });
+                console.log('Gráfico de barras criado');
             }
-        });
-        console.log('Gráfico de pizza criado');
-    }
 
-    // --- Gráfico de Rosca (Metas de Economia) ---
-    const ctxRosca = document.getElementById('graficoRosca');
-    if (ctxRosca) {
-        new Chart(ctxRosca, {
-            type: 'doughnut',
-            data: {
-                labels: ['Concluído', 'Em Andamento', 'Pendente'],
-                datasets: [{
-                    data: [45, 30, 25],
-                    backgroundColor: [
-                        'rgba(34, 197, 94, 0.8)',
-                        'rgba(59, 130, 246, 0.8)',
-                        'rgba(239, 68, 68, 0.8)'
-                    ],
-                    borderColor: [
-                        'rgba(34, 197, 94, 1)',
-                        'rgba(59, 130, 246, 1)',
-                        'rgba(239, 68, 68, 1)'
-                    ],
-                    borderWidth: 2,
-                    hoverOffset: 15,
-                    cutout: '60%'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            color: '#10b981',
-                            padding: 15,
-                            font: { size: 11 }
-                        }
+            // --- Gráfico de Pizza (Distribuição de Receitas) ---
+            const ctxPizza = document.getElementById('graficoPizza');
+            if (ctxPizza) {
+                new Chart(ctxPizza, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Salário', 'Freelance', 'Investimentos', 'Bônus', 'Outros'],
+                        datasets: [{
+                            data: [65, 15, 12, 5, 3],
+                            backgroundColor: [
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(168, 85, 247, 0.8)',
+                                'rgba(249, 115, 22, 0.8)',
+                                'rgba(156, 163, 175, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(34, 197, 94, 1)',
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(168, 85, 247, 1)',
+                                'rgba(249, 115, 22, 1)',
+                                'rgba(156, 163, 175, 1)'
+                            ],
+                            borderWidth: 2,
+                            hoverOffset: 15
+                        }]
                     },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return `${context.label}: ${context.parsed}%`;
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#10b981',
+                                    padding: 15,
+                                    font: { size: 11 }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.label}: ${context.parsed}%`;
+                                    }
+                                }
                             }
                         }
                     }
-                }
+                });
+                console.log('Gráfico de pizza criado');
             }
-        });
-        console.log('Gráfico de rosca criado');
-    }
 
-    console.log('Todos os gráficos processados');
-});
-</script>
+            // --- Gráfico de Rosca (Metas de Economia) ---
+            const ctxRosca = document.getElementById('graficoRosca');
+            if (ctxRosca) {
+                new Chart(ctxRosca, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Concluído', 'Em Andamento', 'Pendente'],
+                        datasets: [{
+                            data: [45, 30, 25],
+                            backgroundColor: [
+                                'rgba(34, 197, 94, 0.8)',
+                                'rgba(59, 130, 246, 0.8)',
+                                'rgba(239, 68, 68, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(34, 197, 94, 1)',
+                                'rgba(59, 130, 246, 1)',
+                                'rgba(239, 68, 68, 1)'
+                            ],
+                            borderWidth: 2,
+                            hoverOffset: 15,
+                            cutout: '60%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#10b981',
+                                    padding: 15,
+                                    font: { size: 11 }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return `${context.label}: ${context.parsed}%`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                console.log('Gráfico de rosca criado');
+            }
+
+            console.log('Todos os gráficos processados');
+        });
+    </script>
 
 
 </body>

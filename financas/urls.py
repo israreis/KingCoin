@@ -5,6 +5,8 @@ from .views import (  # <-- importando corretamente das views
     CustomLoginView,
     CustomLogoutView,
     RegisterView,
+    register_done,
+    minha_conta,
     CustomPasswordResetView,
     CustomPasswordResetConfirmView,
     minha_carteira_view,
@@ -25,6 +27,7 @@ urlpatterns = [
     path("login/", CustomLoginView.as_view(), name="login"),
     path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("register/", RegisterView, name="register"),
+    path("register_done", register_done, name="register_done"),
 
     # Recuperação de senha
     path(
@@ -48,6 +51,9 @@ urlpatterns = [
         CustomPasswordResetConfirmView.as_view(),
         name="password_reset_confirm",
     ),
+    
+    # Minha conta 
+    path('minha-conta/', minha_conta, name='minha-conta'),
 
     # Nova URL da Carteira
     path('minha-carteira/', minha_carteira_view, name='minha-carteira'),

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block title %}Kingcoin - Cadastro Concluído{% endblock %}
+
+{% block body %}
+<body class="transition-colors duration-500 bg-[#000805] text-white flex items-center justify-center min-h-screen font-[Archivo] relative overflow-hidden" id="body">
+
+  <!-- Background da página -->
+  <div id="bg-image" class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-80 -z-10" style="background-image: url('{% static 'img/background-escuro.png' %}')"></div>
+
+  <!-- Logo do site -->
+  <div class="absolute top-8 left-10 z-20 flex items-center">
+    <a href="{% url 'landing' %}" class="block"> 
+      <img id="logo-img" src="{% static 'img/KingCoinLogo.svg' %}" alt="Kingcoin" class="w-64 h-auto max-w-[160px] transition-all duration-500">
+    </a>
+  </div>
+
+  <!-- Card de sucesso -->
+  <div class="flex flex-col items-center justify-center w-full px-6 relative z-10">
+    <div id="register-card" class="glass-dark w-full max-w-lg text-center shadow-xl animate-zoomIn p-8">
+      
+      <!-- Ícone de sucesso -->
+      <div class="mb-6">
+        <div class="w-20 h-20 bg-[#23b785] rounded-full flex items-center justify-center mx-auto">
+          <i class="fas fa-check text-white text-2xl"></i>
+        </div>
+      </div>
+
+      <!-- Título -->
+      <h2 class="text-3xl font-semibold mb-4">Cadastro Concluído!</h2>
+
+      <!-- Mensagem -->
+      <p class="text-gray-300 mb-2">
+        Seu cadastro foi realizado com sucesso.
+      </p>
+      <p class="text-gray-300 mb-8">
+        Agora você pode fazer login em sua conta.
+      </p>
+
+      <!-- Botão para login -->
+      <a href="{% url 'login' %}" class="bg-[#23b785] text-[#000805] font-semibold py-3 px-8 rounded-full hover:opacity-90 transition inline-block">
+        Fazer Login
+      </a>
+
+      <!-- Link para landing page -->
+      <p class="text-sm text-gray-300 mt-6">
+        ou <a href="{% url 'landing' %}" class="text-[#23b785] font-medium">voltar para a página inicial</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Script do tema (similar ao seu template de cadastro) -->
+  <script>
+    // Seu script do tema aqui (igual ao do template de cadastro)
+    const body = document.getElementById('body');
+    const card = document.getElementById('register-card');
+    const bgImage = document.getElementById('bg-image');
+    const logoImg = document.getElementById('logo-img');
+
+    const BG_DARK = "url('{% static 'img/background-escuro.png' %}')";
+    const BG_LIGHT = "url('{% static 'img/background-claro.png' %}')";
+    const LOGO_DARK = "{% static 'img/KingCoinLogo.svg' %}";
+    const LOGO_LIGHT = "{% static 'img/KingCoin-Logo-Light.svg' %}";
+
+    function applyTheme(isLight) {
+      if (isLight) {
+        body.classList.remove('bg-[#000805]', 'text-white');
+        body.classList.add('bg-[#fffcf0]', 'text-[#000805]');
+        card.classList.remove('glass-dark');
+        card.classList.add('glass-light');
+        bgImage.style.backgroundImage = BG_LIGHT;
+        logoImg.src = LOGO_LIGHT;
+        localStorage.setItem('theme', 'light');
+      } else {
+        body.classList.remove('bg-[#fffcf0]', 'text-[#000805]');
+        body.classList.add('bg-[#000805]', 'text-white');
+        card.classList.remove('glass-light');
+        card.classList.add('glass-dark');
+        bgImage.style.backgroundImage = BG_DARK;
+        logoImg.src = LOGO_DARK;
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme === 'light');
+    });
+  </script>
+
+</body>
+{% endblock %}

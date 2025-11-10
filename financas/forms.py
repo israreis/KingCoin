@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 # Formulário de login customizado
 class CustomLoginForm(AuthenticationForm):
@@ -126,3 +127,45 @@ class CustomSetPasswordForm(SetPasswordForm):
         super().__init__(*args, **kwargs)
         self.fields['new_password1'].label = "Nova senha"
         self.fields['new_password2'].label = "Confirmar nova senha"
+
+#Formulario de minha conta 
+
+class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]',
+            'placeholder': 'Seu nome'
+        })
+    )
+    
+    last_name = forms.CharField(
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]',
+            'placeholder': 'Seu sobrenome'
+        })
+    )
+    
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={
+            'class': 'w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]',
+            'placeholder': 'seu@email.com'
+        })
+    )
+    
+    class Meta:
+        model = Profile
+        fields = ['phone', 'photo']
+        widgets = {
+            'phone': forms.TextInput(attrs={
+                'class': 'w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]',
+                'placeholder': '(11) 99999-9999'
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]'
+            })
+        }        

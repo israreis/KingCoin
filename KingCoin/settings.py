@@ -1,6 +1,7 @@
 #é o arquivo de configurações gerais do projeto
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,3 +123,6 @@ DEFAULT_FROM_EMAIL = 'KingCoin <kingcoin.eixo3@gmail.com>'
 
 
 LOGIN_REDIRECT_URL = 'minha-carteira'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
