@@ -399,11 +399,9 @@
                 <div id="crud-modal" aria-hidden="true" class="hidden modal-container">
                     <div class="modal-overlay"></div>
                     <div class="modal-content">
-                        <div
-                            class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <div class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
                             <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
-                                <h3 id="crud-modal-title" class="text-2xl font-semibold theme-text">Adicionar Ganhos
-                                </h3>
+                                <h3 id="crud-modal-title" class="text-2xl font-semibold theme-text">Adicionar Ganhos</h3>
                                 <button id="crud-modal-close" type="button"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -414,12 +412,15 @@
                                     <span class="sr-only theme-text">Fechar</span>
                                 </button>
                             </div>
-                            <form id="crud-modal-form" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5" data-tipo="RECEITA">
+                            <!-- FORM SIMPLES - SEM AJAX -->
+                            <form method="POST" action="{% url 'criar_movimentacao' %}" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                {% csrf_token %}
+                                <input type="hidden" name="tipo" value="RECEITA">
+                                
                                 <div class="sm:col-span-2">
                                     <label for="category" class="block text-sm mb-1 theme-text">Categoria</label>
-                                    <select id="category" name="category"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <select id="category" name="categoria_id" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                         <option value="" class="text-gray-800">Selecione</option>
                                         {% for categoria in categorias_receita %}
                                         <option value="{{ categoria.id_categoria }}" class="text-gray-800">{{ categoria.nomeCategoria }}</option>
@@ -427,29 +428,28 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="date" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
-                                    <input id="date" name="date" type="date" value="{{ data_hoje }}"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <label for="date" class="block text-sm mb-1 theme-text">Data</label>
+                                    <input id="date" name="data" type="date" value="{{ data_hoje }}" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                 </div>
                                 <div>
                                     <label for="price" class="block text-sm mb-1 theme-text">Valor</label>
-                                    <input id="price" name="price" type="number" step="0.01" min="0.01"
+                                    <input id="price" name="valor" type="number" step="0.01" min="0.01" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="R$ 0,00" required>
+                                        placeholder="R$ 0,00">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label for="description" class="block text-sm mb-1 theme-text">Descrição</label>
-                                    <textarea id="description" name="description" rows="4"
+                                    <textarea id="description" name="descricao" rows="4" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="Descrição" required></textarea>
+                                        placeholder="Descrição"></textarea>
                                 </div>
                                 <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <button id="crud-modal-cancel" type="button"
                                         class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
                                         Cancelar
                                     </button>
-                                    <button id="crud-modal-save" type="submit"
+                                    <button type="submit"
                                         class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
                                         Salvar
                                     </button>
@@ -463,11 +463,9 @@
                 <div id="crud-modal2" aria-hidden="true" class="hidden modal-container">
                     <div class="modal-overlay"></div>
                     <div class="modal-content">
-                        <div
-                            class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <div class="relative shadow-xl border border-white/10 bg-white/5 backdrop-blur-md p-10 text-left rounded-3xl">
                             <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
-                                <h3 id="crud-modal-title2" class="text-2xl font-semibold theme-text">Adicionar Despesas
-                                </h3>
+                                <h3 id="crud-modal-title2" class="text-2xl font-semibold theme-text">Adicionar Despesas</h3>
                                 <button id="crud-modal-close2" type="button"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -478,12 +476,15 @@
                                     <span class="sr-only theme-text">Fechar</span>
                                 </button>
                             </div>
-                            <form id="crud-modal-form2" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5" data-tipo="DESPESA">
+                            <!-- FORM SIMPLES - SEM AJAX -->
+                            <form method="POST" action="{% url 'criar_movimentacao' %}" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                {% csrf_token %}
+                                <input type="hidden" name="tipo" value="DESPESA">
+                                
                                 <div class="sm:col-span-2">
                                     <label for="category2" class="block text-sm mb-1 theme-text">Categoria</label>
-                                    <select id="category2" name="category"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <select id="category2" name="categoria_id" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                         <option value="" class="text-gray-800">Selecione</option>
                                         {% for categoria in categorias_despesa %}
                                         <option value="{{ categoria.id_categoria }}" class="text-gray-800">{{ categoria.nomeCategoria }}</option>
@@ -491,29 +492,28 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="date2" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
-                                    <input id="date2" name="date" type="date" value="{{ data_hoje }}"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <label for="date2" class="block text-sm mb-1 theme-text">Data</label>
+                                    <input id="date2" name="data" type="date" value="{{ data_hoje }}" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                 </div>
                                 <div>
                                     <label for="price2" class="block text-sm mb-1 theme-text">Valor</label>
-                                    <input id="price2" name="price" type="number" step="0.01" min="0.01"
+                                    <input id="price2" name="valor" type="number" step="0.01" min="0.01" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="R$ 0,00" required>
+                                        placeholder="R$ 0,00">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label for="description2" class="block text-sm mb-1 theme-text">Descrição</label>
-                                    <textarea id="description2" name="description" rows="4"
+                                    <textarea id="description2" name="descricao" rows="4" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="Descrição" required></textarea>
+                                        placeholder="Descrição"></textarea>
                                 </div>
                                 <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <button id="crud-modal-cancel2" type="button"
-                                        class="w-full bg-transparent border theme-text rounded-3xl py-2.5 hover:bg-white/20 border-[#23b785]">
+                                        class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
                                         Cancelar
                                     </button>
-                                    <button id="crud-modal-save2" type="submit"
+                                    <button type="submit"
                                         class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
                                         Salvar
                                     </button>
@@ -527,12 +527,9 @@
                 <div id="crud-modal3" aria-hidden="true" class="hidden modal-container">
                     <div class="modal-overlay"></div>
                     <div class="modal-content">
-                        <div
-                            class="relative shadow-xl border border-white/10 bg-black/10 backdrop-blur-md p-10 text-left rounded-3xl">
+                        <div class="relative shadow-xl border border-white/10 bg-black/10 backdrop-blur-md p-10 text-left rounded-3xl">
                             <div class="flex items-center justify-between pb-3 border-b border-[#23b785]">
-                                <h3 id="crud-modal-title3" class="text-2xl font-semibold theme-text">Adicionar
-                                    Investimentos
-                                </h3>
+                                <h3 id="crud-modal-title3" class="text-2xl font-semibold theme-text">Adicionar Investimentos</h3>
                                 <button id="crud-modal-close3" type="button"
                                     class="inline-flex items-center justify-center w-8 h-8 rounded-md bg-white/3 hover:bg-white/6 theme-text">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -543,12 +540,15 @@
                                     <span class="sr-only theme-text">Fechar</span>
                                 </button>
                             </div>
-                            <form id="crud-modal-form3" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5" data-tipo="ECONOMIA">
+                            <!-- FORM SIMPLES - SEM AJAX -->
+                            <form method="POST" action="{% url 'criar_movimentacao' %}" class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                {% csrf_token %}
+                                <input type="hidden" name="tipo" value="ECONOMIA">
+                                
                                 <div class="sm:col-span-2">
                                     <label for="category3" class="block text-sm mb-1 theme-text">Categoria</label>
-                                    <select id="category3" name="category"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <select id="category3" name="categoria_id" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                         <option value="" class="text-gray-800">Selecione</option>
                                         {% for categoria in categorias_economia %}
                                         <option value="{{ categoria.id_categoria }}" class="text-gray-800">{{ categoria.nomeCategoria }}</option>
@@ -556,29 +556,28 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="date3" class="block text-sm mb-1 theme-text">Data de Lançamento</label>
-                                    <input id="date3" name="date" type="date" value="{{ data_hoje }}"
-                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        required>
+                                    <label for="date3" class="block text-sm mb-1 theme-text">Data</label>
+                                    <input id="date3" name="data" type="date" value="{{ data_hoje }}" required
+                                        class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]">
                                 </div>
                                 <div>
                                     <label for="price3" class="block text-sm mb-1 theme-text">Valor</label>
-                                    <input id="price3" name="price" type="number" step="0.01" min="0.01"
+                                    <input id="price3" name="valor" type="number" step="0.01" min="0.01" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="R$ 0,00" required>
+                                        placeholder="R$ 0,00">
                                 </div>
                                 <div class="sm:col-span-2">
                                     <label for="description3" class="block text-sm mb-1 theme-text">Descrição</label>
-                                    <textarea id="description3" name="description" rows="4"
+                                    <textarea id="description3" name="descricao" rows="4" required
                                         class="w-full px-3 py-2 rounded-lg bg-[#fffcf0] border border-white/10 text-black placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#23b785]/40 focus:border-[#23b785]"
-                                        placeholder="Descrição" required></textarea>
+                                        placeholder="Descrição"></textarea>
                                 </div>
                                 <div class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <button id="crud-modal-cancel3" type="button"
-                                        class="w-full bg-transparent border theme-text rounded-3xl py-2.5 hover:bg-white/20 border-[#23b785]">
+                                        class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-2.5 hover:bg-white/20">
                                         Cancelar
                                     </button>
-                                    <button id="crud-modal-save3" type="submit"
+                                    <button type="submit"
                                         class="w-full bg-[#23b785] hover:bg-[#1f9d72] theme-text font-semibold rounded-3xl py-2.5">
                                         Salvar
                                     </button>
@@ -587,7 +586,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </main>
     </div>
@@ -851,346 +849,211 @@
             });
         });
     </script>
+<script>
 
-    <!-- SCRIPT: Modal -->
-    <script>
-        (function () {
-            const openBtn = document.getElementById('open-crud-modal');
-            const modal = document.getElementById('crud-modal');
-            const overlay = modal.querySelector('.modal-overlay');
-            const closeBtn = document.getElementById('crud-modal-close');
-            const cancelBtn = document.getElementById('crud-modal-cancel');
-            const form = document.getElementById('crud-modal-form');
-            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+    // FUNÇÃO GERAL PARA CONTROLAR MODAIS
+function setupModal(openBtnId, modalId, closeBtnId, cancelBtnId) {
+    const openBtn = document.getElementById(openBtnId);
+    const modal = document.getElementById(modalId);
+    const closeBtn = document.getElementById(closeBtnId);
+    const cancelBtn = document.getElementById(cancelBtnId);
+    const overlay = modal ? modal.querySelector('.modal-overlay') : null;
 
-            let previouslyFocused = null;
+    if (!modal) return;
 
-            function openModal() {
-                previouslyFocused = document.activeElement;
-                modal.classList.remove('hidden');
-                modal.setAttribute('aria-hidden', 'false');
-                document.documentElement.style.overflow = 'hidden';
-                document.body.style.overflow = 'hidden';
-                if (firstFocusable) firstFocusable.focus();
-                document.addEventListener('keydown', handleKeyDown);
-            }
+    function openModal() {
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        // CORREÇÃO: Esconder a rolagem do body
+        document.body.style.overflow = 'hidden';
+    }
 
-            function closeModal() {
-                modal.classList.add('hidden');
-                modal.setAttribute('aria-hidden', 'true');
-                document.documentElement.style.overflow = '';
-                document.body.style.overflow = '';
-                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
-                document.removeEventListener('keydown', handleKeyDown);
-            }
+    function closeModal() {
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        // CORREÇÃO: Restaurar a rolagem do body
+        document.body.style.overflow = '';
+    }
 
-            function handleKeyDown(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
+    // Abertura
+    if (openBtn) openBtn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        openModal();
+    });
+
+    // Fechar por botão X
+    if (closeBtn) closeBtn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        closeModal();
+    });
+
+    // Fechar por Cancel
+    if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        closeModal();
+    });
+
+    // Fechar clicando no overlay
+    if (overlay) overlay.addEventListener('click', (ev) => {
+        if (ev.target === overlay) closeModal();
+    });
+}
+
+// Inicializar todos os modais quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal 1 - Ganhos
+    setupModal(
+        'open-crud-modal',
+        'crud-modal', 
+        'crud-modal-close',
+        'crud-modal-cancel'
+    );
+    
+    // Modal 2 - Despesas
+    setupModal(
+        'open-crud-modal2',
+        'crud-modal2',
+        'crud-modal-close2', 
+        'crud-modal-cancel2'
+    );
+    
+    // Modal 3 - Investimentos
+    setupModal(
+        'open-crud-modal3',
+        'crud-modal3',
+        'crud-modal-close3',
+        'crud-modal-cancel3'
+    );
+
+    // Fechar modais com ESC (global)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modals = document.querySelectorAll('.modal-container');
+            modals.forEach(modal => {
+                if (!modal.classList.contains('hidden')) {
+                    modal.classList.add('hidden');
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = ''; // Restaurar rolagem
                 }
-            }
-
-            // Abertura
-            if (openBtn) openBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                openModal();
             });
+        }
+    });
+});
 
-            // Fechar por botão X
-            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
+// SUAS FUNÇÕES ADAPTADAS
+function formatarMoeda(valor) {
+    let valorLimpo = valor.replace(/\D/g, '');
+    if (valorLimpo === '') return '';
+    
+    // Se for apenas zeros, retorna vazio
+    if (parseInt(valorLimpo) === 0) return '';
+    
+    let valorNumerico = (parseInt(valorLimpo) / 100).toFixed(2);
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(valorNumerico);
+}
 
-            // Fechar por Cancel
-            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
+function aplicarMascaraMoeda(input) {
+    // Muda o tipo para text para aceitar formatação
+    input.type = 'text';
+    
+    input.addEventListener('input', function (e) {
+        let cursorPosition = e.target.selectionStart;
+        let valorOriginal = e.target.value;
+        
+        // Permite backspace/delete
+        if (e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward') {
+            return;
+        }
+        
+        e.target.value = formatarMoeda(valorOriginal);
+        
+        if (e.target.value) {
+            let diferenca = e.target.value.length - valorOriginal.length;
+            e.target.setSelectionRange(cursorPosition + diferenca, cursorPosition + diferenca);
+        }
+    });
 
-            // Fechar clicando no overlay
-            if (overlay) overlay.addEventListener('click', (ev) => {
-                if (ev.target === overlay) closeModal();
-            });
+    // Não formata valor inicial para evitar "R$ 0,00"
+    if (input.value && input.value !== 'R$ 0,00') {
+        input.value = formatarMoeda(input.value);
+    } else {
+        input.value = ''; // Deixa vazio inicialmente
+    }
+}
 
-            // Submissão do formulário com AJAX
-            if (form) {
-                form.addEventListener('submit', function (ev) {
-                    ev.preventDefault();
-                    
-                    const category = document.getElementById('category').value.trim();
-                    const date = document.getElementById('date').value.trim();
-                    const price = document.getElementById('price').value.trim();
-                    const description = document.getElementById('description').value.trim();
+function converterMoedaParaNumero(valorFormatado) {
+    if (!valorFormatado || valorFormatado === 'R$ 0,00') return 0;
+    
+    let valorNumerico = valorFormatado
+        .replace('R$', '')
+        .replace(/\s/g, '')
+        .replace(/\./g, '')
+        .replace(',', '.');
+    return parseFloat(valorNumerico);
+}
 
-                    if (!category || !date || !price || !description) {
-                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
-                        return;
-                    }
+// Função para validar se o valor é válido (não zero)
+function valorEhValido(valorFormatado) {
+    const valorNumerico = converterMoedaParaNumero(valorFormatado);
+    return valorNumerico > 0;
+}
 
-                    // Envia via AJAX
-                    fetch("{% url 'criar_movimentacao' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            categoria_id: category,
-                            data: date,
-                            valor: price,
-                            descricao: description
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("✅ Ganho adicionado com sucesso!");
-                            form.reset();
-                            closeModal();
-                            // Recarrega a página para atualizar os dados
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1000);
-                        } else {
-                            alert("❌ Erro ao adicionar ganho: " + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert("❌ Erro ao adicionar ganho. Tente novamente.");
-                    });
-                });
-            }
-        })();
-    </script>
-
-    <!-- SCRIPT: Modal2 -->
-    <script>
-        (function () {
-            const openBtn = document.getElementById('open-crud-modal2');
-            const modal = document.getElementById('crud-modal2');
-            const overlay = modal.querySelector('.modal-overlay');
-            const closeBtn = document.getElementById('crud-modal-close2');
-            const cancelBtn = document.getElementById('crud-modal-cancel2');
-            const form = document.getElementById('crud-modal-form2');
-            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
-
-            let previouslyFocused = null;
-
-            function openModal() {
-                previouslyFocused = document.activeElement;
-                modal.classList.remove('hidden');
-                modal.setAttribute('aria-hidden', 'false');
-                document.documentElement.style.overflow = 'hidden';
-                document.body.style.overflow = 'hidden';
-                if (firstFocusable) firstFocusable.focus();
-                document.addEventListener('keydown', handleKeyDown);
-            }
-
-            function closeModal() {
-                modal.classList.add('hidden');
-                modal.setAttribute('aria-hidden', 'true');
-                document.documentElement.style.overflow = '';
-                document.body.style.overflow = '';
-                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
-                document.removeEventListener('keydown', handleKeyDown);
-            }
-
-            function handleKeyDown(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
+// INICIALIZAÇÃO ADAPTADA PARA SEUS CAMPOS
+document.addEventListener('DOMContentLoaded', function() {
+    // Campos de valor dos modais
+    const camposValor = [
+        document.getElementById('price'),
+        document.getElementById('price2'), 
+        document.getElementById('price3')
+    ];
+    
+    camposValor.forEach(campo => {
+        if (campo) {
+            // Aplica a máscara
+            aplicarMascaraMoeda(campo);
+            
+            // Adiciona validação no submit do form
+            campo.closest('form')?.addEventListener('submit', function(e) {
+                const valorFormatado = campo.value;
+                
+                // Valida se o valor é válido
+                if (!valorEhValido(valorFormatado)) {
+                    e.preventDefault();
+                    alert('Por favor, insira um valor válido maior que zero.');
+                    campo.focus();
+                    return;
                 }
-            }
-
-            // Abertura
-            if (openBtn) openBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                openModal();
+                
+                // Converte para número antes de enviar
+                const valorNumerico = converterMoedaParaNumero(valorFormatado);
+                
+                // Cria um campo hidden com o valor numérico
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = campo.name;
+                hiddenInput.value = valorNumerico;
+                
+                // Adiciona ao form e remove o name do campo formatado
+                this.appendChild(hiddenInput);
+                campo.removeAttribute('name');
             });
-
-            // Fechar por botão X
-            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
-
-            // Fechar por Cancel
-            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
-
-            // Fechar clicando no overlay
-            if (overlay) overlay.addEventListener('click', (ev) => {
-                if (ev.target === overlay) closeModal();
-            });
-
-            // Submissão do formulário com AJAX
-            if (form) {
-                form.addEventListener('submit', function (ev) {
-                    ev.preventDefault();
-                    
-                    const category = document.getElementById('category2').value.trim();
-                    const date = document.getElementById('date2').value.trim();
-                    const price = document.getElementById('price2').value.trim();
-                    const description = document.getElementById('description2').value.trim();
-
-                    if (!category || !date || !price || !description) {
-                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
-                        return;
-                    }
-
-                    // Envia via AJAX
-                    fetch("{% url 'criar_movimentacao' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            categoria_id: category,
-                            data: date,
-                            valor: price,
-                            descricao: description
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("✅ Despesa adicionada com sucesso!");
-                            form.reset();
-                            closeModal();
-                            // Recarrega a página para atualizar os dados
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1000);
-                        } else {
-                            alert("❌ Erro ao adicionar despesa: " + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert("❌ Erro ao adicionar despesa. Tente novamente.");
-                    });
-                });
-            }
-        })();
-    </script>
-
-    <!-- SCRIPT: Modal3 -->
-    <script>
-        (function () {
-            const openBtn = document.getElementById('open-crud-modal3');
-            const modal = document.getElementById('crud-modal3');
-            const overlay = modal.querySelector('.modal-overlay');
-            const closeBtn = document.getElementById('crud-modal-close3');
-            const cancelBtn = document.getElementById('crud-modal-cancel3');
-            const form = document.getElementById('crud-modal-form3');
-            const firstFocusable = modal.querySelector('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
-
-            let previouslyFocused = null;
-
-            function openModal() {
-                previouslyFocused = document.activeElement;
-                modal.classList.remove('hidden');
-                modal.setAttribute('aria-hidden', 'false');
-                document.documentElement.style.overflow = 'hidden';
-                document.body.style.overflow = 'hidden';
-                if (firstFocusable) firstFocusable.focus();
-                document.addEventListener('keydown', handleKeyDown);
-            }
-
-            function closeModal() {
-                modal.classList.add('hidden');
-                modal.setAttribute('aria-hidden', 'true');
-                document.documentElement.style.overflow = '';
-                document.body.style.overflow = '';
-                if (previouslyFocused && previouslyFocused.focus) previouslyFocused.focus();
-                document.removeEventListener('keydown', handleKeyDown);
-            }
-
-            function handleKeyDown(e) {
-                if (e.key === 'Escape') {
-                    closeModal();
+            
+            // Adiciona validação visual no blur
+            campo.addEventListener('blur', function() {
+                if (this.value && !valorEhValido(this.value)) {
+                    this.style.borderColor = '#ff6b6b';
+                } else {
+                    this.style.borderColor = '';
                 }
-            }
-
-            // Abertura
-            if (openBtn) openBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                openModal();
             });
+        }
+    });
+});
 
-            // Fechar por botão X
-            if (closeBtn) closeBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
-
-            // Fechar por Cancel
-            if (cancelBtn) cancelBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                closeModal();
-            });
-
-            // Fechar clicando no overlay
-            if (overlay) overlay.addEventListener('click', (ev) => {
-                if (ev.target === overlay) closeModal();
-            });
-
-            // Submissão do formulário com AJAX
-            if (form) {
-                form.addEventListener('submit', function (ev) {
-                    ev.preventDefault();
-                    
-                    const category = document.getElementById('category3').value.trim();
-                    const date = document.getElementById('date3').value.trim();
-                    const price = document.getElementById('price3').value.trim();
-                    const description = document.getElementById('description3').value.trim();
-
-                    if (!category || !date || !price || !description) {
-                        alert("⚠️ Por favor, preencha todos os campos corretamente antes de salvar.");
-                        return;
-                    }
-
-                    // Envia via AJAX
-                    fetch("{% url 'criar_movimentacao' %}", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        body: JSON.stringify({
-                            categoria_id: category,
-                            data: date,
-                            valor: price,
-                            descricao: description
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert("✅ Investimento adicionado com sucesso!");
-                            form.reset();
-                            closeModal();
-                            // Recarrega a página para atualizar os dados
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 1000);
-                        } else {
-                            alert("❌ Erro ao adicionar investimento: " + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro:', error);
-                        alert("❌ Erro ao adicionar investimento. Tente novamente.");
-                    });
-                });
-            }
-        })();
-    </script>
-
+</script>
 </body>
 
 </html>

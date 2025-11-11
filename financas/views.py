@@ -367,33 +367,30 @@ def get_categorias_por_tipo(request, tipo_nome):
     ]
     return JsonResponse({'categorias': categorias_list})
 
-@csrf_exempt
-@require_http_methods(["POST"])
 @login_required
 def criar_movimentacao(request):
-    """Cria uma nova movimentação"""
-    try:
-        data = json.loads(request.body)
-        
-        movimentacao = Movimentacao(
-            usuario=request.user,
-            data_movimentacao=datetime.strptime(data['data'], '%Y-%m-%d').date(),
-            valor=data['valor'],
-            descricao=data['descricao'],
-            categoria_id=data['categoria_id']
-        )
-        movimentacao.save()
-        
-        return JsonResponse({
-            'success': True, 
-            'message': 'Movimentação criada com sucesso!',
-            'id': movimentacao.id_movimentacao
-        })
-        
-    except Exception as e:
-        return JsonResponse({
-            'success': False, 
-            'message': f'Erro ao criar movimentação: {str(e)}'
-        }, status=400)
-
+    if request.method == 'POST':
+        try:
+            categoria_id = request.POST.get('categoria_id')
+            data_movimentacao = request.POST.get('data')
+            valor = request.POST.get('valor')
+            descricao = request.POST.get('descricao')
+            
+            movimentacao = Movimentacao(
+                usuario=request.user,
+                data_movimentacao=data_movimentacao,
+                valor=valor,
+                descricao=descricao,
+                categoria_id=categoria_id
+            )
+            movimentacao.save()
+            
+            messages.success(request, 'Movimentação criada com sucesso!')
+            return redirect('minha-carteira')
+            
+        except Exception as e:
+            messages.error(request, f'Erro ao criar movimentação: {str(e)}')
+            return redirect('minha-carteira')
+    
+    return redirect('minha-carteira')
 
