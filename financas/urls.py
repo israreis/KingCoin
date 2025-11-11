@@ -11,7 +11,9 @@ from .views import (  # <-- importando corretamente das views
     CustomPasswordResetConfirmView,
     minha_carteira_view,
     dashboard,
-    relatorios
+    relatorios,
+    get_categorias_por_tipo,
+    criar_movimentacao
 )
 from django.contrib.auth import views as auth_views
 
@@ -63,4 +65,10 @@ urlpatterns = [
 
          # Nova URL da relatorios
     path('relatorios/', relatorios, name='relatorios'),
+
+
+
+    path('api/categorias/<str:tipo_nome>/', get_categorias_por_tipo, name='get_categorias_por_tipo'),
+    path('api/movimentacoes/criar/', criar_movimentacao, name='criar_movimentacao'),
+    
 ]

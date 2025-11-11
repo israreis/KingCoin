@@ -1,26 +1,3 @@
-
-// --- Dados "Fake" para simulação ---
-// ... (resto do seu código)
-
-// --- Dados "Fake" para simulação ---
-// Dados para o card de Saldo
-const dadosSaldo = {
-  "Este mês": { valor: "R$16.550,00", porcentagem: "14%", variacao: "+R$2.576,00 este mês" },
-  "Último mês": { valor: "R$14.980,00", porcentagem: "10%", variacao: "+R$1.500,00 último mês" },
-  "Últimos 3 meses": { valor: "R$45.200,00", porcentagem: "8%", variacao: "+R$3.350,00 últimos 3 meses" }
-};
-
-// Dados para o card de Investimentos
-const dadosInvestimentos = {
-  "Este mês": { valor: "R$177.650,00", porcentagem: "-7,5%", variacao: "neste mês" },
-  "Último mês": { valor: "R$180.000,00", porcentagem: "-2%", variacao: "último mês" },
-  "Últimos 3 meses": { valor: "R$185.500,00", porcentagem: "+3,2%", variacao: "últimos 3 meses" }
-};
-
-// --- Função Auxiliar ---
-// Converte uma string "R$ 1.234,56" para um número 1234.56
-const parseValor = (str) => Number(str.replace(/[R$\.\s]/g, "").replace(",", "."));
-
 // --- Configuração dos Dropdowns ---
 // Array de objetos para configurar os dois dropdowns (evita repetir código)
 const dropdowns = [

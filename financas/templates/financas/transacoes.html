@@ -251,106 +251,48 @@
                 <section
                     class="panel mt-8 w-full max-w-full bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 animate-slide-fade delay-3 relative z-10 border border-emerald-900/100">
                     <div class="p-6 md:p-10">
-                        <div class="section-title">Hoje</div>
+                        {% if transacoes_por_data %}
+                            {% for data_str, transacoes in transacoes_por_data.items %}
+                            <div class="section-title">
+                                {% if data_str == data_hoje %}
+                                    Hoje
+                                {% elif data_str == data_ontem %}
+                                    Ontem
+                                {% else %}
+                                    {{ transacoes.0.data_movimentacao|date:"d/m/Y" }}
+                                {% endif %}
+                            </div>
 
-                        <!-- Transação 1 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#1f6fe0">
-                                    <i class="fa-solid fa-hospital-user"></i>
+                            {% for transacao in transacoes %}
+                            <div class="tx-row">
+                                <div class="left">
+                                    <div class="icon" style="background:{{ transacao.get_icon_color }}">
+                                        <i class="fas {{ transacao.get_icon_class }}"></i>
+                                    </div>
+                                    <div class="tx-info">
+                                        <div style="font-weight:600">{{ transacao.descricao }}</div>
+                                        <div style="font-size:13px; margin-top:4px">
+                                            {{ transacao.categoria.tipoMovimentacao }} • {{ transacao.categoria.nomeCategoria }}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="tx-info theme-text">
-                                    <div style="font-weight:600">Saúde - Remédios na farmácia</div>
-                                    <div style="font-size:13px; margin-top:4px">
-                                        Despesas • Saúde</div>
+                                <div class="tx-amount {% if transacao.categoria.tipoMovimentacao.nome == 'DESPESA' or transacao.categoria.tipoMovimentacao.nome == 'ECONOMIA' %}minus{% else %}plus{% endif %}">
+                                    {% if transacao.categoria.tipoMovimentacao.nome == 'DESPESA' or transacao.categoria.tipoMovimentacao.nome == 'ECONOMIA' %}-{% else %}+{% endif %} R$ {{ transacao.valor }}
                                 </div>
                             </div>
-                            <div class="tx-amount minus">- R$97,00</div>
-                        </div>
+                            {% endfor %}
 
-                        <!-- Transação 2 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#f08fe3">
-                                    <i class="fa-solid fa-face-laugh-beam"></i>
-                                </div>
-                                <div class="tx-info">
-                                    <div style="font-weight:600">Diversão - Rolê com os amigos</div>
-                                    <div style="font-size:13px; margin-top:4px">
-                                        Despesas • Lazer</div>
-                                </div>
+                            {% if not forloop.last %}
+                            <div class="thin-hr"></div>
+                            {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-8 theme-text">
+                                <i class="fas fa-receipt text-4xl mb-4 opacity-50"></i>
+                                <p class="text-lg font-semibold">Nenhuma transação encontrada</p>
+                                <p class="text-sm opacity-75">Comece adicionando sua primeira transação</p>
                             </div>
-                            <div class="tx-amount minus">- R$148,90</div>
-                        </div>
-
-                        <!-- LINHA DIVISÓRIA ÚNICA - SEPARA HOJE DE ONTEM -->
-                        <div class="thin-hr"></div>
-
-                        <div class="section-title">Ontem</div>
-
-                        <!-- Transação 3 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#b53b3b">
-                                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                                </div>
-                                <div class="tx-info">
-                                    <div style="font-weight:600">Contas - Conta de Luz e Água</div>
-                                    <div style="font-size:13px; margin-top:4px">Despesas • Fixo</div>
-                                </div>
-                            </div>
-                            <div class="tx-amount minus">- R$427,90</div>
-                        </div>
-
-                        <!-- Transação 4 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#23b785">
-                                    <i class="fa-solid fa-dollar-sign"></i>
-                                </div>
-                                <div class="tx-info">
-                                    <div style="font-weight:600">Salário</div>
-                                    <div style="font-size:13px; margin-top:4px">
-                                        Ganhos • Emprego</div>
-                                </div>
-                            </div>
-                            <div class="tx-amount plus">+ R$5.456,37</div>
-                        </div>
-
-                        <!-- Transação 5 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#9fbefc">
-                                    <i class="fa-solid fa-coins"></i>
-                                </div>
-                                <div class="tx-info">
-                                    <div style="font-weight:600">CDB 105%</div>
-                                    <div style="font-size:13px; margin-top:4px">
-                                        Investimentos • Renda Fixa</div>
-                                </div>
-                            </div>
-                            <div class="tx-amount minus">- R$1.000,00</div>
-                        </div>
-
-                        <!-- LINHA DIVISÓRIA ÚNICA - SEPARA ONTEM DE 15 DE ABRIL -->
-                        <div class="thin-hr"></div>
-
-                        <div class="section-title">15 de Abril</div>
-
-                        <!-- Transação 6 -->
-                        <div class="tx-row">
-                            <div class="left">
-                                <div class="icon" style="background:#23b785">
-                                    <i class="fa-solid fa-code"></i>
-                                </div>
-                                <div class="tx-info">
-                                    <div style="font-weight:600">Freelancer - Desenvolvimento Web</div>
-                                    <div style="font-size:13px; margin-top:4px">
-                                        Ganhos • Freelance</div>
-                                </div>
-                            </div>
-                            <div class="tx-amount plus">+ R$2.500,00</div>
-                        </div>
+                        {% endif %}
                     </div>
                 </section>
 
@@ -458,85 +400,85 @@
         </main>
     </div>
 
-<script>
-// =====================================================
-// SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
-// =====================================================
+    <script>
+            // =====================================================
+            // SISTEMA DE PERSISTÊNCIA DE TEMA - VERSÃO CORRIGIDA
+            // =====================================================
 
-(function() {
-    // 1. EVITAR FLASH DE TEMA - Execução Imediata
-    const body = document.body;
-    const savedTheme = localStorage.getItem('themeState');
-    
-    if (body) {
-        body.style.transition = 'none';
-        
-        if (savedTheme === 'light') {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-        } else if (savedTheme === 'dark') {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-        }
-    }
+            (function () {
+                // 1. EVITAR FLASH DE TEMA - Execução Imediata
+                const body = document.body;
+                const savedTheme = localStorage.getItem('themeState');
 
-    // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
-    document.addEventListener('DOMContentLoaded', function() {
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
+                if (body) {
+                    body.style.transition = 'none';
 
-        if (!themeToggle) return;
-
-        // Remove TODOS os event listeners existentes
-        const newThemeToggle = themeToggle.cloneNode(true);
-        themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
-
-        // Função para atualizar ícone
-        function updateThemeIcon() {
-            const icon = newThemeToggle.querySelector('i');
-            if (icon) {
-                if (body.classList.contains('dark-mode')) {
-                    icon.className = 'fas fa-sun';
-                } else {
-                    icon.className = 'fas fa-moon';
+                    if (savedTheme === 'light') {
+                        body.classList.remove('dark-mode');
+                        body.classList.add('light-mode');
+                    } else if (savedTheme === 'dark') {
+                        body.classList.remove('light-mode');
+                        body.classList.add('dark-mode');
+                    }
                 }
-            }
-        }
 
-        // Função para salvar tema
-        function saveThemeState() {
-            localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
+                // 2. SOLUÇÃO DEFINITIVA - Substitui completamente o comportamento
+                document.addEventListener('DOMContentLoaded', function () {
+                    const themeToggle = document.querySelector('.theme-toggle');
+                    const body = document.body;
 
-        // Adiciona NOVO event listener
-        newThemeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            console.log('Botão de tema clicado!'); // Para debug
-            
-            // Alterna tema
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode');
-            
-            // Atualiza e salva
-            updateThemeIcon();
-            saveThemeState();
-            
-            console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
-        });
+                    if (!themeToggle) return;
 
-        // Atualiza ícone inicial
-        updateThemeIcon();
-        
-        // Restaura transições
-        setTimeout(() => {
-            if (body) body.style.transition = '';
-        }, 100);
-    });
-})();
-</script>
-    
+                    // Remove TODOS os event listeners existentes
+                    const newThemeToggle = themeToggle.cloneNode(true);
+                    themeToggle.parentNode.replaceChild(newThemeToggle, themeToggle);
+
+                    // Função para atualizar ícone
+                    function updateThemeIcon() {
+                        const icon = newThemeToggle.querySelector('i');
+                        if (icon) {
+                            if (body.classList.contains('dark-mode')) {
+                                icon.className = 'fas fa-sun';
+                            } else {
+                                icon.className = 'fas fa-moon';
+                            }
+                        }
+                    }
+
+                    // Função para salvar tema
+                    function saveThemeState() {
+                        localStorage.setItem('themeState', body.classList.contains('dark-mode') ? 'dark' : 'light');
+                    }
+
+                    // Adiciona NOVO event listener
+                    newThemeToggle.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        console.log('Botão de tema clicado!'); // Para debug
+
+                        // Alterna tema
+                        body.classList.toggle('dark-mode');
+                        body.classList.toggle('light-mode');
+
+                        // Atualiza e salva
+                        updateThemeIcon();
+                        saveThemeState();
+
+                        console.log('Tema atual:', body.classList.contains('dark-mode') ? 'dark' : 'light'); // Para debug
+                    });
+
+                    // Atualiza ícone inicial
+                    updateThemeIcon();
+
+                    // Restaura transições
+                    setTimeout(() => {
+                        if (body) body.style.transition = '';
+                    }, 100);
+                });
+            })();
+    </script>
+
     <script>
         // *** Sistema Completo de Navegação ***
 
@@ -860,8 +802,332 @@
         mo.observe(document.documentElement, { attributes: true });
     </script>
 
+    <script>
+    // Configuração do modal 
+    const modalConfig = {
+        modalId: 'transaction-modal',
+        formId: 'transaction-modal-form',
+        tipoSelectId: 'transaction-type',
+        categoriaSelectId: 'transaction-category',
+        dateId: 'transaction-date',
+        priceId: 'transaction-value',
+        descriptionId: 'transaction-description',
+        closeBtnId: 'transaction-modal-close',
+        cancelBtnId: 'transaction-modal-cancel',
+        overlayId: 'transaction-modal-overlay'
+    };
+
+    // Função para pegar o token CSRF
+    function getCSRFToken() {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]');
+        return csrfToken ? csrfToken.value : '';
+    }
+
+    // Funções para máscara de moeda (Real Brasileiro)
+    function formatarMoeda(valor) {
+        let valorLimpo = valor.replace(/\D/g, '');
+        if (valorLimpo === '') return '';
+        
+        // Se for apenas zeros, retorna vazio
+        if (parseInt(valorLimpo) === 0) return '';
+        
+        let valorNumerico = (parseInt(valorLimpo) / 100).toFixed(2);
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(valorNumerico);
+    }
+
+    function aplicarMascaraMoeda(input) {
+        input.addEventListener('input', function (e) {
+            let cursorPosition = e.target.selectionStart;
+            let valorOriginal = e.target.value;
+            e.target.value = formatarMoeda(valorOriginal);
+            
+            if (e.target.value) {
+                let diferenca = e.target.value.length - valorOriginal.length;
+                e.target.setSelectionRange(cursorPosition + diferenca, cursorPosition + diferenca);
+            }
+        });
+
+        // Não formata valor inicial para evitar "R$ 0,00"
+        if (input.value && input.value !== 'R$ 0,00') {
+            input.value = formatarMoeda(input.value);
+        } else {
+            input.value = ''; // Deixa vazio inicialmente
+        }
+    }
+
+    function converterMoedaParaNumero(valorFormatado) {
+        if (!valorFormatado || valorFormatado === 'R$ 0,00') return 0;
+        
+        let valorNumerico = valorFormatado
+            .replace('R$', '')
+            .replace(/\s/g, '')
+            .replace(/\./g, '')
+            .replace(',', '.');
+        return parseFloat(valorNumerico);
+    }
+
+    // Função para validar se o valor é válido (não zero)
+    function valorEhValido(valorFormatado) {
+        const valorNumerico = converterMoedaParaNumero(valorFormatado);
+        return valorNumerico > 0;
+    }
+
+    // Carrega categorias do banco baseado no tipo selecionado
+    async function carregarCategoriasPorTipo(tipo, selectId) {
+        try {
+            // Mapeia o tipo do select para o tipo do banco
+            const tipoMap = {
+                'Ganho': 'RECEITA',
+                'Despesa': 'DESPESA',
+                'Investimento': 'ECONOMIA'
+            };
+
+            const tipoBanco = tipoMap[tipo];
+            if (!tipoBanco) {
+                console.warn('Tipo não mapeado:', tipo);
+                return;
+            }
+
+            const response = await fetch(`/financas/api/categorias/${tipoBanco}/`);
+            const data = await response.json();
+
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option class="text-gray-800" value="">Selecione uma categoria</option>';
+
+            data.categorias.forEach(categoria => {
+                const option = document.createElement('option');
+                option.value = categoria.id;
+                option.textContent = categoria.nome;
+                option.className = 'text-gray-800';
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Erro ao carregar categorias:', error);
+        }
+    }
+
+    // Configura o modal unificado
+    function configurarModalUnificado() {
+        const modal = document.getElementById(modalConfig.modalId);
+        const form = document.getElementById(modalConfig.formId);
+        const openBtn = document.getElementById('open-transaction-modal');
+        const closeBtn = document.getElementById(modalConfig.closeBtnId);
+        const cancelBtn = document.getElementById(modalConfig.cancelBtnId);
+        const overlay = document.getElementById(modalConfig.overlayId);
+        const tipoSelect = document.getElementById(modalConfig.tipoSelectId);
+        const priceInput = document.getElementById(modalConfig.priceId);
+
+        if (!modal || !form || !openBtn) {
+            console.warn('Elementos do modal não encontrados');
+            return;
+        }
+
+        // Aplica máscara monetária ao campo de valor
+        if (priceInput) {
+            // Muda o tipo para text para aceitar a máscara
+            priceInput.type = 'text';
+            priceInput.placeholder = 'R$ 0,00';
+            aplicarMascaraMoeda(priceInput);
+        }
+
+        // Quando o tipo muda, carrega as categorias correspondentes
+        if (tipoSelect) {
+            tipoSelect.addEventListener('change', function () {
+                if (this.value !== 'Selecione') {
+                    carregarCategoriasPorTipo(this.value, modalConfig.categoriaSelectId);
+                } else {
+                    // Limpa as categorias se nenhum tipo for selecionado
+                    const categoriaSelect = document.getElementById(modalConfig.categoriaSelectId);
+                    categoriaSelect.innerHTML = '<option class="text-gray-800" value="">Selecione uma categoria</option>';
+                }
+            });
+        }
+
+        let previouslyFocused = null;
+
+        function openModal() {
+            previouslyFocused = document.activeElement;
+            modal.classList.remove('hidden');
+            modal.setAttribute('aria-hidden', 'false');
+
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+
+            // Define a data atual como padrão
+            const dateInput = document.getElementById(modalConfig.dateId);
+            if (dateInput) {
+                const hoje = new Date().toISOString().split('T')[0];
+                dateInput.value = hoje;
+            }
+
+            // Limpa o campo de valor ao abrir o modal
+            if (priceInput) {
+                priceInput.value = '';
+            }
+
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            modal.setAttribute('aria-hidden', 'true');
+
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+
+            if (previouslyFocused && previouslyFocused.focus) {
+                previouslyFocused.focus();
+            }
+
+            // Reset personalizado para evitar problemas com a máscara
+            form.reset();
+            if (priceInput) {
+                priceInput.value = '';
+            }
+            
+            // Limpa as categorias também
+            const categoriaSelect = document.getElementById(modalConfig.categoriaSelectId);
+            if (categoriaSelect) {
+                categoriaSelect.innerHTML = '<option class="text-gray-800" value="">Selecione uma categoria</option>';
+            }
+
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        }
+
+        // Event Listeners
+        openBtn.addEventListener('click', (ev) => {
+            ev.preventDefault();
+            openModal();
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+        }
+
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                closeModal();
+            });
+        }
+
+        if (overlay) {
+            overlay.addEventListener('click', (ev) => {
+                if (ev.target === overlay) closeModal();
+            });
+        }
+
+        // Enviar formulário
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const tipoSelect = document.getElementById(modalConfig.tipoSelectId);
+            const categoriaSelect = document.getElementById(modalConfig.categoriaSelectId);
+            const dateInput = document.getElementById(modalConfig.dateId);
+            const priceInput = document.getElementById(modalConfig.priceId);
+            const descriptionInput = document.getElementById(modalConfig.descriptionId);
+
+            console.log('Valores dos campos:', {
+                tipo: tipoSelect.value,
+                categoria: categoriaSelect.value,
+                data: dateInput.value,
+                valor: priceInput.value,
+                descricao: descriptionInput.value
+            });
+
+            // Validação melhorada
+            if (!tipoSelect.value || tipoSelect.value === 'Selecione') {
+                alert('⚠️ Por favor, selecione o tipo da transação.');
+                tipoSelect.focus();
+                return;
+            }
+
+            if (!categoriaSelect.value) {
+                alert('⚠️ Por favor, selecione uma categoria.');
+                categoriaSelect.focus();
+                return;
+            }
+
+            if (!dateInput.value) {
+                alert('⚠️ Por favor, selecione uma data.');
+                dateInput.focus();
+                return;
+            }
+
+            if (!priceInput.value || !valorEhValido(priceInput.value)) {
+                alert('⚠️ Por favor, insira um valor válido maior que zero.');
+                priceInput.focus();
+                return;
+            }
+
+            // Converte o valor formatado para número
+            const valorNumerico = converterMoedaParaNumero(priceInput.value);
+
+            const data = {
+                data: dateInput.value,
+                valor: valorNumerico,
+                descricao: descriptionInput.value.trim(),
+                categoria_id: parseInt(categoriaSelect.value)
+            };
+
+            console.log('Dados enviados:', data);
+
+            try {
+                const response = await fetch('/financas/api/movimentacoes/criar/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken()
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ Transação salva com sucesso!');
+                    closeModal();
+                    // Recarrega a página para atualizar os dados
+                    location.reload();
+                } else {
+                    alert('❌ Erro: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('❌ Erro ao salvar transação. Tente novamente.');
+            }
+        });
+    }
+
+    // Inicializar modal quando a página carregar
+    document.addEventListener('DOMContentLoaded', function () {
+        configurarModalUnificado();
+
+        // Adiciona CSRF token se não existir
+        if (!document.querySelector('[name=csrfmiddlewaretoken]')) {
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = 'csrfmiddlewaretoken';
+            csrfToken.value = '{{ csrf_token }}';
+            document.body.appendChild(csrfToken);
+        }
+    });
+</script>
 
 
+{% csrf_token %}
 </body>
 
 </html>
