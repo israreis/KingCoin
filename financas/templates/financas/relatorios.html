@@ -67,14 +67,14 @@
                 <ul>
                     <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
-                            <i class="fas fa-th-large"></i>
+                            <i class="fa-solid fa-table-columns"></i>
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
                         <a href="{% url 'minha-carteira' %}">
-                            <i class="fas fa-credit-card"></i>
+                            <i class="fa-solid fa-wallet"></i>
                             <span class="nav-text">Carteira</span>
                         </a>
                     </li>
@@ -94,7 +94,7 @@
 
                     <li class="nav-item {% if request.resolver_match.url_name == 'relatorios' %}active{% endif %}">
                         <a href="{% url 'relatorios' %}">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fa-solid fa-file"></i>
                             <span class="nav-text">Relatórios</span>
                         </a>
                     </li>

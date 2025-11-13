@@ -168,150 +168,143 @@
         </aside>
 
         <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
-            <div class="max-w-4xl mx-auto xl:ml-8 xl:mr-auto mt-6">
+    <div class="max-w-4xl mx-auto xl:ml-8 xl:mr-auto mt-6">
 
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text md:pl-16 md:mt-20">
-                    Minha Conta
-                </h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text md:pl-16 md:mt-20">
+            Minha Conta
+        </h1>
 
-                {% if messages %}
-                <div class="max-w-2xl mx-auto mb-8 animate-slide-fade delay-2">
-                    {% for message in messages %}
-                    <div class="p-4 rounded-2xl bg-gradient-to-r from-[#23b785]/25 to-black/5 border border-emerald-900/100">
-                        <div class="flex items-center">
-                            <i class="fas fa-check-circle text-emerald-400 mr-3"></i>
-                            <span class="theme-text">{{ message }}</span>
+        {% if messages %}
+        <div class="max-w-2xl mx-auto mb-8 animate-slide-fade delay-2">
+            {% for message in messages %}
+            <div class="p-4 rounded-2xl bg-gradient-to-r from-[#23b785]/25 to-black/5 border border-emerald-900/100">
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle text-emerald-400 mr-3"></i>
+                    <span class="theme-text">{{ message }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="animate-slide-fade delay-3">
+            <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-12 border border-emerald-900/100">
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:items-center">
+                    
+                    <div class="lg:col-span-1 flex flex-col items-center justify-start text-center border-b lg:border-r lg:border-b-0 border-emerald-900/100 pb-8 lg:pb-0 lg:pr-8">
+                        
+                        <div class="flex justify-center mb-6">
+                            {% if profile.photo %}
+                                <img src="{{ profile.photo.url }}" alt="Foto de perfil" class="profile-photo">
+                            {% else %}
+                                <div class="photo-placeholder">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <h3 class="text-xl font-semibold theme-text mb-2">
+                            {% if user.first_name and user.last_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        </h3>
+                        <p class="text-gray-400 text-sm mb-4">{{ user.email }}</p>
+                        
+                        <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full max-w-[200px]">
+                            <button type="button" onclick="document.getElementById('id_photo').click()" 
+                                    class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 py-3">
+                                Alterar Foto
+                            </button>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-                {% endif %}
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-slide-fade delay-3">
-                    <!-- Coluna da Foto -->
-                    <div class="lg:col-span-1">
-                        <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100 text-center">
-                            <div class="flex justify-center mb-6">
-                                {% if profile.photo %}
-                                    <img src="{{ profile.photo.url }}" alt="Foto de perfil" class="profile-photo">
-                                {% else %}
-                                    <div class="photo-placeholder">
-                                        <i class="fas fa-user"></i>
-                                    </div>
+                    <div class="lg:col-span-2 lg:pl-4">
+                        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+                            {% csrf_token %}
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="id_first_name" class="block text-sm mb-2 theme-text">Nome</label>
+                                    {{ form.first_name }}
+                                    {% if form.first_name.errors %}
+                                        <div class="text-red-400 text-xs mt-1">{{ form.first_name.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div>
+                                    <label for="id_last_name" class="block text-sm mb-2 theme-text">Sobrenome</label>
+                                    {{ form.last_name }}
+                                    {% if form.last_name.errors %}
+                                        <div class="text-red-400 text-xs mt-1">{{ form.last_name.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="id_email" class="block text-sm mb-2 theme-text">E-mail</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-red-400 text-xs mt-1">{{ form.email.errors.0 }}</div>
                                 {% endif %}
                             </div>
                             
-                            <h3 class="text-xl font-semibold theme-text mb-2">
-                                {% if user.first_name and user.last_name %}
-                                    {{ user.first_name }} {{ user.last_name }}
-                                {% else %}
-                                    {{ user.username }}
+                            <div>
+                                <label for="id_phone" class="block text-sm mb-2 theme-text">Telefone</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                    <div class="text-red-400 text-xs mt-1">{{ form.phone.errors.0 }}</div>
                                 {% endif %}
-                            </h3>
-                            <p class="text-gray-400 text-sm mb-4">{{ user.email }}</p>
+                            </div>
                             
-                            <div class="rounded-lg p-[2px] bg-gradient-to-r from-[#23b785]/25 to-[#23b785]/25 inline-block w-full">
-                                <button type="button" onclick="document.getElementById('id_photo').click()" 
-                                        class="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 transition text-black px-4 py-3">
-                                    Alterar Foto
+                            <div class="hidden">
+                                <label for="id_photo" class="block text-sm mb-2 theme-text">Foto</label>
+                                {{ form.photo }}
+                                {% if form.photo.errors %}
+                                    <div class="text-red-400 text-xs mt-1">{{ form.photo.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                                <button type="button" onclick="window.history.back()" 
+                                        class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-3 hover:bg-white/20 transition">
+                                    Cancelar
+                                </button>
+                                <button type="submit" 
+                                        class="w-full bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-3xl py-3 transition">
+                                    Salvar Alterações
                                 </button>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Coluna do Formulário -->
-                    <div class="lg:col-span-2">
-                        <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100">
-                            <h2 class="text-2xl font-semibold theme-text mb-6">Informações Pessoais</h2>
-                            
-                            <form method="POST" enctype="multipart/form-data" class="space-y-6">
-                                {% csrf_token %}
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <!-- Nome -->
-                                    <div>
-                                        <label for="id_first_name" class="block text-sm mb-2 theme-text">Nome</label>
-                                        {{ form.first_name }}
-                                        {% if form.first_name.errors %}
-                                            <div class="text-red-400 text-xs mt-1">{{ form.first_name.errors.0 }}</div>
-                                        {% endif %}
-                                    </div>
-                                    
-                                    <!-- Sobrenome -->
-                                    <div>
-                                        <label for="id_last_name" class="block text-sm mb-2 theme-text">Sobrenome</label>
-                                        {{ form.last_name }}
-                                        {% if form.last_name.errors %}
-                                            <div class="text-red-400 text-xs mt-1">{{ form.last_name.errors.0 }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                
-                                <!-- Email -->
-                                <div>
-                                    <label for="id_email" class="block text-sm mb-2 theme-text">E-mail</label>
-                                    {{ form.email }}
-                                    {% if form.email.errors %}
-                                        <div class="text-red-400 text-xs mt-1">{{ form.email.errors.0 }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <!-- Telefone -->
-                                <div>
-                                    <label for="id_phone" class="block text-sm mb-2 theme-text">Telefone</label>
-                                    {{ form.phone }}
-                                    {% if form.phone.errors %}
-                                        <div class="text-red-400 text-xs mt-1">{{ form.phone.errors.0 }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <!-- Foto (hidden, acionado pelo botão) -->
-                                <div class="hidden">
-                                    <label for="id_photo" class="block text-sm mb-2 theme-text">Foto</label>
-                                    {{ form.photo }}
-                                    {% if form.photo.errors %}
-                                        <div class="text-red-400 text-xs mt-1">{{ form.photo.errors.0 }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <!-- Botões -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                                    <button type="button" onclick="window.history.back()" 
-                                            class="w-full bg-transparent border border-[#23b785] theme-text rounded-3xl py-3 hover:bg-white/20 transition">
-                                        Cancelar
-                                    </button>
-                                    <button type="submit" 
-                                            class="w-full bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-3xl py-3 transition">
-                                        Salvar Alterações
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
-
-                <!-- Seção de Segurança -->
-                <div class="mt-8 animate-slide-fade delay-4">
-                    <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100">
-                        <h2 class="text-2xl font-semibold theme-text mb-6">Segurança</h2>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5">
-                                <div>
-                                    <h3 class="theme-text font-semibold">Alterar Senha</h3>
-                                    <p class="text-gray-400 text-sm">Atualize sua senha regularmente para manter a segurança</p>
-                                </div>
-                                <a href="{% url 'password_reset' %}" 
-                                   class="bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-2xl px-6 py-2 transition">
-                                    Alterar
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-        </main>
+        </div>
+
+        <div class="mt-8 animate-slide-fade delay-4">
+            <div class="bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-[3rem] p-8 border border-emerald-900/100">
+                <h2 class="text-2xl font-semibold theme-text mb-6">Segurança</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 rounded-2xl bg-white/5">
+                        <div>
+                            <h3 class="theme-text font-semibold">Alterar Senha</h3>
+                            <p class="text-gray-400 text-sm">Atualize sua senha regularmente para manter a segurança</p>
+                        </div>
+                        <a href="{% url 'password_reset' %}" 
+                           class="bg-[#23b785] hover:bg-[#1f9d72] text-black font-semibold rounded-2xl px-6 py-2 transition">
+                            Alterar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
     </div>
 
     <!-- Scripts do tema (mesmos do carteira.html) -->

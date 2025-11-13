@@ -59,3 +59,22 @@
     flex-shrink: 0;
 }
 
+
+/* Este CSS deve ser colocado em um <style> tag ou arquivo global */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Se o seu carrossel está em uma div com overflow-x-scroll */
+.flex-row.gap-6 { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+}
+.flex-row.gap-6::-webkit-scrollbar {
+    display: none; 
+}

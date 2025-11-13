@@ -74,14 +74,14 @@
                 <ul>
                     <li class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
                         <a href="{% url 'dashboard' %}">
-                            <i class="fas fa-th-large"></i>
+                            <i class="fa-solid fa-table-columns"></i>
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
 
                     <li class="nav-item {% if request.resolver_match.url_name == 'minha-carteira' %}active{% endif %}">
                         <a href="{% url 'minha-carteira' %}">
-                            <i class="fas fa-credit-card"></i>
+                            <i class="fa-solid fa-wallet"></i>
                             <span class="nav-text">Carteira</span>
                         </a>
                     </li>
@@ -101,7 +101,7 @@
 
                     <li class="nav-item {% if request.resolver_match.url_name == 'relatorios' %}active{% endif %}">
                         <a href="{% url 'relatorios' %}">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fa-solid fa-file"></i>
                             <span class="nav-text">Relatórios</span>
                         </a>
                     </li>
@@ -165,179 +165,109 @@
         <main id="main-content" class="relative pl-[240px] px-8 pb-10 md:px-14 md:pb-16 pt-[100px] md:pt-[140px] z-10">
             <div class="max-w-7xl mx-auto xl:ml-8 xl:mr-auto mt-6">
                 <h1
-                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text  md:pl-16 md:mt-20">
+                    class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 animate-slide-fade delay-1 text-center md:text-left theme-text md:pl-16 md:mt-20">
                     Dashboard
                 </h1>
-                <!-- CARDS SUPERIORES - SCROLL HORIZONTAL EM MOBILE -->
-                <!-- <div class="top-cards flex animate-slide-fade delay-1" role="list" aria-label="Destaques financeiros">
-      
-                    <article class="card g-blue theme-text">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior despesa <span
-                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
-                                <h3 style=""> <i class="fa-solid fa-circle-plus theme-text"
-                                        style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
-                                <div style="margin-top:6px; font-size:13px; color:#ff6b6b"><i
-                                        class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14% <span
-                                        style="margin-left:6px; font-size:12px">este mês</span></div>
-                            </div>
-                        </div>
-                    </article>
-
-     
-                    <article class="card g-purple">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Menor despesa <span
-                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
-                                <h3 style=""> <i class="fa-solid fa-face-laugh-beam theme-text"
-                                        style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
-                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
-                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                        style="margin-left:6px; font-size:12px">este mês</span></div>
-                            </div>
-                        </div>
-                    </article>
-
-
-                    <article class="card g-green">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior entrada <span
-                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
-                                <h3 style=""> <i class="fa-solid fa-dollar-sign theme-text"
-                                        style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
-                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
-                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                        style=" margin-left:6px; font-size:12px">este mês</span></div>
-                            </div>
-                        </div>
-                    </article>
-
-
-                    <article class="card g-navy">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior invest. <span
-                                        class="ml-2 text-xs theme-text">Este mês ▾</span></div>
-                                <h3 style=""> <i class="fa-solid fa-coins theme-text"
-                                        style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
-                                <div style="margin-top:6px; font-size:13px; color:#23b785"><i
-                                        class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span
-                                        style="margin-left:6px; font-size:12px">este mês</span></div>
-                            </div>
-                        </div>
-                    </article>
-                </div> -->
-                <!-- CARDS SUPERIORES - FLEXBOX TAILWIND -->
+                
                 <div class="flex flex-wrap gap-4 md:gap-6 mb-8 animate-slide-fade delay-1 w-full ">
-                    <!-- Card 1 -->
+                    
                     <article
-                        class="card g-blue bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 theme-text flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior despesa <span class="ml-2 text-xs theme-text">Este
-                                        mês ▾</span></div>
-                                <h3 class="mt-1"> <i class="fa-solid fa-circle-plus theme-text"
-                                        style="color:#4cc0ff;margin-right:8px"></i> Saúde</h3>
-                                <div class="mt-2 text-sm" style="color:#ff6b6b"><i
-                                        class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14%
+                        class="card g-blue bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 theme-text flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-10 rounded-4xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start">
+                            <div class="flex-1">
+                                <div class="text-sm theme-text flex justify-between items-center">
+                                    <div>Maior despesa</div>
+                                    <span class="text-xs theme-text">Este mês ▾</span>
+                                </div>
+                                <h3 class="mt-2 text-left"> 
+                                    <i class="fa-solid fa-circle-plus theme-text" style="color:#4cc0ff;margin-right:8px"></i> Saúde
+                                </h3>
+                                <div class="mt-2 text-sm text-left" style="color:#ff6b6b">
+                                    <i class="fa-solid fa-arrow-trend-down theme-text" style="margin-right:8px"></i>14%
                                     <span class="ml-2 text-xs">este mês</span>
                                 </div>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Card 2 -->
                     <article
-                        class="card g-purple  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Menor despesa <span class="ml-2 text-xs theme-text">Este
-                                        mês ▾</span></div>
-                                <h3 class="mt-1"> <i class="fa-solid fa-face-laugh-beam theme-text"
-                                        style="color:#f08fe3;margin-right:8px"></i> Diversão</h3>
-                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
-                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                        class="card g-purple bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-10 rounded-4xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start">
+                            <div class="flex-1">
+                                <div class="text-sm theme-text flex justify-between items-center">
+                                    <div>Menor despesa</div>
+                                    <span class="text-xs theme-text">Este mês ▾</span>
+                                </div>
+                                <h3 class="mt-1 text-left"> 
+                                    <i class="fa-solid fa-face-laugh-beam theme-text" style="color:#f08fe3;margin-right:8px"></i> Diversão
+                                </h3>
+                                <div class="mt-2 text-sm text-left" style="color:#23b785">
+                                    <i class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
                                 </div>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Card 3 -->
                     <article
-                        class="card g-green bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior entrada <span class="ml-2 text-xs theme-text">Este
-                                        mês ▾</span></div>
-                                <h3 class="mt-1"> <i class="fa-solid fa-dollar-sign theme-text"
-                                        style="color:#23b785;margin-right:8px"></i> Freelancer</h3>
-                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
-                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                        class="card g-green bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-10 rounded-4xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start">
+                            <div class="flex-1">
+                                <div class="text-sm theme-text flex justify-between items-center">
+                                    <div>Maior entrada</div>
+                                    <span class="text-xs theme-text">Este mês ▾</span>
+                                </div>
+                                <h3 class="mt-1 text-left"> 
+                                    <i class="fa-solid fa-dollar-sign theme-text" style="color:#23b785;margin-right:8px"></i> Freelancer
+                                </h3>
+                                <div class="mt-2 text-sm text-left" style="color:#23b785">
+                                    <i class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
                                 </div>
                             </div>
                         </div>
                     </article>
 
-                    <!-- Card 4 -->
                     <article
-                        class="card g-navy bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <div class="text-sm theme-text">Maior invest. <span class="ml-2 text-xs theme-text">Este
-                                        mês ▾</span></div>
-                                <h3 class="mt-1"> <i class="fa-solid fa-coins theme-text"
-                                        style="color:#9fbefc;margin-right:8px"></i> CDB 105%</h3>
-                                <div class="mt-2 text-sm" style="color:#23b785"><i class="fa-solid fa-arrow-trend-up"
-                                        style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
+                        class="card g-navy bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 flex-1 min-w-full sm:min-w-[calc(50%-8px)] lg:min-w-[calc(25%-18px)] min-h-[120px] lg:min-h-[140px] flex flex-col justify-center p-10 rounded-4xl shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 border border-emerald-900/100">
+                        <div class="flex items-start">
+                            <div class="flex-1">
+                                <div class="text-sm theme-text flex justify-between items-center">
+                                    <div>Maior invest.</div>
+                                    <span class="text-xs theme-text">Este mês ▾</span>
+                                </div>
+                                <h3 class="mt-1 text-left"> 
+                                    <i class="fa-solid fa-coins theme-text" style="color:#9fbefc;margin-right:8px"></i> CDB 105%
+                                </h3>
+                                <div class="mt-2 text-sm text-left" style="color:#23b785">
+                                    <i class="fa-solid fa-arrow-trend-up" style="margin-right:8px"></i>14% <span class="ml-2 text-xs">este mês</span>
                                 </div>
                             </div>
                         </div>
                     </article>
                 </div>
 
-
-                <!-- <div class="animate-slide-fade delay-4 mb-12 flex justify-center">
+                <div class="animate-slide-fade delay-4 mb-12 w-full"> 
                     <div
-                         class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1 min-w-[300px]">
-                        
-                        class="bg-[#ffffff]/7 border border-[#1c2a24]  bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full max-w-[1400px] flex flex-row items-center gap-8"
-                        
+                        class="bg-[#ffffff]/7 border-2 border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-4xl shadow-md p-10 w-full">
                         <h2
-                            class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
+                            class="text-xl sm:text-2xl mb-2 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text text-left">
                             Evolução da Carteira
                         </h2>
-                        <div class="w-3/4 h-[300px]">
-                            <canvas id="graficoCarteira"></canvas>
+                        
+                        <div id="balanceDisplay" class="mb-4 text-left">
+                            <div class="text-sm theme-text opacity-70 mt-6">Saldo Atual</div> 
+                            <div class="text-4xl sm:text-5xl font-extrabold text-[#23b785] mb-6">R$16.800</div> 
                         </div>
-                    </div>
-                </div> -->
-
-                <div class="animate-slide-fade delay-4 mb-12">
-                    <div
-                        class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 w-full">
-
-                        <h2
-                            class="text-xl sm:text-2xl mb-6 font-bold bg-gradient-to-r from-[#C0C0C0] to-[#C0C0C0]/30 bg-clip-text mb-2">
-                            Evolução da Carteira
-                        </h2>
-
+                        
                         <div class="w-full h-[250px] sm:h-[300px] lg:h-[350px]">
                             <canvas id="graficoCarteira"></canvas>
                         </div>
-
                     </div>
                 </div>
 
 
-
-                <!-- NOVOS GRÁFICOS - BARRA, PIZZA E ROSCA -->
                 <div class="animate-slide-fade delay-5 mb-12">
                     <div class="flex flex-col lg:flex-row gap-8 justify-center">
 
-                        <!-- Gráfico de Barras -->
                         <div
                             class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1 min-w-[300px]">
                             <h2
@@ -349,10 +279,8 @@
                             </div>
                         </div>
 
-                        <!-- Container para Pizza e Rosca lado a lado -->
                         <div class="flex flex-col md:flex-row gap-8 flex-1 min-w-[300px]">
 
-                            <!-- Gráfico de Pizza -->
                             <div
                                 class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1">
                                 <h2
@@ -364,7 +292,6 @@
                                 </div>
                             </div>
 
-                            <!-- Gráfico de Rosca -->
                             <div
                                 class="bg-[#ffffff]/7 border border-[#1c2a24] bg-gradient-to-l from-[#23b785]/25 to-black/5 dark:to-white/10 rounded-3xl shadow-md p-6 flex-1">
                                 <h2
@@ -379,19 +306,7 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
             </div>
-
         </main>
     </div>
 
@@ -615,41 +530,110 @@
             console.log('Iniciando carregamento dos gráficos...');
 
             // --- Gráfico de Linha (Evolução da Carteira) ---
-            const ctxLine = document.getElementById('graficoCarteira');
-            if (ctxLine) {
-                new Chart(ctxLine, {
-                    type: 'line',
-                    data: {
-                        labels: ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'],
-                        datasets: [{
-                            label: 'Saldo (R$)',
-                            data: [14500, 15200, 15800, 16300, 16550, 16800],
-                            fill: true,
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            tension: 0.4,
-                        }]
+            // Dados de Ponto
+const dataPoints = [14500, 15200, 15800, 16300, 16550, 16800];
+const labels = ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'];
+
+/**
+ * Função Customizada para Atualizar o Saldo (Tooltip Externo)
+ * É chamada pelo Chart.js sempre que há uma interação do mouse.
+ * Atualiza o VALOR GRANDE (segundo div) e o LABEL PEQUENO (primeiro div).
+ * @param {object} context - Objeto de contexto do Chart.js tooltip
+ */
+function externalTooltipHandler(context) {
+    // 1. Elementos HTML de Saldo
+    const balanceDisplayDiv = document.getElementById('balanceDisplay');
+    // Saldo Grande é o SEGUNDO elemento (div:last-child)
+    const saldoElement = balanceDisplayDiv ? balanceDisplayDiv.querySelector('div:last-child') : null; 
+    // Label Pequeno é o PRIMEIRO elemento (div:first-child)
+    const labelElement = balanceDisplayDiv ? balanceDisplayDiv.querySelector('div:first-child') : null;
+    
+    // Verifica se os elementos existem no DOM
+    if (!saldoElement || !labelElement) return;
+
+    const tooltipModel = context.tooltip;
+    // O valor inicial/final é o último ponto (R$16.800)
+    const initialValue = dataPoints[dataPoints.length - 1].toLocaleString('pt-BR'); 
+    
+    // 2. Lógica de Exibição
+    if (tooltipModel.opacity === 0 || !tooltipModel.dataPoints) {
+        // Se o mouse sair, retorna ao saldo inicial/final
+        saldoElement.innerHTML = `R$${initialValue}`;
+        labelElement.innerHTML = 'Saldo Atual';
+        return;
+    }
+
+    // Pega o valor e o label do ponto ativo
+    const dataPoint = tooltipModel.dataPoints[0];
+    const value = dataPoint.parsed.y.toLocaleString('pt-BR');
+    const label = dataPoint.label;
+
+    // 3. Atualiza o HTML
+    saldoElement.innerHTML = `R$${value}`;
+    labelElement.innerHTML = `Saldo em ${label}`;
+}
+
+
+    // --- Gráfico de Linha (Evolução da Carteira) ---
+    const ctxLine = document.getElementById('graficoCarteira');
+    if (ctxLine) {
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Saldo (R$)',
+                    data: dataPoints,
+                    fill: 'start', 
+                    // Criando o gradiente dinâmico para a área preenchida
+                    backgroundColor: (context) => {
+                        const chart = context.chart;
+                        const { ctx, chartArea } = chart;
+                        if (!chartArea) return;
+                        
+                        // Ajustado para usar #23b785
+                        const areaGradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                        areaGradient.addColorStop(0, 'rgba(35, 183, 133, 0.4)'); 
+                        areaGradient.addColorStop(1, 'rgba(35, 183, 133, 0)');
+                        return areaGradient;
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false }
-                        },
-                        scales: {
-                            x: {
-                                ticks: { color: '#10b981' },
-                                grid: { display: false }
-                            },
-                            y: {
-                                ticks: { color: '#10b981' },
-                                grid: { color: 'rgba(255,255,255,0.05)' }
-                            }
-                        }
+                    borderColor: '#23b785', // Cor da linha (verde)
+                    borderWidth: 3,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: '#23b785',
+                    pointBorderColor: '#000000',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        enabled: false, // Desativa o tooltip padrão do Chart.js
+                        external: externalTooltipHandler // ATIVA o manipulador customizado (variação de saldo)
                     }
-                });
-                console.log('Gráfico de linha criado');
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#C0C0C0' }, 
+                        grid: { display: false },
+                        border: { display: true, color: '#1c2a24' } 
+                    },
+                    y: {
+                        ticks: { color: '#C0C0C0' }, 
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        border: { display: true, color: '#1c2a24' }, 
+                        beginAtZero: false 
+                    }
+                }
             }
+        });
+        console.log('Gráfico de linha configurado com variação de saldo (mouse over)');
+    }
 
             // --- Gráfico de Barras (Despesas por Categoria) ---
             const ctxBarras = document.getElementById('graficoBarras');
@@ -821,6 +805,8 @@
 
             console.log('Todos os gráficos processados');
         });
+
+    
     </script>
 
 
