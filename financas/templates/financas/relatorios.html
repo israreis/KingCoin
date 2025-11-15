@@ -175,11 +175,11 @@
                             <div class="form-grid">
                                 <div>
                                     <label class="block text-sm theme-text mb-2">Data Inicial</label>
-                                    <input type="date" class="date-input">
+                                    <input type="date" class="date-input" id="data-inicial" value="{{ data_inicial }}">
                                 </div>
                                 <div>
                                     <label class="block text-sm theme-text mb-2">Data Final</label>
-                                    <input type="date" class="date-input">
+                                    <input type="date" class="date-input" id="data-final" value="{{ data_final }}">
                                 </div>
                             </div>
                         </div>
@@ -210,33 +210,33 @@
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="ganho-salario" value="salario">
+                                                <input type="checkbox" id="ganho-salario" value="3">
                                                 <label for="ganho-salario" class="theme-text text-sm">Salário</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="ganho-freelance" value="freelance">
+                                                <input type="checkbox" id="ganho-freelance" value="4">
                                                 <label for="ganho-freelance"
                                                     class="theme-text text-sm">Freelance</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="ganho-aluguel" value="aluguel">
+                                                <input type="checkbox" id="ganho-aluguel" value="5">
                                                 <label for="ganho-aluguel" class="theme-text text-sm">Aluguel</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="ganho-aposentadoria" value="aposentadoria">
+                                                <input type="checkbox" id="ganho-aposentadoria" value="6">
                                                 <label for="ganho-aposentadoria"
                                                     class="theme-text text-sm">Aposentadoria</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="ganho-outros" value="outros">
+                                                <input type="checkbox" id="ganho-outros" value="7">
                                                 <label for="ganho-outros" class="theme-text text-sm">Outros
                                                     Rendimentos</label>
                                             </div>
@@ -266,46 +266,46 @@
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-moradia" value="moradia">
+                                                <input type="checkbox" id="despesa-moradia" value="8">
                                                 <label for="despesa-moradia" class="theme-text text-sm">Moradia</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-alimentacao" value="alimentacao">
+                                                <input type="checkbox" id="despesa-alimentacao" value="9">
                                                 <label for="despesa-alimentacao"
                                                     class="theme-text text-sm">Alimentação</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-transporte" value="transporte">
+                                                <input type="checkbox" id="despesa-transporte" value="10">
                                                 <label for="despesa-transporte"
                                                     class="theme-text text-sm">Transporte</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-saude" value="saude">
+                                                <input type="checkbox" id="despesa-saude" value="11">
                                                 <label for="despesa-saude" class="theme-text text-sm">Saúde</label>
                                             </div>
                                         </div>
-                                        <div class="dropdown-item">
+                                        <!-- <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-educacao" value="educacao">
+                                                <input type="checkbox" id="despesa-educacao" value="12">
                                                 <label for="despesa-educacao"
                                                     class="theme-text text-sm">Educação</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-lazer" value="lazer">
+                                                <input type="checkbox" id="despesa-lazer" value="12">
                                                 <label for="despesa-lazer" class="theme-text text-sm">Lazer</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="despesa-outros" value="outros">
+                                                <input type="checkbox" id="despesa-outros" value="13">
                                                 <label for="despesa-outros" class="theme-text text-sm">Outros
                                                     Gastos</label>
                                             </div>
@@ -334,15 +334,14 @@
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="investimento-poupanca" value="poupanca">
+                                                <input type="checkbox" id="investimento-poupanca" value="14">
                                                 <label for="investimento-poupanca"
                                                     class="theme-text text-sm">Poupança</label>
                                             </div>
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="investimento-previdencia"
-                                                    value="previdencia">
+                                                <input type="checkbox" id="investimento-previdencia" value="15">
                                                 <label for="investimento-previdencia"
                                                     class="theme-text text-sm">Previdência
                                                     Privada</label>
@@ -350,7 +349,7 @@
                                         </div>
                                         <div class="dropdown-item">
                                             <div class="checkbox-item">
-                                                <input type="checkbox" id="investimento-outros" value="outros">
+                                                <input type="checkbox" id="investimento-outros" value="16">
                                                 <label for="investimento-outros" class="theme-text text-sm">Outros
                                                     Investimentos</label>
                                             </div>
@@ -623,7 +622,7 @@
         checkMobileMenu();
     </script>
 
-    <script>
+    <!-- <script>
         // Sistema de dropdowns
         document.addEventListener('DOMContentLoaded', function () {
             // Configuração dos dropdowns
@@ -789,10 +788,356 @@
         document.head.appendChild(style);
 
 
+    </script> -->
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sistema de dropdowns existente
+            const dropdowns = [
+                { button: 'ganhosDropdownBtn', menu: 'ganhosDropdown' },
+                { button: 'despesasDropdownBtn', menu: 'despesasDropdown' },
+                { button: 'investimentosDropdownBtn', menu: 'investimentosDropdown' },
+                { button: 'formatoDropdownBtn', menu: 'formatoDropdown' }
+            ];
+
+            dropdowns.forEach(dropdown => {
+                const button = document.getElementById(dropdown.button);
+                const menu = document.getElementById(dropdown.menu);
+
+                if (button && menu) {
+                    button.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        // Fecha outros dropdowns
+                        dropdowns.forEach(other => {
+                            if (other.menu !== dropdown.menu) {
+                                const otherMenu = document.getElementById(other.menu);
+                                if (otherMenu) otherMenu.classList.add('hidden');
+                            }
+                        });
+                        // Alterna o dropdown atual
+                        menu.classList.toggle('hidden');
+                    });
+
+                    // Atualiza o texto do botão quando itens são selecionados
+                    if (dropdown.menu === 'formatoDropdown') {
+                        const radioInputs = menu.querySelectorAll('input[type="radio"]');
+                        radioInputs.forEach(radio => {
+                            radio.addEventListener('change', function () {
+                                button.querySelector('span').textContent = this.nextElementSibling.textContent;
+                                menu.classList.add('hidden');
+                                updateButtonState();
+                            });
+                        });
+                    } else {
+                        const checkboxes = menu.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function () {
+                                const selectedCount = menu.querySelectorAll('input[type="checkbox"]:checked').length;
+                                if (selectedCount === 0) {
+                                    button.querySelector('span').textContent = 'Selecionar categorias';
+                                } else {
+                                    button.querySelector('span').textContent = `${selectedCount} selecionada(s)`;
+                                }
+                                updateButtonState();
+                            });
+                        });
+                    }
+                }
+            });
+
+            // Fecha dropdowns ao clicar fora
+            document.addEventListener('click', function () {
+                dropdowns.forEach(dropdown => {
+                    const menu = document.getElementById(dropdown.menu);
+                    if (menu) menu.classList.add('hidden');
+                });
+            });
+
+
+            // Função para coletar dados dos formulários
+            // function coletarDadosRelatorio() {
+            //     const dataInicial = document.getElementById('data-inicial').value;
+            //     const dataFinal = document.getElementById('data-final').value;
+
+            //     // Coletar categorias selecionadas diretamente pelos valores (IDs)
+            //     const categoriasGanhos = Array.from(document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:checked'))
+            //         .map(cb => {
+            //             const valor = cb.value;
+            //             return valor !== 'selecionar-todos-ganhos' ? parseInt(valor) : null;
+            //         })
+            //         .filter(val => val !== null && !isNaN(val));
+
+            //     const categoriasDespesas = Array.from(document.querySelectorAll('#despesasDropdown input[type="checkbox"]:checked'))
+            //         .map(cb => {
+            //             const valor = cb.value;
+            //             return valor !== 'selecionar-todas-despesas' ? parseInt(valor) : null;
+            //         })
+            //         .filter(val => val !== null && !isNaN(val));
+
+            //     const categoriasInvestimentos = Array.from(document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:checked'))
+            //         .map(cb => {
+            //             const valor = cb.value;
+            //             return valor !== 'selecionar-todos-investimento' ? parseInt(valor) : null;
+            //         })
+            //         .filter(val => val !== null && !isNaN(val));
+
+            //     const formato = document.querySelector('#formatoDropdown input[type="radio"]:checked')?.value;
+
+            //     return {
+            //         data_inicial: dataInicial,
+            //         data_final: dataFinal,
+            //         categorias_ganhos: categoriasGanhos,
+            //         categorias_despesas: categoriasDespesas,
+            //         categorias_investimentos: categoriasInvestimentos,
+            //         formato: formato
+            //     };
+            // }
+
+            // Função para coletar dados dos formulários
+            function coletarDadosRelatorio() {
+                const dataInicial = document.getElementById('data-inicial').value;
+                const dataFinal = document.getElementById('data-final').value;
+
+                // IDs de todas as categorias por tipo (baseado no seu banco)
+                const todasCategorias = {
+                    ganhos: [3, 4, 5, 6, 7],      // Salário, Freelance, Aluguel, Aposentadoria, Outros
+                    despesas: [8, 9, 10, 11, 12, 13], // Moradia, Alimentação, Transporte, Saúde, Lazer, Outros
+                    investimentos: [14, 15, 16]   // Poupança, Previdência, Outros
+                };
+
+                // Coletar categorias selecionadas ou usar todas por padrão
+                const getCategoriasSelecionadas = (dropdownId, todasIds) => {
+                    const selecionadas = Array.from(document.querySelectorAll(`#${dropdownId} input[type="checkbox"]:checked`))
+                        .map(cb => {
+                            const valor = cb.value;
+                            // Ignorar o checkbox "selecionar todos"
+                            if (valor.includes('selecionar')) return null;
+                            return parseInt(valor);
+                        })
+                        .filter(val => val !== null && !isNaN(val));
+
+                    // Se nenhuma categoria foi selecionada, usar todas
+                    return selecionadas.length > 0 ? selecionadas : todasIds;
+                };
+
+                const categoriasGanhos = getCategoriasSelecionadas('ganhosDropdown', todasCategorias.ganhos);
+                const categoriasDespesas = getCategoriasSelecionadas('despesasDropdown', todasCategorias.despesas);
+                const categoriasInvestimentos = getCategoriasSelecionadas('investimentosDropdown', todasCategorias.investimentos);
+
+                const formato = document.querySelector('#formatoDropdown input[type="radio"]:checked')?.value;
+
+                console.log('Dados enviados:', {
+                    data_inicial: dataInicial,
+                    data_final: dataFinal,
+                    categorias_ganhos: categoriasGanhos,
+                    categorias_despesas: categoriasDespesas,
+                    categorias_investimentos: categoriasInvestimentos,
+                    formato: formato
+                });
+
+                return {
+                    data_inicial: dataInicial,
+                    data_final: dataFinal,
+                    categorias_ganhos: categoriasGanhos,
+                    categorias_despesas: categoriasDespesas,
+                    categorias_investimentos: categoriasInvestimentos,
+                    formato: formato
+                };
+            }
+
+
+            // Evento do botão Gerar Relatório
+            const generateBtn = document.querySelector('.generate-btn');
+
+            generateBtn.addEventListener('click', async function (e) {
+                e.preventDefault();
+
+                const dados = coletarDadosRelatorio();
+
+                // Validação básica
+                if (!dados.data_inicial || !dados.data_final) {
+                    alert('Por favor, selecione o período.');
+                    return;
+                }
+
+                if (!dados.formato) {
+                    alert('Por favor, selecione o formato do arquivo.');
+                    return;
+                }
+
+                try {
+                    // Mostrar loading
+                    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Gerando...';
+                    generateBtn.disabled = true;
+
+                    const response = await fetch('/financas/exportar-relatorio/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify(dados)
+                    });
+
+                    if (response.ok) {
+                        // Criar blob e fazer download
+                        const blob = await response.blob();
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+
+                        const extensao = dados.formato === 'pdf' ? 'pdf' : 'xlsx';
+                        a.download = `relatorio_kingcoin_${new Date().toISOString().slice(0, 10)}.${extensao}`;
+                        document.body.appendChild(a);
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        document.body.removeChild(a);
+
+                        alert('Relatório gerado com sucesso!');
+                    } else {
+                        const error = await response.text();
+                        alert('Erro ao gerar relatório: ' + error);
+                    }
+
+                } catch (error) {
+                    console.error('Erro:', error);
+                    alert('Erro ao gerar relatório. Tente novamente.');
+                } finally {
+                    // Restaurar botão
+                    generateBtn.innerHTML = '<i class="fas fa-download mr-2"></i> Gerar Relatório';
+                    generateBtn.disabled = false;
+                }
+            });
+
+            // Função para selecionar/desselecionar todos em cada dropdown
+            // function configurarSelecaoTotal() {
+            //     // Ganhos
+            //     const selecionarTodosGanhos = document.getElementById('selecionar-todos-ganhos');
+            //     const checkboxesGanhos = document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:not(#selecionar-todos-ganhos)');
+
+            //     if (selecionarTodosGanhos) {
+            //         selecionarTodosGanhos.addEventListener('change', function () {
+            //             checkboxesGanhos.forEach(cb => {
+            //                 cb.checked = this.checked;
+            //             });
+            //             updateButtonState();
+            //         });
+            //     }
+
+            //     // Despesas
+            //     const selecionarTodasDespesas = document.getElementById('selecionar-todas-despesas');
+            //     const checkboxesDespesas = document.querySelectorAll('#despesasDropdown input[type="checkbox"]:not(#selecionar-todas-despesas)');
+
+            //     if (selecionarTodasDespesas) {
+            //         selecionarTodasDespesas.addEventListener('change', function () {
+            //             checkboxesDespesas.forEach(cb => {
+            //                 cb.checked = this.checked;
+            //             });
+            //             updateButtonState();
+            //         });
+            //     }
+
+            //     // Investimentos
+            //     const selecionarTodosInvestimento = document.getElementById('selecionar-todos-investimento');
+            //     const checkboxesInvestimentos = document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:not(#selecionar-todos-investimento)');
+
+            //     if (selecionarTodosInvestimento) {
+            //         selecionarTodosInvestimento.addEventListener('change', function () {
+            //             checkboxesInvestimentos.forEach(cb => {
+            //                 cb.checked = this.checked;
+            //             });
+            //             updateButtonState();
+            //         });
+            //     }
+            // }
+
+            // Função para selecionar/desselecionar todos em cada dropdown
+            function configurarSelecaoTotal() {
+                // Ganhos
+                const selecionarTodosGanhos = document.getElementById('selecionar-todos-ganhos');
+                const checkboxesGanhos = document.querySelectorAll('#ganhosDropdown input[type="checkbox"]:not(#selecionar-todos-ganhos)');
+
+                if (selecionarTodosGanhos) {
+                    selecionarTodosGanhos.addEventListener('change', function () {
+                        checkboxesGanhos.forEach(cb => {
+                            cb.checked = this.checked;
+                        });
+                        // Não precisa mais chamar updateButtonState() aqui
+                    });
+                }
+
+                // Despesas
+                const selecionarTodasDespesas = document.getElementById('selecionar-todas-despesas');
+                const checkboxesDespesas = document.querySelectorAll('#despesasDropdown input[type="checkbox"]:not(#selecionar-todas-despesas)');
+
+                if (selecionarTodasDespesas) {
+                    selecionarTodasDespesas.addEventListener('change', function () {
+                        checkboxesDespesas.forEach(cb => {
+                            cb.checked = this.checked;
+                        });
+                    });
+                }
+
+                // Investimentos
+                const selecionarTodosInvestimento = document.getElementById('selecionar-todos-investimento');
+                const checkboxesInvestimentos = document.querySelectorAll('#investimentosDropdown input[type="checkbox"]:not(#selecionar-todos-investimento)');
+
+                if (selecionarTodosInvestimento) {
+                    selecionarTodosInvestimento.addEventListener('change', function () {
+                        checkboxesInvestimentos.forEach(cb => {
+                            cb.checked = this.checked;
+                        });
+                    });
+                }
+            }
+
+            // Função para validar se todos os campos estão preenchidos
+            function validateForm() {
+                const dataInicial = document.querySelector('input[type="date"]:first-of-type').value;
+                const dataFinal = document.querySelector('input[type="date"]:last-of-type').value;
+                const formato = document.querySelector('#formatoDropdown input[type="radio"]:checked')?.value;
+
+                if (!dataInicial || !dataFinal || !formato) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Função para atualizar o estado do botão
+            function updateButtonState() {
+                if (validateForm()) {
+                    generateBtn.disabled = false;
+                    generateBtn.style.opacity = '1';
+                    generateBtn.style.cursor = 'pointer';
+                    generateBtn.style.transform = 'none';
+                } else {
+                    generateBtn.disabled = true;
+                    generateBtn.style.opacity = '0.6';
+                    generateBtn.style.cursor = 'not-allowed';
+                    generateBtn.style.transform = 'none';
+                }
+            }
+
+            // Adiciona eventos para todos os campos
+            const dateInputs = document.querySelectorAll('.date-input');
+            dateInputs.forEach(input => {
+                input.addEventListener('change', updateButtonState);
+                input.addEventListener('input', updateButtonState);
+            });
+
+            // Adiciona eventos para checkboxes e radios
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            allCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateButtonState);
+            });
+
+            // Inicializar configurações
+            configurarSelecaoTotal();
+            updateButtonState();
+        });
     </script>
-
-
-
 
 
 </body>

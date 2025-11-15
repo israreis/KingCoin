@@ -13,7 +13,8 @@ from .views import (  # <-- importando corretamente das views
     dashboard,
     relatorios,
     get_categorias_por_tipo,
-    criar_movimentacao
+    criar_movimentacao,
+    ExportarRelatorioView
 )
 from django.contrib.auth import views as auth_views
 
@@ -70,5 +71,6 @@ urlpatterns = [
 
     path('api/categorias/<str:tipo_nome>/', get_categorias_por_tipo, name='get_categorias_por_tipo'),
     path('api/movimentacoes/criar/', criar_movimentacao, name='criar_movimentacao'),
+    path('exportar-relatorio/', ExportarRelatorioView.as_view(), name='exportar_relatorio'),
     
 ]
